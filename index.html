@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun for Movers - English Club</title>
-    <!-- Nhúng Font chữ tròn trịa đáng yêu -->
+    <title>Fun for Movers - English Exercise</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #fff9db 100%);
-            --text-main: #2c3e50;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,153 +14,121 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 30px 20px;
+            background-color: #fcf8f2;
+            background-image: radial-gradient(#e1dbd3 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #333333;
+            padding: 30px 15px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* Khung tiêu đề đám mây sinh động */
+        /* Bảng tiêu đề phong cách bảng vẽ thủ công */
         header {
             text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 35px 20px;
-            border-radius: 30px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.06);
-            border: 4px dashed #ff87a0;
-            margin-bottom: 40px;
-            position: relative;
+            background: #ffffff;
+            border: 4px solid #333333;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 6px 6px 0px #333333;
+            margin-bottom: 45px;
         }
 
         header h1 {
-            font-family: 'Comfortaa', cursive;
-            font-size: 2.6rem;
-            color: #ff5e7e;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #485460;
-        }
-
-        /* Danh sách bài học sắp xếp gọn gàng */
-        .grid-lessons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
-
-        /* Hộp bài học (Card) siêu cute */
-        .lesson-card {
-            background: white;
-            border-radius: 25px;
-            padding: 25px 20px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Hiệu ứng phóng to nhẹ kèm đổi màu khi bé rê chuột vào */
-        .lesson-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Đổ màu nền icon riêng biệt tạo sự sinh động */
-        .icon-wrapper {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .lesson-card:hover .icon-wrapper {
-            transform: rotate(15deg);
-        }
-
-        .lesson-card h2 {
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.4rem;
+            font-family: 'Fredoka', cursive;
+            font-size: 2.8rem;
+            color: #ff5964;
+            text-shadow: 2px 2px 0px #ffe5e7;
             margin-bottom: 8px;
         }
 
-        .lesson-card p {
-            font-size: 0.95rem;
-            color: #778ca3;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        /* Nút nhỏ gọn bên trong card */
-        .btn-go {
-            padding: 8px 20px;
-            border-radius: 20px;
-            color: white;
+        header p {
+            font-size: 1.15rem;
+            color: #555555;
             font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* Phối màu pastel kẹo ngọt cho từng Unit */
-        .card-u1-9 { background: #fff5f5; }
-        .card-u1-9 .icon-wrapper { background: #ffe3e3; }
-        .card-u1-9 h2 { color: #ff6b6b; }
-        .card-u1-9 .btn-go { background: #ff6b6b; }
+        /* Lưới danh sách bài tập sắp xếp cực kỳ gọn gàng */
+        .grid-lessons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
 
-        .card-u10 { background: #f0fdf4; }
-        .card-u10 .icon-wrapper { background: #dcfce7; }
-        .card-u10 h2 { color: #22c55e; }
-        .card-u10 .btn-go { background: #22c55e; }
+        /* Thẻ bài tập dạng khối hộp phẳng, không đổ bóng mờ kiểu AI */
+        .lesson-card {
+            background: #ffffff;
+            border: 3px solid #333333;
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 4px 4px 0px #333333;
+            transition: all 0.15s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .card-u11 { background: #fef8e6; }
-        .card-u11 .icon-wrapper { background: #fef08a; }
-        .card-u11 h2 { color: #eab308; }
-        .card-u11 .btn-go { background: #eab308; }
+        /* Hiệu ứng bấm nảy chân thực khi di chuột hoặc chạm vào */
+        .lesson-card:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #333333;
+        }
 
-        .card-u12 { background: #eff6ff; }
-        .card-u12 .icon-wrapper { background: #dbeafe; }
-        .card-u12 h2 { color: #3b82f6; }
-        .card-u12 .btn-go { background: #3b82f6; }
+        .icon-box {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
 
-        .card-u14 { background: #faf5ff; }
-        .card-u14 .icon-wrapper { background: #f3e8ff; }
-        .card-u14 h2 { color: #a855f7; }
-        .card-u14 .btn-go { background: #a855f7; }
+        .lesson-card h2 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.25rem;
+            color: #333333;
+            margin-bottom: 4px;
+            white-space: nowrap;
+        }
 
-        /* Chân trang */
+        .lesson-card p {
+            font-size: 0.9rem;
+            color: #666666;
+            font-weight: 700;
+        }
+
+        /* Hệ màu sắc rực rỡ phân biệt rõ ràng từng nhóm bài */
+        .u-1-9  { background-color: #fff0f3; }
+        .u-10   { background-color: #e8f5e9; }
+        .u-11   { background-color: #fffde7; }
+        .u-12   { background-color: #e3f2fd; }
+        .u-13   { background-color: #f3e5f5; }
+        .u-14   { background-color: #fff3e0; }
+        .u-15   { background-color: #e0f2f1; }
+        .u-16   { background-color: #fce4ec; }
+        .u-17   { background-color: #efebe9; }
+        .u-18   { background-color: #e8eaf6; }
+        .u-19   { background-color: #f9fbe7; }
+        .u-20   { background-color: #e0f7fa; }
+
         footer {
             text-align: center;
-            margin-top: 50px;
-            font-size: 0.95rem;
-            color: #a5b1c2;
+            margin-top: 60px;
+            font-size: 1rem;
             font-weight: 700;
+            color: #666666;
         }
 
-        /* Tương thích màn hình nhỏ */
-        @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            body { padding: 15px 10px; }
+        /* Tối ưu hóa trên giao diện điện thoại */
+        @media (max-width: 480px) {
+            header h1 { font-size: 2.2rem; }
+            .grid-lessons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
         }
     </style>
 </head>
@@ -174,54 +136,98 @@
 
     <div class="container">
         <header>
-            <h1>✨ Fun for Movers ✨</h1>
-            <p>Bé hãy chọn một thử thách vui nhộn bên dưới nhé! 🦄🎈</p>
+            <h1>✏️ Fun for Movers</h1>
+            <p>Bé hãy chọn một bài học để luyện tập hôm nay nhé! 🚀</p>
         </header>
 
         <main class="grid-lessons">
-            <!-- Thẻ Unit 1 - 9 -->
-            <a href="unit1-9.html" class="lesson-card card-u1-9">
-                <div class="icon-wrapper">🎈</div>
-                <h2>Units 1 - 9</h2>
-                <p>Khởi động vui vẻ</p>
-                <div class="btn-go">Vào chơi ➔</div>
+            <!-- Unit 1-9 -->
+            <a href="unit1-9.html" class="lesson-card u-1-9">
+                <div class="icon-box">🎈</div>
+                <h2>Unit 1 - 9</h2>
+                <p>Khởi động</p>
             </a>
 
-            <!-- Thẻ Unit 10 -->
-            <a href="unit10.html" class="lesson-card card-u10">
-                <div class="icon-wrapper">🚗</div>
+            <!-- Unit 10 -->
+            <a href="unit10.html" class="lesson-card u-10">
+                <div class="icon-box">🚗</div>
                 <h2>Unit 10</h2>
-                <p>Khám phá đường phố</p>
-                <div class="btn-go">Vào chơi ➔</div>
+                <p>Luyện tập</p>
             </a>
 
-            <!-- Thẻ Unit 11 -->
-            <a href="unit11.html" class="lesson-card card-u11">
-                <div class="icon-wrapper">🍕</div>
+            <!-- Unit 11 -->
+            <a href="unit11.html" class="lesson-card u-11">
+                <div class="icon-box">🍕</div>
                 <h2>Unit 11</h2>
-                <p>Thế giới ẩm thực</p>
-                <div class="btn-go">Vào chơi ➔</div>
+                <p>Luyện tập</p>
             </a>
 
-            <!-- Thẻ Unit 12 -->
-            <a href="unit12.html" class="lesson-card card-u12">
-                <div class="icon-wrapper">🦁</div>
+            <!-- Unit 12 -->
+            <a href="unit12.html" class="lesson-card u-12">
+                <div class="icon-box">🦁</div>
                 <h2>Unit 12</h2>
-                <p>Vương quốc động vật</p>
-                <div class="btn-go">Vào chơi ➔</div>
+                <p>Luyện tập</p>
             </a>
 
-            <!-- Thẻ Unit 14 -->
-            <a href="unit14.html" class="lesson-card card-u14">
-                <div class="icon-wrapper">🎨</div>
+            <!-- Unit 13 -->
+            <a href="unit13.html" class="lesson-card u-13">
+                <div class="icon-box">🎒</div>
+                <h2>Unit 13</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 14 -->
+            <a href="unit14.html" class="lesson-card u-14">
+                <div class="icon-box">🎨</div>
                 <h2>Unit 14</h2>
-                <p>Sáng tạo sắc màu</p>
-                <div class="btn-go">Vào chơi ➔</div>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 15 -->
+            <a href="unit15.html" class="lesson-card u-15">
+                <div class="icon-box">🏡</div>
+                <h2>Unit 15</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 16 -->
+            <a href="unit16.html" class="lesson-card u-16">
+                <div class="icon-box">🍦</div>
+                <h2>Unit 16</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 17 -->
+            <a href="unit17.html" class="lesson-card u-17">
+                <div class="icon-box">⚽</div>
+                <h2>Unit 17</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 18 -->
+            <a href="unit18.html" class="lesson-card u-18">
+                <div class="icon-box">🧸</div>
+                <h2>Unit 18</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 19 -->
+            <a href="unit19.html" class="lesson-card u-19">
+                <div class="icon-box">🍍</div>
+                <h2>Unit 19</h2>
+                <p>Luyện tập</p>
+            </a>
+
+            <!-- Unit 20 -->
+            <a href="unit20.html" class="lesson-card u-20">
+                <div class="icon-box">🛹</div>
+                <h2>Unit 20</h2>
+                <p>Luyện tập</p>
             </a>
         </main>
 
         <footer>
-            <p>✨🎈 Chúc các bé học tập thật vui! 🎈✨</p>
+            <p>✨ Chúc các bé học tập thật tốt và vui vẻ! ✨</p>
         </footer>
     </div>
 
