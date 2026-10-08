@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun for Movers - Bài Tập Tiếng Anh</title>
-    <!-- Google Fonts để giao diện dễ thương hơn -->
+    <title>Fun for Movers - English Club</title>
+    <!-- Nhúng Font chữ tròn trịa đáng yêu -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff6b6b;
-            --secondary-color: #4ecdc4;
-            --accent-color: #ffe66d;
-            --bg-color: #f7f9fc;
-            --text-color: #2f3e46;
+            --bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #fff9db 100%);
+            --text-main: #2c3e50;
         }
 
         * {
@@ -23,153 +20,153 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 30px 20px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Tiêu đề trang */
+        /* Khung tiêu đề đám mây sinh động */
         header {
             text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            border-radius: 24px;
-            color: white;
-            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.2);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 35px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.06);
+            border: 4px dashed #ff87a0;
             margin-bottom: 40px;
             position: relative;
-            overflow: hidden;
         }
 
         header h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-family: 'Comfortaa', cursive;
+            font-size: 2.6rem;
+            color: #ff5e7e;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
         }
 
         header p {
             font-size: 1.2rem;
-            font-weight: 500;
-            opacity: 0.9;
+            font-weight: 700;
+            color: #485460;
         }
 
-        /* Trang trí bong bóng phía sau tiêu đề */
-        header::before, header::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-        }
-        header::before { width: 100px; height: 100px; top: -20px; left: -20px; }
-        header::after { width: 150px; height: 150px; bottom: -50px; right: -30px; }
-
-        /* Vùng danh sách bài học */
-        .units-grid {
+        /* Danh sách bài học sắp xếp gọn gàng */
+        .grid-lessons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
         }
 
-        /* Thẻ bài học (Card) */
-        .unit-card {
+        /* Hộp bài học (Card) siêu cute */
+        .lesson-card {
             background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 3px solid transparent;
+            border-radius: 25px;
+            padding: 25px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .unit-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        /* Hiệu ứng phóng to nhẹ kèm đổi màu khi bé rê chuột vào */
+        .lesson-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
         }
 
-        /* Màu sắc viền ngẫu nhiên cho các Card vui nhộn */
-        .unit-card:nth-child(1) { border-color: #4ecdc4; }
-        .unit-card:nth-child(2) { border-color: #ff9f43; }
-        .unit-card:nth-child(3) { border-color: #a55eea; }
-
-        .card-body {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .icon-box {
-            font-size: 3.5rem;
+        /* Đổ màu nền icon riêng biệt tạo sự sinh động */
+        .icon-wrapper {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
             margin-bottom: 15px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
         }
 
-        /* Hiệu ứng nhấp nhô nhẹ cho icon thu hút trẻ nhỏ */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .lesson-card:hover .icon-wrapper {
+            transform: rotate(15deg);
         }
 
-        .unit-card h2 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 1.6rem;
-            color: #2f3e46;
-            margin-bottom: 10px;
+        .lesson-card h2 {
+            font-family: 'Comfortaa', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
         }
 
-        .unit-card p {
-            font-size: 1rem;
-            color: #7f8c8d;
+        .lesson-card p {
+            font-size: 0.95rem;
+            color: #778ca3;
             font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        /* Nút bấm vào làm bài tập */
-        .btn-start {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #4ecdc4;
+        /* Nút nhỏ gọn bên trong card */
+        .btn-go {
+            padding: 8px 20px;
+            border-radius: 20px;
             color: white;
-            text-decoration: none;
             font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 12px;
-            transition: background 0.2s ease;
-            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .unit-card:nth-child(1) .btn-start { background-color: #4ecdc4; box-shadow: 0 4px 10px rgba(78,205,196,0.3); }
-        .unit-card:nth-child(2) .btn-start { background-color: #ff9f43; box-shadow: 0 4px 10px rgba(255,159,67,0.3); }
-        .unit-card:nth-child(3) .btn-start { background-color: #a55eea; box-shadow: 0 4px 10px rgba(165,94,234,0.3); }
+        /* Phối màu pastel kẹo ngọt cho từng Unit */
+        .card-u1-9 { background: #fff5f5; }
+        .card-u1-9 .icon-wrapper { background: #ffe3e3; }
+        .card-u1-9 h2 { color: #ff6b6b; }
+        .card-u1-9 .btn-go { background: #ff6b6b; }
 
-        .btn-start:hover {
-            filter: brightness(0.95);
-        }
+        .card-u10 { background: #f0fdf4; }
+        .card-u10 .icon-wrapper { background: #dcfce7; }
+        .card-u10 h2 { color: #22c55e; }
+        .card-u10 .btn-go { background: #22c55e; }
 
-        /* Footer */
+        .card-u11 { background: #fef8e6; }
+        .card-u11 .icon-wrapper { background: #fef08a; }
+        .card-u11 h2 { color: #eab308; }
+        .card-u11 .btn-go { background: #eab308; }
+
+        .card-u12 { background: #eff6ff; }
+        .card-u12 .icon-wrapper { background: #dbeafe; }
+        .card-u12 h2 { color: #3b82f6; }
+        .card-u12 .btn-go { background: #3b82f6; }
+
+        .card-u14 { background: #faf5ff; }
+        .card-u14 .icon-wrapper { background: #f3e8ff; }
+        .card-u14 h2 { color: #a855f7; }
+        .card-u14 .btn-go { background: #a855f7; }
+
+        /* Chân trang */
         footer {
             text-align: center;
             margin-top: 50px;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #bdc3c7;
-            font-weight: 500;
+            font-size: 0.95rem;
+            color: #a5b1c2;
+            font-weight: 700;
         }
 
-        /* Tương thích điện thoại */
+        /* Tương thích màn hình nhỏ */
         @media (max-width: 600px) {
             header h1 { font-size: 2rem; }
-            body { padding: 10px; }
+            body { padding: 15px 10px; }
         }
     </style>
 </head>
@@ -177,44 +174,54 @@
 
     <div class="container">
         <header>
-            <h1>Welcome to Fun for Movers!</h1>
-            <p>Bé hãy chọn một bài học bên dưới để bắt đầu làm bài tập nhé! 🌟</p>
+            <h1>✨ Fun for Movers ✨</h1>
+            <p>Bé hãy chọn một thử thách vui nhộn bên dưới nhé! 🦄🎈</p>
         </header>
 
-        <main class="units-grid">
+        <main class="grid-lessons">
             <!-- Thẻ Unit 1 - 9 -->
-            <div class="unit-card">
-                <div class="card-body">
-                    <div class="icon-box">🚀</div>
-                    <h2>Units 1 - 9</h2>
-                    <p>Tổng hợp các kiến thức nền tảng và bài tập khởi động thú vị.</p>
-                    <a href="unit1-9.html" class="btn-start">Bắt đầu học ngay ➔</a>
-                </div>
-            </div>
+            <a href="unit1-9.html" class="lesson-card card-u1-9">
+                <div class="icon-wrapper">🎈</div>
+                <h2>Units 1 - 9</h2>
+                <p>Khởi động vui vẻ</p>
+                <div class="btn-go">Vào chơi ➔</div>
+            </a>
 
             <!-- Thẻ Unit 10 -->
-            <div class="unit-card">
-                <div class="card-body">
-                    <div class="icon-box">🗺️</div>
-                    <h2>Unit 10</h2>
-                    <p>Khám phá thử thách đường phố qua bài học Street Quest!</p>
-                    <a href="unit10.html" class="btn-start">Khám phá ngay ➔</a>
-                </div>
-            </div>
+            <a href="unit10.html" class="lesson-card card-u10">
+                <div class="icon-wrapper">🚗</div>
+                <h2>Unit 10</h2>
+                <p>Khám phá đường phố</p>
+                <div class="btn-go">Vào chơi ➔</div>
+            </a>
 
             <!-- Thẻ Unit 11 -->
-            <div class="unit-card">
-                <div class="card-body">
-                    <div class="icon-box">🍳</div>
-                    <h2>Unit 11</h2>
-                    <p>Học từ vựng và câu hỏi bổ ích về chủ đề thế giới ẩm thực.</p>
-                    <a href="unit11.html" class="btn-start">Thử tài nấu nướng ➔</a>
-                </div>
-            </div>
+            <a href="unit11.html" class="lesson-card card-u11">
+                <div class="icon-wrapper">🍕</div>
+                <h2>Unit 11</h2>
+                <p>Thế giới ẩm thực</p>
+                <div class="btn-go">Vào chơi ➔</div>
+            </a>
+
+            <!-- Thẻ Unit 12 -->
+            <a href="unit12.html" class="lesson-card card-u12">
+                <div class="icon-wrapper">🦁</div>
+                <h2>Unit 12</h2>
+                <p>Vương quốc động vật</p>
+                <div class="btn-go">Vào chơi ➔</div>
+            </a>
+
+            <!-- Thẻ Unit 14 -->
+            <a href="unit14.html" class="lesson-card card-u14">
+                <div class="icon-wrapper">🎨</div>
+                <h2>Unit 14</h2>
+                <p>Sáng tạo sắc màu</p>
+                <div class="btn-go">Vào chơi ➔</div>
+            </a>
         </main>
 
         <footer>
-            <p>© Lớp học tiếng Anh Fun for Movers của cô Phương Anh</p>
+            <p>✨🎈 Chúc các bé học tập thật vui! 🎈✨</p>
         </footer>
     </div>
 
