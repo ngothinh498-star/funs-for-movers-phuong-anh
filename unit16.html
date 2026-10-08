@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports Champions Quest - Cambridge Movers Unit 16: Let's Do Some Sport!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #16a34a;
+      --primary-dark: #15803d;
+      --primary-light: #dcfce7;
+      --accent: #f59e0b;
+      --accent-dark: #d97706;
+      --sport-gold: #fde047;
+      --sport-blue: #0284c7;
+      --success: #10b981;
+      --success-dark: #059669;
+      --danger: #ef4444;
+      --bg-gradient: linear-gradient(180deg, #38bdf8 0%, #34d399 35%, #fde047 75%, #4ade80 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 20px 35px -5px rgba(0, 0, 0, 0.15);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Quicksand', -apple-system, sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: #1e293b;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 70px;
+    }
+
+    /* Living Animated Sports Field Environment */
+    .bg-scenery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Floating Clouds */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 50px;
+      opacity: 0.85;
+      filter: blur(1px);
+      animation: floatCloud linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .cloud-1 {
+      width: 170px; height: 52px; top: 6%; left: -200px;
+      animation-duration: 44s;
+    }
+    .cloud-1::before { width: 75px; height: 75px; top: -32px; left: 25px; }
+    .cloud-1::after { width: 55px; height: 55px; top: -22px; left: 85px; }
+
+    .cloud-2 {
+      width: 230px; height: 68px; top: 18%; left: -260px;
+      animation-duration: 60s; animation-delay: 11s;
+    }
+    .cloud-2::before { width: 95px; height: 95px; top: -42px; left: 35px; }
+    .cloud-2::after { width: 75px; height: 75px; top: -28px; left: 115px; }
+
+    .cloud-3 {
+      width: 140px; height: 44px; top: 28%; left: -160px;
+      animation-duration: 38s; animation-delay: 4s;
+    }
+    .cloud-3::before { width: 55px; height: 55px; top: -24px; left: 20px; }
+    .cloud-3::after { width: 45px; height: 45px; top: -18px; left: 70px; }
+
+    @keyframes floatCloud {
+      from { transform: translateX(-240px); }
+      to { transform: translateX(calc(100vw + 300px)); }
+    }
+
+    /* Floating Soccer Ball on top right */
+    .floating-sport-ball {
+      position: absolute;
+      top: 35px;
+      right: 4%;
+      width: 60px;
+      height: 60px;
+      animation: gentleBallSpin 6s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes gentleBallSpin {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-18px) rotate(25deg); }
+    }
+
+    /* Floating Gold Trophy Icon on top left */
+    .floating-sports-trophy {
+      position: absolute;
+      top: 40px;
+      left: 3%;
+      width: 55px;
+      height: 55px;
+      animation: gentleTrophyBob 4s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes gentleTrophyBob {
+      0% { transform: translateY(0) rotate(3deg); }
+      100% { transform: translateY(-14px) rotate(-4deg); }
+    }
+
+    /* Grass track strip at bottom */
+    .sports-turf-strip {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      background: #15803d;
+      border-top: 4px solid #166534;
+      z-index: 1;
+    }
+    .turf-markings {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: repeating-linear-gradient(90deg, #ffffff 0, #ffffff 25px, transparent 25px, transparent 50px);
+    }
+
+    /* Container */
+    .app-container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 15px auto 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Top Header */
+    .top-header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+      border: 3px solid #ffffff;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      font-size: 34px;
+      animation: sportBounce 2s ease infinite;
+    }
+    @keyframes sportBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(6deg); }
+    }
+    .brand-text h1 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #15803d;
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #16a34a;
+      font-weight: 600;
+      background: #dcfce7;
+      padding: 2px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      border: 1px solid #bbf7d0;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-tool {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-tool:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .score-badge {
+      background: linear-gradient(135deg, #fef08a, #f59e0b);
+      color: #78350f;
+      padding: 7px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+      border: 2px solid #fde68a;
+    }
+
+    /* Milestone Trail (20 Checkpoints) */
+    .trail-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      border: 3px solid #ffffff;
+    }
+    .trail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .trail-label {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #15803d;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trail-stats {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .trail-track-wrapper {
+      position: relative;
+      overflow-x: auto;
+      padding: 8px 4px 14px 4px;
+      scrollbar-width: thin;
+      scrollbar-color: #4ade80 #dcfce7;
+    }
+    .trail-track-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+    .trail-track-wrapper::-webkit-scrollbar-thumb {
+      background: #4ade80;
+      border-radius: 4px;
+    }
+    .trail-track {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 680px;
+    }
+    .trail-node {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2px solid #cbd5e1;
+      flex-shrink: 0;
+    }
+    .trail-node:hover {
+      transform: scale(1.18);
+    }
+    .trail-node.current {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.45);
+      transform: scale(1.22);
+    }
+    .trail-node.correct {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #a7f3d0;
+    }
+    .trail-node.incorrect {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #fca5a5;
+    }
+    .trail-node.skipped {
+      background: #f97316;
+      color: #ffffff;
+      border-color: #fed7aa;
+    }
+
+    /* Main Question Card */
+    .quest-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 30px;
+      border: 4px solid #ffffff;
+      position: relative;
+    }
+
+    /* Meta Badges */
+    .q-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .q-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-category {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-unit {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+    }
+    .checkpoint-number {
+      font-size: 14px;
+      font-weight: 700;
+      color: #15803d;
+      background: #dcfce7;
+      padding: 6px 14px;
+      border-radius: 16px;
+    }
+
+    /* Question Prompt */
+    .q-prompt {
+      font-size: 19px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      white-space: pre-line;
+    }
+
+    /* Illustration Box */
+    .q-illustration {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto 24px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 3px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .q-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Audio Player Widget */
+    .audio-player-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 2px solid #86efac;
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audio-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .audio-voice-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #15803d;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .btn-audio-play {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      padding: 10px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-audio-play:hover {
+      background: linear-gradient(135deg, #15803d, #166534);
+      transform: translateY(-2px);
+    }
+    .btn-audio-play.speaking {
+      background: linear-gradient(135deg, #10b981, #059669);
+      animation: pulsePlay 1.2s infinite;
+    }
+    @keyframes pulsePlay {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    }
+
+    .audio-wave {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 28px;
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+    .wave-bar {
+      width: 4px;
+      background: #4ade80;
+      border-radius: 3px;
+      height: 6px;
+      transition: height 0.15s ease;
+    }
+    .audio-wave.active .wave-bar {
+      animation: waveDance 1s ease infinite alternate;
+    }
+    .audio-wave.active .wave-bar:nth-child(1) { animation-delay: 0.1s; height: 16px; }
+    .audio-wave.active .wave-bar:nth-child(2) { animation-delay: 0.3s; height: 24px; }
+    .audio-wave.active .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+    .audio-wave.active .wave-bar:nth-child(4) { animation-delay: 0.4s; height: 22px; }
+    .audio-wave.active .wave-bar:nth-child(5) { animation-delay: 0.15s; height: 18px; }
+    .audio-wave.active .wave-bar:nth-child(6) { animation-delay: 0.35s; height: 26px; }
+    .audio-wave.active .wave-bar:nth-child(7) { animation-delay: 0.25s; height: 12px; }
+
+    @keyframes waveDance {
+      0% { height: 6px; }
+      100% { height: 26px; }
+    }
+
+    .transcript-toggle {
+      font-size: 12px;
+      color: #16a34a;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-weight: 600;
+      text-align: right;
+    }
+    .audio-transcript-box {
+      font-size: 13.5px;
+      color: #334155;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px dashed #86efac;
+      display: none;
+      font-style: italic;
+    }
+    .audio-transcript-box.visible {
+      display: block;
+    }
+
+    /* Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .options-grid.two-cols {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .option-btn {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+    .option-btn:hover:not(.locked) {
+      border-color: #4ade80;
+      background: #f0fdf4;
+      transform: translateY(-2px);
+    }
+    .option-btn.selected {
+      border-color: #16a34a;
+      background: #dcfce7;
+    }
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .option-btn.selected .option-letter {
+      background: #16a34a;
+      color: #ffffff;
+    }
+
+    /* Picture Options Cards */
+    .picture-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    .pic-option-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .pic-option-card:hover:not(.locked) {
+      border-color: #4ade80;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .pic-option-card.selected {
+      border-color: #16a34a;
+      background: #f0fdf4;
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
+    }
+    .pic-preview-box {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: #f8fafc;
+    }
+    .pic-card-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.3;
+    }
+
+    /* Drag & Drop Story Sequencing */
+    .story-seq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .story-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: grab;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .story-card:active {
+      cursor: grabbing;
+    }
+    .story-card.dragging {
+      opacity: 0.4;
+      background: #f1f5f9;
+      border-style: dashed;
+    }
+    .story-card-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-grow: 1;
+    }
+    .story-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #16a34a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .story-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+    .story-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .btn-arrow {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      color: #475569;
+      transition: background 0.15s;
+    }
+    .btn-arrow:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Actions Footer */
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 2px dashed #e2e8f0;
+    }
+    .actions-left, .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      border: none;
+      border-radius: 18px;
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-check {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+    .btn-check:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+    }
+    .btn-check:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn-skip {
+      background: #fff7ed;
+      color: #ea580c;
+      border: 2px solid #fed7aa;
+    }
+    .btn-skip:hover {
+      background: #ffedd5;
+      transform: translateY(-2px);
+    }
+    .btn-nav {
+      background: #f1f5f9;
+      color: #334155;
+      border: 2px solid #cbd5e1;
+    }
+    .btn-nav:hover:not(:disabled) {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .btn-nav:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Explanation & Feedback Card (Vietnamese) */
+    .feedback-panel {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 20px;
+      display: none;
+      animation: slideUp 0.3s ease forwards;
+    }
+    .feedback-panel.visible {
+      display: block;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .feedback-panel.correct-theme {
+      background: #ecfdf5;
+      border: 3px solid #6ee7b7;
+    }
+    .feedback-panel.incorrect-theme {
+      background: #fff1f2;
+      border: 3px solid #fecdd3;
+    }
+    .feedback-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .correct-theme .feedback-status { color: #047857; }
+    .incorrect-theme .feedback-status { color: #be123c; }
+
+    .vn-explanation-box {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 18px;
+      border-left: 5px solid #16a34a;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .vn-explanation-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #15803d;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .vn-explanation-text {
+      font-size: 14.5px;
+      color: #334155;
+      line-height: 1.6;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Option Result Styling */
+    .option-btn.opt-correct {
+      border-color: #10b981 !important;
+      background: #ecfdf5 !important;
+      color: #065f46 !important;
+    }
+    .option-btn.opt-correct .option-letter {
+      background: #10b981 !important;
+      color: #ffffff !important;
+    }
+    .option-btn.opt-incorrect {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      color: #991b1b !important;
+    }
+    .option-btn.opt-incorrect .option-letter {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+    }
+
+    /* Modal Overlay (All 20 Checkpoints) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 620px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #86efac;
+      animation: popIn 0.25s ease forwards;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #15803d;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-modal {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .grid-checkpoints {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .grid-node-btn {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.2s;
+    }
+    .grid-node-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    .grid-node-btn.correct { background: #d1fae5; border-color: #10b981; color: #047857; }
+    .grid-node-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .grid-node-btn.skipped { background: #ffedd5; border-color: #f97316; color: #c2410c; }
+    .grid-node-btn.current { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3); }
+
+    /* Results Screen */
+    .results-screen {
+      display: none;
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #fde047;
+      text-align: center;
+      animation: popIn 0.3s ease;
+    }
+    .results-screen.visible {
+      display: block;
+    }
+    .sports-trophy {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 16px auto;
+      animation: floatSportTrophy 3s ease-in-out infinite alternate;
+    }
+    @keyframes floatSportTrophy {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    .result-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #15803d;
+      margin-bottom: 8px;
+    }
+    .result-rank {
+      font-size: 16px;
+      font-weight: 700;
+      color: #b45309;
+      background: #fef3c7;
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      border: 2px solid #fde68a;
+    }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4ade80, #16a34a);
+      color: #ffffff;
+      margin: 0 auto 24px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.3);
+    }
+    .score-number {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .skill-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .skill-stat-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .skill-stat-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .skill-stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @media (max-width: 640px) {
+      .app-container { padding: 10px; }
+      .quest-card { padding: 18px 14px; }
+      .q-prompt { font-size: 16px; }
+      .top-header { padding: 10px 14px; }
+      .brand-text h1 { font-size: 16px; }
+      .card-actions { justify-content: center; }
+      .actions-left, .actions-right { width: 100%; justify-content: center; }
+      .btn-action { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Living Animated Sports Environment -->
+  <div class="bg-scenery">
+    <!-- Drifting Clouds -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <!-- Floating Soccer Ball on Right -->
+    <div class="floating-sport-ball">
+      <svg viewBox="0 0 60 60" width="100%" height="100%">
+        <circle cx="30" cy="30" r="26" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+        <polygon points="30,18 40,25 36,36 24,36 20,25" fill="#0f172a"/>
+        <line x1="30" y1="18" x2="30" y2="4" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="40" y1="25" x2="52" y2="20" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="36" y1="36" x2="46" y2="46" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="24" y1="36" x2="14" y2="46" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="20" y1="25" x2="8" y2="20" stroke="#0f172a" stroke-width="2.5"/>
+      </svg>
+    </div>
+
+    <!-- Floating Sports Trophy on Left -->
+    <div class="floating-sports-trophy">
+      <svg viewBox="0 0 55 55" width="100%" height="100%">
+        <path d="M15,10 L40,10 L36,35 C34,42 21,42 19,35 Z" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+        <path d="M15,14 Q5,22 17,28" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+        <path d="M40,14 Q50,22 38,28" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+        <rect x="25" y="38" width="5" height="10" fill="#d97706"/>
+        <rect x="18" y="47" width="19" height="6" rx="2" fill="#78350f"/>
+      </svg>
+    </div>
+
+    <!-- Sports Turf Strip at Bottom -->
+    <div class="sports-turf-strip">
+      <div class="turf-markings"></div>
+    </div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Top Header Bar -->
+    <header class="top-header">
+      <div class="brand-title">
+        <div class="brand-icon">⚽</div>
+        <div class="brand-text">
+          <h1>Sports Champions Quest</h1>
+          <span>Movers Unit 16: Let's Do Some Sport!</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-tool" id="btn-open-map" title="View Sports Field Map">
+          <span>🗺️</span>
+          <span>Sports Map</span>
+        </button>
+        <button class="btn-tool" id="btn-sound-toggle" title="Toggle Sound">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <div class="score-badge">
+          <span>🏅</span>
+          <span id="header-gem-score">0</span>
+          <span>Medals</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Milestone Trail Strip (20 Checkpoints) -->
+    <section class="trail-card">
+      <div class="trail-header">
+        <span class="trail-label">🏃 Olympic Sports Trail</span>
+        <span class="trail-stats" id="trail-progress-text">Checkpoint 1 / 20</span>
+      </div>
+      <div class="trail-track-wrapper">
+        <div class="trail-track" id="trail-track">
+          <!-- 20 Node Buttons injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Question Card -->
+    <main class="quest-card" id="quest-card">
+      <!-- Meta Badges -->
+      <div class="q-meta">
+        <div class="q-badges">
+          <span class="badge-category" id="q-category-badge">🔤 Word Master</span>
+          <span class="badge-unit" id="q-unit-badge">Unit 16: Let's do some sport!</span>
+        </div>
+        <div class="checkpoint-number" id="q-counter">Checkpoint 1 of 20</div>
+      </div>
+
+      <!-- Question Prompt -->
+      <div class="q-prompt" id="q-prompt">Loading question...</div>
+
+      <!-- Question SVG Illustration -->
+      <div class="q-illustration" id="q-illustration"></div>
+
+      <!-- Audio Player Widget -->
+      <div class="audio-player-box" id="audio-player-box" style="display: none;">
+        <div class="audio-player-header">
+          <div class="audio-voice-tag">🎙️ Native US Storyteller (0.86x Clear & Encouraging)</div>
+          <button class="transcript-toggle" id="transcript-toggle">Show Transcript</button>
+        </div>
+        <div class="audio-controls">
+          <button class="btn-audio-play" id="btn-audio-play">
+            <span id="audio-btn-icon">▶️</span>
+            <span id="audio-btn-text">Listen to Story</span>
+          </button>
+          <div class="audio-wave" id="audio-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+        <div class="audio-transcript-box" id="audio-transcript-box"></div>
+      </div>
+
+      <!-- Standard Multiple Choice / True-False Options -->
+      <div class="options-grid" id="options-container" style="display: none;"></div>
+
+      <!-- Picture Choice Options -->
+      <div class="picture-options-grid" id="picture-options-container" style="display: none;"></div>
+
+      <!-- Story Sequencing Drag & Drop -->
+      <div class="story-seq-list" id="story-seq-container" style="display: none;"></div>
+
+      <!-- Action Buttons Footer -->
+      <footer class="card-actions">
+        <div class="actions-left">
+          <button class="btn-action btn-nav" id="btn-prev-q">⬅ Back</button>
+          <button class="btn-action btn-skip" id="btn-skip-q">Skip for Now ↷</button>
+        </div>
+        <div class="actions-right">
+          <button class="btn-action btn-check" id="btn-check-q">Check Answer ⭐</button>
+          <button class="btn-action btn-nav" id="btn-next-q" style="display: none;">Next Game ➔</button>
+        </div>
+      </footer>
+
+      <!-- Feedback & Detailed Vietnamese Explanation Panel -->
+      <div class="feedback-panel" id="feedback-panel">
+        <div class="feedback-status" id="feedback-status">
+          <span id="feedback-status-icon">🎉</span>
+          <span id="feedback-status-text">Brilliant! That's correct!</span>
+        </div>
+        <div class="vn-explanation-box">
+          <div class="vn-explanation-title">
+            <span>💡</span>
+            <span>Giải Thích Chi Tiết Cho Bé:</span>
+          </div>
+          <div class="vn-explanation-text" id="feedback-vn-text"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Results Screen -->
+    <div class="results-screen" id="results-screen">
+      <div class="sports-trophy">
+        <svg viewBox="0 0 130 130" width="100%" height="100%">
+          <!-- Golden Cup with Star -->
+          <path d="M35,25 L95,25 L88,75 C85,90 45,90 42,75 Z" fill="#fbbf24" stroke="#d97706" stroke-width="4"/>
+          <!-- Handles -->
+          <path d="M35,32 Q15,45 37,60" stroke="#f59e0b" stroke-width="5" fill="none"/>
+          <path d="M95,32 Q115,45 93,60" stroke="#f59e0b" stroke-width="5" fill="none"/>
+          <!-- Base -->
+          <rect x="58" y="85" width="14" height="22" fill="#d97706"/>
+          <rect x="40" y="105" width="50" height="18" rx="4" fill="#15803d" stroke="#166534" stroke-width="2"/>
+          <!-- Gold medal star on trophy -->
+          <polygon points="65,42 70,52 82,52 72,60 76,70 65,64 54,70 58,60 48,52 60,52" fill="#ffffff"/>
+        </svg>
+      </div>
+
+      <h2 class="result-title">Sports Quest Complete!</h2>
+      <div class="result-rank" id="result-rank-title">🏆 Gold Medal Sports Champion!</div>
+
+      <div class="score-circle">
+        <div class="score-number" id="result-score-num">20/20</div>
+        <div class="score-label" id="result-score-pct">100% Score</div>
+      </div>
+
+      <div class="skill-stats-grid" id="skill-breakdown-grid">
+        <!-- Breakdown cards injected by JS -->
+      </div>
+
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-action btn-check" id="btn-restart-quest">🔄 Play Sports Quest Again</button>
+        <button class="btn-action btn-nav" id="btn-review-all">📋 Review All Sports</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Map Modal -->
+  <div class="modal-overlay" id="quest-map-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>⚽</span>
+          <span>Sports Champions Checkpoints</span>
+        </div>
+        <button class="btn-close-modal" id="btn-close-modal">✕</button>
+      </div>
+      <div class="grid-checkpoints" id="grid-checkpoints">
+        <!-- 20 Checkpoint Grid Items -->
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #64748b; flex-wrap: wrap; gap: 8px;">
+        <div>🟢 Correct</div>
+        <div>🔴 Needs Review</div>
+        <div>🟠 Skipped</div>
+        <div>🔵 Current</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Embedded Questions Data
+    const questQuestions = [{"id": 1, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. You hold this object in your hand to hit a small yellow ball over the net in a game of tennis. What is it?", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"courtBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#eff6ff\"/>\n      <stop offset=\"100%\" stop-color=\"#dbeafe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#courtBg)\"/>\n  <!-- Green tennis court floor -->\n  <rect x=\"0\" y=\"180\" width=\"400\" height=\"60\" fill=\"#22c55e\"/>\n  <line x1=\"0\" y1=\"180\" x2=\"400\" y2=\"180\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <!-- Tennis Racket -->\n  <g transform=\"translate(140, 40)\">\n    <!-- Racket Oval Frame -->\n    <ellipse cx=\"60\" cy=\"55\" rx=\"42\" ry=\"52\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"6\"/>\n    <!-- String Mesh -->\n    <g stroke=\"#93c5fd\" stroke-width=\"1.5\">\n      <line x1=\"32\" y1=\"30\" x2=\"32\" y2=\"80\"/>\n      <line x1=\"46\" y1=\"15\" x2=\"46\" y2=\"95\"/>\n      <line x1=\"60\" y1=\"8\" x2=\"60\" y2=\"102\"/>\n      <line x1=\"74\" y1=\"15\" x2=\"74\" y2=\"95\"/>\n      <line x1=\"88\" y1=\"30\" x2=\"88\" y2=\"80\"/>\n      <line x1=\"25\" y1=\"40\" x2=\"95\" y2=\"40\"/>\n      <line x1=\"20\" y1=\"55\" x2=\"100\" y2=\"55\"/>\n      <line x1=\"25\" y1=\"70\" x2=\"95\" y2=\"70\"/>\n    </g>\n    <!-- Racket Handle -->\n    <path d=\"M60,107 L60,175\" stroke=\"#ef4444\" stroke-width=\"12\" stroke-linecap=\"round\"/>\n    <rect x=\"54\" y=\"130\" width=\"12\" height=\"40\" rx=\"3\" fill=\"#1e293b\"/>\n  </g>\n  <!-- Tennis Ball -->\n  <g transform=\"translate(265, 145)\">\n    <circle cx=\"0\" cy=\"0\" r=\"18\" fill=\"#facc15\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <path d=\"M-12,-12 Q-2,0 -12,12\" stroke=\"#ffffff\" stroke-width=\"2.5\" fill=\"none\"/>\n    <path d=\"M12,-12 Q2,0 12,12\" stroke=\"#ffffff\" stroke-width=\"2.5\" fill=\"none\"/>\n  </g>\n</svg>", "options": ["A tennis racket", "A toothbrush", "A wooden spoon", "A radio"], "correctIndex": 0, "explanation": "Đáp án đúng là **A tennis racket** (vợt đánh quần vợt/tennis). Bạn dùng vợt cầm trên tay để đánh quả bóng màu vàng qua lưới ('hit a small yellow ball over the net in a game of tennis'). Toothbrush = bàn chải đánh răng; wooden spoon = thìa gỗ; radio = đài phát thanh."}, {"id": 2, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 16: Let's do some sport!", "question": "Listen to the sports story! Which sport is Ben doing at the sports center today?", "audioScript": "It is Saturday morning. Ben is at the sports center with his father. He is not playing football or basketball today. Ben is wearing his blue swimming goggles and swimming in the cool blue pool!", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"poolSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#e0f2fe\"/>\n      <stop offset=\"100%\" stop-color=\"#bae6fd\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#poolSky)\"/>\n  <!-- Swimming pool water -->\n  <rect x=\"30\" y=\"120\" width=\"340\" height=\"95\" rx=\"14\" fill=\"#0284c7\" stroke=\"#0369a1\" stroke-width=\"3\"/>\n  <!-- Pool lane lines & ripples -->\n  <path d=\"M40,150 Q120,140 200,150 Q280,160 360,150\" stroke=\"#38bdf8\" stroke-width=\"3\" fill=\"none\"/>\n  <path d=\"M40,180 Q120,170 200,180 Q280,190 360,180\" stroke=\"#38bdf8\" stroke-width=\"3\" fill=\"none\"/>\n  <!-- Ben swimming -->\n  <g transform=\"translate(190, 135)\">\n    <!-- Head with swimming goggles -->\n    <circle cx=\"0\" cy=\"0\" r=\"14\" fill=\"#fed7aa\"/>\n    <rect x=\"-10\" y=\"-4\" width=\"20\" height=\"8\" rx=\"3\" fill=\"#3b82f6\"/>\n    <circle cx=\"-4\" cy=\"0\" r=\"3\" fill=\"#ffffff\"/>\n    <circle cx=\"4\" cy=\"0\" r=\"3\" fill=\"#ffffff\"/>\n    <!-- Water splashes -->\n    <path d=\"M-18,10 Q-10,2 -2,10\" stroke=\"#ffffff\" stroke-width=\"2\" fill=\"none\"/>\n    <path d=\"M2,10 Q10,2 18,10\" stroke=\"#ffffff\" stroke-width=\"2\" fill=\"none\"/>\n  </g>\n  <text x=\"200\" y=\"55\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#0369a1\">At the Sports Center Pool</text>\n</svg>", "options": ["Playing football", "Swimming in the pool", "Riding a horse", "Playing tennis"], "correctIndex": 1, "explanation": "Đáp án đúng là **Swimming in the pool** (Bơi lội trong hồ bơi). Trong đoạn nghe nêu rõ: 'Ben is wearing his blue swimming goggles and swimming in the cool blue pool!'."}, {"id": 3, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 16: Let's do some sport!", "question": "In football, players ______ the ball with their feet, but in basketball, they ______ the ball with their hands.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Left: Football (kick) -->\n  <g transform=\"translate(100, 100)\">\n    <circle cx=\"0\" cy=\"0\" r=\"36\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"3\"/>\n    <polygon points=\"0,-15 14,-5 9,12 -9,12 -14,-5\" fill=\"#0f172a\"/>\n    <text x=\"0\" y=\"65\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#15803d\">Football: feet</text>\n  </g>\n  <!-- Right: Basketball (bounce/throw) -->\n  <g transform=\"translate(300, 100)\">\n    <circle cx=\"0\" cy=\"0\" r=\"36\" fill=\"#ea580c\" stroke=\"#9a3412\" stroke-width=\"3\"/>\n    <line x1=\"-36\" y1=\"0\" x2=\"36\" y2=\"0\" stroke=\"#0f172a\" stroke-width=\"2.5\"/>\n    <path d=\"M0,-36 Q-18,0 0,36\" stroke=\"#0f172a\" stroke-width=\"2.5\" fill=\"none\"/>\n    <path d=\"M0,-36 Q18,0 0,36\" stroke=\"#0f172a\" stroke-width=\"2.5\" fill=\"none\"/>\n    <text x=\"0\" y=\"65\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#ea580c\">Basketball: hands</text>\n  </g>\n</svg>", "options": ["kick / throw", "draw / write", "wear / sing", "swim / sail"], "correctIndex": 0, "explanation": "Đáp án đúng là **kick / throw** (sút / ném). Trong bóng đá, cầu thủ dùng chân để sút bóng ('kick the ball with their feet'), còn trong bóng rổ thì dùng tay để ném hoặc chuyền bóng ('throw the ball with their hands')."}, {"id": 4, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the basketball game story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"courtGymBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fff7ed\"/>\n      <stop offset=\"100%\" stop-color=\"#fed7aa\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#cookBakeBg)\" fill=\"#fed7aa\" rx=\"16\"/>\n  <!-- Basketball Backboard & Hoop -->\n  <g transform=\"translate(280, 40)\">\n    <rect x=\"0\" y=\"0\" width=\"70\" height=\"55\" rx=\"3\" fill=\"#ffffff\" stroke=\"#ea580c\" stroke-width=\"3\"/>\n    <rect x=\"20\" y=\"25\" width=\"30\" height=\"22\" fill=\"none\" stroke=\"#ea580c\" stroke-width=\"2\"/>\n    <!-- Orange Rim -->\n    <ellipse cx=\"35\" cy=\"50\" rx=\"22\" ry=\"6\" fill=\"none\" stroke=\"#ea580c\" stroke-width=\"4\"/>\n    <!-- Net -->\n    <path d=\"M15,50 L20,75 L50,75 L55,50\" stroke=\"#ffffff\" stroke-width=\"2\" fill=\"none\"/>\n    <line x1=\"25\" y1=\"50\" x2=\"45\" y2=\"75\" stroke=\"#ffffff\" stroke-width=\"1.5\"/>\n    <line x1=\"45\" y1=\"50\" x2=\"25\" y2=\"75\" stroke=\"#ffffff\" stroke-width=\"1.5\"/>\n  </g>\n  <!-- Orange basketball flying into net -->\n  <circle cx=\"270\" cy=\"55\" r=\"14\" fill=\"#ea580c\" stroke=\"#9a3412\" stroke-width=\"2\"/>\n  <!-- Happy boy shooting -->\n  <g transform=\"translate(120, 130)\">\n    <circle cx=\"0\" cy=\"-25\" r=\"14\" fill=\"#fed7aa\"/>\n    <rect x=\"-10\" y=\"-10\" width=\"20\" height=\"35\" rx=\"4\" fill=\"#2563eb\"/>\n    <!-- Raised hands -->\n    <line x1=\"-10\" y1=\"-5\" x2=\"15\" y2=\"-30\" stroke=\"#2563eb\" stroke-width=\"5\"/>\n  </g>\n</svg>", "sentences": ["Next, Tom bounced the orange basketball fast down the sports hall.", "Finally, the ball dropped through the net and all his friends cheered!", "First, Tom ran onto the wooden basketball court with his team.", "Then, he jumped high and threw the ball straight toward the hoop."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự trận đấu bóng rổ: 1. Đầu tiên, Tom chạy vào sân bóng rổ cùng đội của mình (First, Tom ran onto the wooden basketball court...) -> 2. Tiếp theo, Tom đập quả bóng rổ màu cam dẫn bóng nhanh dọc sàn đấu (Next, Tom bounced the orange basketball...) -> 3. Sau đó, bạn bật nhảy cao ném bóng về phía rổ (Then, he jumped high and threw the ball...) -> 4. Cuối cùng, bóng lọt qua rổ và cả đội reo hò (Finally, the ball dropped through the net...)."}, {"id": 5, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 16: Let's do some sport!", "question": "Read the story below. Is the sentence TRUE or FALSE?\n\n\"On sunny afternoons, Daisy and her sister love playing badminton in their green garden. Daisy hits the small white shuttlecock over the net with her yellow racket. Her sister catches it and hits it back. They play for an hour until dinner time.\"\n\nSentence: Daisy and her sister play badminton in their garden.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Garden grass -->\n  <rect x=\"0\" y=\"160\" width=\"400\" height=\"60\" fill=\"#22c55e\"/>\n  <!-- Badminton Net -->\n  <line x1=\"200\" y1=\"80\" x2=\"200\" y2=\"180\" stroke=\"#475569\" stroke-width=\"4\"/>\n  <rect x=\"198\" y=\"90\" width=\"4\" height=\"60\" fill=\"#ffffff\"/>\n  <!-- White Shuttlecock in the air -->\n  <g transform=\"translate(170, 70)\">\n    <polygon points=\"0,0 20,-10 20,10\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"1.5\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f87171\"/>\n  </g>\n  <text x=\"200\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#15803d\">Badminton in the Garden</text>\n</svg>", "options": ["True", "False"], "correctIndex": 0, "explanation": "Đáp án đúng là **True** (Đúng). Trong bài đọc nêu rõ: 'Daisy and her sister love playing badminton in their green garden' (Daisy và em gái thích chơi cầu lông trong khu vườn xanh mát)."}, {"id": 6, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 16: Let's do some sport!", "question": "Listen to the park audio. Which picture shows what sport Alex is doing?", "audioScript": "Look across the sunny park! Alex is wearing a green safety helmet. He is riding his fast skateboard along the stone path. He is moving very quickly and waving to his friends!", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#eff6ff\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#3b82f6\" opacity=\"0.2\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#1d4ed8\">🎧 Listen carefully to choose Alex's sport!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Riding a skateboard with a green helmet", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#dbeafe\"/>\n  <!-- Boy on skateboard -->\n  <circle cx=\"75\" cy=\"30\" r=\"10\" fill=\"#fed7aa\"/>\n  <!-- Green helmet -->\n  <path d=\"M65,30 C65,18 85,18 85,30 Z\" fill=\"#16a34a\"/>\n  <rect x=\"68\" y=\"40\" width=\"14\" height=\"26\" rx=\"3\" fill=\"#ef4444\"/>\n  <!-- Legs -->\n  <line x1=\"70\" y1=\"66\" x2=\"62\" y2=\"88\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n  <line x1=\"80\" y1=\"66\" x2=\"88\" y2=\"88\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n  <!-- Skateboard -->\n  <rect x=\"45\" y=\"88\" width=\"60\" height=\"7\" rx=\"3.5\" fill=\"#f59e0b\"/>\n  <circle cx=\"55\" cy=\"98\" r=\"4\" fill=\"#0f172a\"/>\n  <circle cx=\"95\" cy=\"98\" r=\"4\" fill=\"#0f172a\"/>\n</svg>"}, {"label": "Swimming with goggles in a pool", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#e0f2fe\"/>\n  <rect x=\"20\" y=\"60\" width=\"120\" height=\"45\" rx=\"6\" fill=\"#0284c7\"/>\n  <circle cx=\"70\" cy=\"55\" r=\"10\" fill=\"#fed7aa\"/>\n  <rect x=\"63\" y=\"52\" width=\"14\" height=\"6\" fill=\"#2563eb\"/>\n</svg>"}, {"label": "Playing tennis with a racket", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fef3c7\"/>\n  <ellipse cx=\"65\" cy=\"45\" rx=\"14\" ry=\"18\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"3\"/>\n  <line x1=\"65\" y1=\"63\" x2=\"65\" y2=\"90\" stroke=\"#ef4444\" stroke-width=\"4\"/>\n  <circle cx=\"105\" cy=\"50\" r=\"9\" fill=\"#facc15\"/>\n</svg>"}, {"label": "Kicking a soccer ball", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#dcfce7\"/>\n  <circle cx=\"60\" cy=\"35\" r=\"10\" fill=\"#fed7aa\"/>\n  <rect x=\"52\" y=\"45\" width=\"16\" height=\"26\" fill=\"#15803d\"/>\n  <circle cx=\"105\" cy=\"85\" r=\"13\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"2\"/>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Riding a skateboard with a green helmet** (Trượt ván đội mũ bảo hiểm xanh lá). Trong bài nghe nói rõ: 'Alex is wearing a green safety helmet. He is riding his fast skateboard along the stone path'."}, {"id": 7, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. In this sport, players use a wooden bat to hit a small hard ball, and then run around four bases. What sport is it?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"baseGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fffbeb\"/>\n      <stop offset=\"100%\" stop-color=\"#fef3c7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#baseGrad)\"/>\n  <!-- Baseball Bat -->\n  <g transform=\"translate(110, 50)\">\n    <!-- Wooden Bat Angled -->\n    <path d=\"M20,130 L160,20 C166,15 174,23 169,29 L40,140 Z\" fill=\"#d97706\" stroke=\"#92400e\" stroke-width=\"3\"/>\n    <!-- Bat grip handle -->\n    <path d=\"M20,130 L45,110 L52,118 L28,138 Z\" fill=\"#1e293b\"/>\n  </g>\n  <!-- Baseball Ball with red stitches -->\n  <g transform=\"translate(260, 135)\">\n    <circle cx=\"0\" cy=\"0\" r=\"26\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n    <path d=\"M-14,-14 Q-3,0 -14,14\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\"/>\n    <path d=\"M14,-14 Q3,0 14,14\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\"/>\n  </g>\n  <text x=\"200\" y=\"200\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#78350f\">Bat and Ball Game</text>\n</svg>", "options": ["Baseball", "Swimming", "Sailing", "Running"], "correctIndex": 0, "explanation": "Đáp án đúng là **Baseball** (bóng chày). Người chơi dùng gậy gỗ để đánh quả bóng cứng ('use a wooden bat to hit a small hard ball'). Swimming = bơi lội; sailing = chèo thuyền buồm; running = chạy bộ."}, {"id": 8, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 16: Let's do some sport!", "question": "Anna loves water sports. She ______ swim very fast, but she ______ ride a horse.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Left: Swimming checkmark (can) -->\n  <g transform=\"translate(100, 110)\">\n    <rect x=\"-60\" y=\"-60\" width=\"120\" height=\"120\" rx=\"10\" fill=\"#dcfce7\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"14\" fill=\"#0284c7\"/>\n    <path d=\"M-20,-10 L-5,12 L24,-20\" stroke=\"#16a34a\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <text x=\"0\" y=\"48\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#15803d\">SWIM: YES</text>\n  </g>\n  <!-- Right: Horse riding cross (can't) -->\n  <g transform=\"translate(300, 110)\">\n    <rect x=\"-60\" y=\"-60\" width=\"120\" height=\"120\" rx=\"10\" fill=\"#fee2e2\" stroke=\"#ef4444\" stroke-width=\"2\"/>\n    <line x1=\"-30\" y1=\"-30\" x2=\"30\" y2=\"30\" stroke=\"#ef4444\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <line x1=\"30\" y1=\"-30\" x2=\"-30\" y2=\"30\" stroke=\"#ef4444\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <text x=\"0\" y=\"48\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">HORSE: NO</text>\n  </g>\n</svg>", "options": ["can / can't", "is / isn't", "are / aren't", "do / doesn't"], "correctIndex": 0, "explanation": "Đáp án đúng là **can / can't** (có thể / không thể). Dùng 'can' để diễn đạt khả năng biết bơi rất nhanh ('can swim very fast') và 'can't' để diễn tả việc không biết cưỡi ngựa ('can't ride a horse')."}, {"id": 9, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the new bicycle riding story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"bikeParkBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#86efac\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#bikeParkBg)\"/>\n  <!-- Red Bicycle in Park -->\n  <g transform=\"translate(190, 120)\">\n    <!-- Wheels -->\n    <circle cx=\"-50\" cy=\"30\" r=\"26\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"4\"/>\n    <circle cx=\"50\" cy=\"30\" r=\"26\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"4\"/>\n    <!-- Red Frame -->\n    <polygon points=\"-50,30 0,30 25,0 -25,0\" fill=\"none\" stroke=\"#ef4444\" stroke-width=\"5\"/>\n    <line x1=\"0\" y1=\"30\" x2=\"50\" y2=\"30\" stroke=\"#ef4444\" stroke-width=\"4\"/>\n    <line x1=\"25\" y1=\"0\" x2=\"40\" y2=\"-15\" stroke=\"#ef4444\" stroke-width=\"4\"/>\n    <line x1=\"30\" y1=\"-15\" x2=\"52\" y2=\"-15\" stroke=\"#0f172a\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n    <!-- Blue helmet on handlebar -->\n    <circle cx=\"36\" cy=\"-22\" r=\"10\" fill=\"#3b82f6\"/>\n  </g>\n</svg>", "sentences": ["Next, his father helped him push the pedals along the park path.", "Finally, Dan rode his red bicycle all by himself and waved to his mum!", "First, Dan put on his blue safety helmet and got on his new bike.", "Then, Dan learned how to balance carefully without stopping."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện tập đi xe đạp: 1. Đầu tiên, Dan đội mũ bảo hiểm màu xanh và ngồi lên xe mới (First, Dan put on his blue safety helmet...) -> 2. Tiếp theo, bố giúp bạn đạp bàn đạp dọc lối đi (Next, his father helped him...) -> 3. Sau đó, Dan học cách giữ thăng bằng cẩn thận (Then, Dan learned how to balance...) -> 4. Cuối cùng, Dan tự mình đạp xe và vẫy tay chào mẹ (Finally, Dan rode his red bicycle all by himself...)."}, {"id": 10, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 16: Let's do some sport!", "question": "Read the sentences and choose the best word to complete the blank:\n\n\"When children go swimming at the beach, they put on their swimsuits and swim in the cool sea ______.\"", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"seaWaterBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"100%\" stop-color=\"#0284c7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#seaWaterBg)\"/>\n  <!-- Sea waves -->\n  <path d=\"M0,80 Q50,60 100,80 Q150,100 200,80 Q250,60 300,80 Q350,100 400,80\" stroke=\"#ffffff\" stroke-width=\"3\" fill=\"none\"/>\n  <path d=\"M0,140 Q50,120 100,140 Q150,160 200,140 Q250,120 300,140 Q350,160 400,140\" stroke=\"#ffffff\" stroke-width=\"3\" fill=\"none\"/>\n  <text x=\"200\" y=\"195\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#ffffff\">Cool Blue Sea</text>\n</svg>", "options": ["water", "soup", "tea", "milk"], "correctIndex": 0, "explanation": "Đáp án đúng là **water** (nước biển - sea water). Khi đi bơi ngoài biển, các bạn nhỏ bơi trong làn nước biển mát lạnh ('swim in the cool sea water'). Soup = món súp; tea = trà; milk = sữa."}, {"id": 11, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 16: Let's do some sport!", "question": "Listen to the table tennis audio. Is the sentence TRUE or FALSE?\n\nSentence: Sam and Jack are playing table tennis with an orange ball.", "audioScript": "In the school sports room, Sam and Jack are having a fun table tennis match! They have got two green bats. They are hitting a small white ball over the little net very fast.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0f9ff\"/>\n  <!-- Green Table Tennis Table -->\n  <g transform=\"translate(100, 70)\">\n    <!-- Table Top -->\n    <rect x=\"0\" y=\"20\" width=\"200\" height=\"70\" rx=\"4\" fill=\"#15803d\" stroke=\"#166534\" stroke-width=\"3\"/>\n    <line x1=\"100\" y1=\"20\" x2=\"100\" y2=\"90\" stroke=\"#ffffff\" stroke-width=\"2\"/>\n    <!-- Net -->\n    <line x1=\"0\" y1=\"55\" x2=\"200\" y2=\"55\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-dasharray=\"4,4\"/>\n    <!-- White ping pong ball in air -->\n    <circle cx=\"85\" cy=\"40\" r=\"6\" fill=\"#ffffff\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n  </g>\n  <text x=\"200\" y=\"190\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#0369a1\">Table Tennis Match</text>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Trong bài nghe nói rõ: 'They are hitting a small white ball over the little net' (Hai bạn đánh quả bóng nhỏ màu trắng - small white ball, chứ không phải quả bóng màu cam - orange ball)."}, {"id": 12, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. In football, when you kick the ball past the goalkeeper into the big net, your team scores a ______!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"goalPitchBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#22c55e\"/>\n      <stop offset=\"100%\" stop-color=\"#15803d\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#goalPitchBg)\"/>\n  <!-- Goal Net Post -->\n  <g transform=\"translate(140, 45)\">\n    <rect x=\"0\" y=\"0\" width=\"130\" height=\"120\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"6\"/>\n    <!-- Net Grid -->\n    <line x1=\"25\" y1=\"0\" x2=\"25\" y2=\"120\" stroke=\"#e2e8f0\" stroke-width=\"1.5\" stroke-dasharray=\"4,4\"/>\n    <line x1=\"55\" y1=\"0\" x2=\"55\" y2=\"120\" stroke=\"#e2e8f0\" stroke-width=\"1.5\" stroke-dasharray=\"4,4\"/>\n    <line x1=\"85\" y1=\"0\" x2=\"85\" y2=\"120\" stroke=\"#e2e8f0\" stroke-width=\"1.5\" stroke-dasharray=\"4,4\"/>\n    <line x1=\"105\" y1=\"0\" x2=\"105\" y2=\"120\" stroke=\"#e2e8f0\" stroke-width=\"1.5\" stroke-dasharray=\"4,4\"/>\n    <!-- Ball inside net -->\n    <circle cx=\"65\" cy=\"70\" r=\"15\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"2.5\"/>\n  </g>\n  <text x=\"200\" y=\"205\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#fde047\">GOAL! ⭐</text>\n</svg>", "options": ["goal", "desk", "book", "clock"], "correctIndex": 0, "explanation": "Đáp án đúng là **goal** (bàn thắng - score a goal). Trong bóng đá, sút bóng qua thủ môn vào lưới thì đội của bạn ghi được một bàn thắng ('scores a goal'). Desk = cái bàn; book = quyển sách; clock = đồng hồ."}, {"id": 13, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 16: Let's do some sport!", "question": "Look! The children ______ football on the school field right now.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Two children playing football -->\n  <g transform=\"translate(130, 100)\">\n    <circle cx=\"0\" cy=\"-20\" r=\"10\" fill=\"#fed7aa\"/>\n    <rect x=\"-8\" y=\"-10\" width=\"16\" height=\"26\" fill=\"#3b82f6\"/>\n    <!-- Kicking leg -->\n    <line x1=\"0\" y1=\"16\" x2=\"20\" y2=\"28\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n  </g>\n  <g transform=\"translate(250, 100)\">\n    <circle cx=\"0\" cy=\"-20\" r=\"10\" fill=\"#fed7aa\"/>\n    <rect x=\"-8\" y=\"-10\" width=\"16\" height=\"26\" fill=\"#ef4444\"/>\n    <line x1=\"0\" y1=\"16\" x2=\"-15\" y2=\"28\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n  </g>\n  <!-- Ball in center -->\n  <circle cx=\"190\" cy=\"120\" r=\"12\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"2\"/>\n  <text x=\"200\" y=\"180\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#15803d\">Happening right now (are playing)</text>\n</svg>", "options": ["are playing", "plays", "played", "is playing"], "correctIndex": 0, "explanation": "Đáp án đúng là **are playing**. Dấu hiệu 'Look!' và 'right now' cho biết hành động đang diễn ra nên dùng thì Hiện tại tiếp diễn (Present Continuous). Chủ ngữ 'The children' là danh từ số nhiều nên đi với **are playing**."}, {"id": 14, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the sports day medal story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"sportsMedalBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#eff6ff\"/>\n      <stop offset=\"100%\" stop-color=\"#dbeafe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#sportsMedalBg)\"/>\n  <!-- Podium Stand -->\n  <g transform=\"translate(130, 95)\">\n    <!-- 2nd place -->\n    <rect x=\"0\" y=\"30\" width=\"45\" height=\"55\" fill=\"#94a3b8\"/>\n    <text x=\"22\" y=\"60\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#ffffff\">2</text>\n    <!-- 1st place center -->\n    <rect x=\"45\" y=\"10\" width=\"50\" height=\"75\" fill=\"#facc15\"/>\n    <text x=\"70\" y=\"50\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"bold\" fill=\"#78350f\">1</text>\n    <!-- 3rd place -->\n    <rect x=\"95\" y=\"45\" width=\"45\" height=\"40\" fill=\"#d97706\"/>\n    <text x=\"117\" y=\"70\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#ffffff\">3</text>\n  </g>\n  <!-- Gold medal shining -->\n  <g transform=\"translate(200, 60)\">\n    <circle cx=\"0\" cy=\"0\" r=\"14\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <polygon points=\"-8,-20 0,0 8,-20\" fill=\"#ef4444\"/>\n  </g>\n</svg>", "sentences": ["Next, Toby ran faster than all the other runners.", "Finally, Toby stood on the first place podium and received his shiny gold medal!", "On school sports day, Toby joined the big running race.", "Then, he crossed the red finish line with a big smile."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện giành huy chương vàng: 1. Vào ngày hội thể thao trường, Toby tham gia cuộc thi chạy (On school sports day, Toby joined...) -> 2. Tiếp theo, Toby chạy nhanh hơn tất cả các bạn khác (Next, Toby ran faster...) -> 3. Sau đó, bạn vượt qua vạch đích màu đỏ với nụ cười rạng rỡ (Then, he crossed the red finish line...) -> 4. Cuối cùng, Toby đứng trên bục số 1 và nhận huy chương vàng lấp lánh (Finally, Toby stood on the first place podium...)."}, {"id": 15, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 16: Let's do some sport!", "question": "Read the story. Answer the question below:\n\n\"Nick loves weekends because he plays sports with his brother. Every Saturday morning, Nick puts on his white cap and goes to the sports field to play baseball. He is the best batter in his team!\"\n\nWhat sport does Nick play on Saturday mornings?", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#fefce8\"/>\n  <!-- Nick with Baseball Cap & Bat -->\n  <g transform=\"translate(200, 95)\">\n    <!-- Head with white cap -->\n    <circle cx=\"0\" cy=\"-20\" r=\"15\" fill=\"#fed7aa\"/>\n    <path d=\"M-15,-22 C-15,-35 15,-35 15,-22 Z\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n    <rect x=\"-18\" y=\"-23\" width=\"12\" height=\"4\" rx=\"2\" fill=\"#ffffff\"/>\n    <rect x=\"-10\" y=\"-5\" width=\"20\" height=\"35\" fill=\"#3b82f6\"/>\n    <!-- Holding bat -->\n    <line x1=\"10\" y1=\"5\" x2=\"35\" y2=\"-25\" stroke=\"#ca8a04\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  </g>\n  <text x=\"200\" y=\"185\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#b45309\">Nick's Saturday Sport</text>\n</svg>", "options": ["Baseball", "Swimming", "Tennis", "Skiing"], "correctIndex": 0, "explanation": "Đáp án đúng là **Baseball** (Bóng chày). Đoạn văn kể rõ: 'Every Saturday morning, Nick puts on his white cap and goes to the sports field to play baseball'."}, {"id": 16, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 16: Let's do some sport!", "question": "Listen to the weekend audio! Which picture shows what sport Emma is doing with her father?", "audioScript": "On Sunday afternoons, Emma and her father ride their red bicycles through the countryside. They wear safety helmets and ride along the quiet paths next to the river.", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#ecfdf5\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#10b981\" opacity=\"0.2\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#047857\">🎧 Listen carefully to choose Emma's sport!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Riding bicycles along a path with helmets", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#dcfce7\"/>\n  <!-- Bicycle -->\n  <circle cx=\"45\" cy=\"80\" r=\"16\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"3\"/>\n  <circle cx=\"115\" cy=\"80\" r=\"16\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"3\"/>\n  <polygon points=\"45,80 80,80 95,60 60,60\" fill=\"none\" stroke=\"#ef4444\" stroke-width=\"3\"/>\n  <!-- Rider -->\n  <circle cx=\"75\" cy=\"40\" r=\"8\" fill=\"#fed7aa\"/>\n  <path d=\"M68,40 C68,30 82,30 82,40 Z\" fill=\"#3b82f6\"/>\n</svg>"}, {"label": "Ice-skating on frozen ice", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#e0f2fe\"/>\n  <circle cx=\"80\" cy=\"40\" r=\"10\" fill=\"#fed7aa\"/>\n  <rect x=\"74\" y=\"50\" width=\"12\" height=\"24\" fill=\"#ec4899\"/>\n  <!-- Ice skates -->\n  <line x1=\"70\" y1=\"85\" x2=\"90\" y2=\"85\" stroke=\"#94a3b8\" stroke-width=\"3\"/>\n</svg>"}, {"label": "Playing badminton with rackets", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fef3c7\"/>\n  <line x1=\"40\" y1=\"80\" x2=\"60\" y2=\"40\" stroke=\"#f59e0b\" stroke-width=\"3\"/>\n  <circle cx=\"65\" cy=\"35\" r=\"8\" fill=\"none\" stroke=\"#f59e0b\" stroke-width=\"2\"/>\n  <circle cx=\"105\" cy=\"35\" r=\"5\" fill=\"#ffffff\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n</svg>"}, {"label": "Hitting a baseball with a bat", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#f1f5f9\"/>\n  <line x1=\"50\" y1=\"80\" x2=\"95\" y2=\"35\" stroke=\"#ca8a04\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n  <circle cx=\"115\" cy=\"35\" r=\"8\" fill=\"#ffffff\" stroke=\"#ef4444\" stroke-width=\"2\"/>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Riding bicycles along a path with helmets** (Đạp xe đạp có đội mũ bảo hiểm). Trong bài nghe nói rõ: 'Emma and her father ride their red bicycles through the countryside. They wear safety helmets'."}, {"id": 17, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. In this action, you open your hands to take and hold a ball that is flying to you in the air. What action is it?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Two open hands catching red ball -->\n  <g transform=\"translate(200, 120)\">\n    <!-- Ball flying with motion lines -->\n    <path d=\"M-90,-50 Q-30,-20 0,0\" stroke=\"#38bdf8\" stroke-width=\"2.5\" stroke-dasharray=\"4,4\" fill=\"none\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"18\" fill=\"#ef4444\" stroke=\"#b91c1c\" stroke-width=\"2.5\"/>\n    <!-- Left Hand -->\n    <path d=\"M-28,15 Q-20,0 -8,-5 Q-15,18 -20,25 Z\" fill=\"#fed7aa\" stroke=\"#f59e0b\" stroke-width=\"2\"/>\n    <!-- Right Hand -->\n    <path d=\"M28,15 Q20,0 8,-5 Q15,18 20,25 Z\" fill=\"#fed7aa\" stroke=\"#f59e0b\" stroke-width=\"2\"/>\n  </g>\n  <text x=\"200\" y=\"195\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#0284c7\">Hold the ball with hands</text>\n</svg>", "options": ["catch", "kick", "sleep", "read"], "correctIndex": 0, "explanation": "Đáp án đúng là **catch** (bắt bóng / đón lấy). Hành động mở hai bàn tay để đón và giữ lấy quả bóng đang bay tới là bắt bóng ('take and hold a ball that is flying to you in the air'). Kick = sút bóng; sleep = ngủ; read = đọc sách."}, {"id": 18, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 16: Let's do some sport!", "question": "Choose the correct question to ask a friend about their favorite sport:", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#fefce8\"/>\n  <circle cx=\"200\" cy=\"90\" r=\"46\" fill=\"#fde047\" opacity=\"0.3\"/>\n  <text x=\"200\" y=\"115\" text-anchor=\"middle\" font-size=\"62\" font-weight=\"bold\" fill=\"#ca8a04\">?</text>\n  <!-- Sports icons -->\n  <circle cx=\"80\" cy=\"95\" r=\"16\" fill=\"#ffffff\" stroke=\"#0f172a\" stroke-width=\"2\"/>\n  <circle cx=\"320\" cy=\"95\" r=\"16\" fill=\"#ea580c\"/>\n</svg>", "options": ["Which sport do you like playing the most?", "Which sport are you like play the most?", "Which sport does you like play the most?", "Which sport you do like play the most?"], "correctIndex": 0, "explanation": "Đáp án đúng là **Which sport do you like playing the most?**. Thì Hiện tại đơn hỏi với chủ ngữ 'you' dùng trợ động từ 'do' và động từ nguyên mẫu 'like'. Sau 'like' đi cùng V-ing ('playing')."}, {"id": 19, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 16: Let's do some sport!", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the exciting running race story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"raceTrackBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#eff6ff\"/>\n      <stop offset=\"100%\" stop-color=\"#fed7aa\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#raceTrackBg)\"/>\n  <!-- Running Track red lanes -->\n  <rect x=\"0\" y=\"130\" width=\"400\" height=\"100\" fill=\"#f87171\"/>\n  <line x1=\"0\" y1=\"165\" x2=\"400\" y2=\"165\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-dasharray=\"10,10\"/>\n  <line x1=\"0\" y1=\"200\" x2=\"400\" y2=\"200\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-dasharray=\"10,10\"/>\n  <!-- Red finish line ribbon -->\n  <line x1=\"320\" y1=\"120\" x2=\"320\" y2=\"220\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <!-- Runner boy -->\n  <g transform=\"translate(180, 125)\">\n    <circle cx=\"0\" cy=\"-22\" r=\"10\" fill=\"#fed7aa\"/>\n    <rect x=\"-8\" y=\"-12\" width=\"16\" height=\"26\" fill=\"#2563eb\"/>\n    <line x1=\"0\" y1=\"14\" x2=\"16\" y2=\"35\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n    <line x1=\"0\" y1=\"14\" x2=\"-14\" y2=\"30\" stroke=\"#1e293b\" stroke-width=\"4\"/>\n  </g>\n</svg>", "sentences": ["Next, the teacher blew the whistle and shouted: 'Go!'", "Finally, Lucy won first place and received a bright red ribbon!", "First, the students stood ready at the starting line.", "Then, all the children ran as fast as they could down the track."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự cuộc thi chạy: 1. Đầu tiên, các học sinh đứng sẵn sàng ở vạch xuất phát (First, the students stood ready...) -> 2. Tiếp theo, thầy giáo thổi còi và hô 'Chạy!' (Next, the teacher blew the whistle...) -> 3. Sau đó, tất cả các bạn chạy thật nhanh trên đường chạy (Then, all the children ran...) -> 4. Cuối cùng, Lucy về đích thứ nhất và nhận dải ruy-băng đỏ (Finally, Lucy won first place...)."}, {"id": 20, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 16: Let's do some sport!", "question": "Read the story. Is the sentence TRUE or FALSE?\n\n\"In winter, the weather is cold and the lake turns into thick ice. Sam and his friends put on warm jackets, thick gloves, and silver ice skates. They glide smoothly on the ice together!\"\n\nSentence: Sam and his friends skate on the ice in winter.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"iceLakeBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#e0f2fe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#iceLakeBg)\"/>\n  <!-- Smooth Frozen Ice Lake -->\n  <ellipse cx=\"200\" cy=\"150\" rx=\"160\" ry=\"50\" fill=\"#ffffff\" stroke=\"#93c5fd\" stroke-width=\"3\"/>\n  <!-- Skater shoes marks -->\n  <path d=\"M120,150 Q160,135 200,150 Q240,165 280,150\" stroke=\"#93c5fd\" stroke-width=\"2.5\" fill=\"none\"/>\n  <!-- Snowflakes -->\n  <circle cx=\"80\" cy=\"40\" r=\"3\" fill=\"#ffffff\"/>\n  <circle cx=\"320\" cy=\"50\" r=\"3\" fill=\"#ffffff\"/>\n  <text x=\"200\" y=\"55\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#0369a1\">Ice Skating on the Lake</text>\n</svg>", "options": ["True", "False"], "correctIndex": 0, "explanation": "Đáp án đúng là **True** (Đúng). Trong bài đọc kể rõ: 'In winter... Sam and his friends put on... silver ice skates. They glide smoothly on the ice together!' (Vào mùa đông, Sam và các bạn trượt băng trên mặt hồ đóng băng)."}];
+
+    // State
+    let currentIndex = 0;
+    let userAnswers = {}; // { qId: { selected, isCorrect, skipped } }
+    let soundEnabled = true;
+    let storyCurrentOrder = [];
+
+    // Synthesizer Audio Context (100% Offline)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (!soundEnabled || !audioCtx) return;
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      const now = audioCtx.currentTime;
+
+      if (type === "correct") {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.28);
+        });
+      } else if (type === "incorrect") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.3);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.38);
+      } else if (type === "click") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(600, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } else if (type === "fanfare") {
+        const notes = [440, 554.37, 659.25, 880];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.45);
+        });
+      }
+    }
+
+    // Web Speech API for Listening Questions
+    let activeSpeech = null;
+    let isSpeaking = false;
+
+    function playTTS(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Web Speech API is not supported on this browser.");
+        return;
+      }
+
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setSpeakingState(false);
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      utterance.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoices = voices.filter(v => 
+        v.lang === "en-US" && (v.name.includes("Natural") || v.name.includes("Studio") || v.name.includes("Samantha") || v.name.includes("Google US English") || v.name.includes("Zira") || v.name.includes("Jenny"))
+      );
+      if (preferredVoices.length > 0) {
+        utterance.voice = preferredVoices[0];
+      } else {
+        const anyUS = voices.find(v => v.lang === "en-US");
+        if (anyUS) utterance.voice = anyUS;
+      }
+
+      utterance.onstart = () => {
+        setSpeakingState(true);
+      };
+      utterance.onend = () => {
+        setSpeakingState(false);
+      };
+      utterance.onerror = () => {
+        setSpeakingState(false);
+      };
+
+      activeSpeech = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function setSpeakingState(speaking) {
+      isSpeaking = speaking;
+      const btn = document.getElementById("btn-audio-play");
+      const wave = document.getElementById("audio-wave");
+      const btnText = document.getElementById("audio-btn-text");
+      const btnIcon = document.getElementById("audio-btn-icon");
+      if (speaking) {
+        btn.classList.add("speaking");
+        wave.classList.add("active");
+        btnText.textContent = "Speaking... (Click to Pause)";
+        btnIcon.textContent = "⏸️";
+      } else {
+        btn.classList.remove("speaking");
+        wave.classList.remove("active");
+        btnText.textContent = "Listen to Story";
+        btnIcon.textContent = "▶️";
+      }
+    }
+
+    // Initialize Trail Track
+    function initTrailTrack() {
+      const track = document.getElementById("trail-track");
+      track.innerHTML = "";
+      questQuestions.forEach((q, idx) => {
+        const node = document.createElement("div");
+        node.className = "trail-node";
+        node.id = `trail-node-${idx}`;
+        node.textContent = idx + 1;
+        node.title = `${q.category} - Checkpoint ${idx + 1}`;
+        node.addEventListener("click", () => {
+          playSound("click");
+          goToQuestion(idx);
+        });
+        track.appendChild(node);
+      });
+      updateTrailUI();
+    }
+
+    function updateTrailUI() {
+      questQuestions.forEach((q, idx) => {
+        const node = document.getElementById(`trail-node-${idx}`);
+        if (!node) return;
+        node.className = "trail-node";
+        if (idx === currentIndex) {
+          node.classList.add("current");
+        }
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) {
+            node.classList.add("skipped");
+          } else if (userAnswers[q.id].isCorrect) {
+            node.classList.add("correct");
+          } else {
+            node.classList.add("incorrect");
+          }
+        }
+      });
+
+      document.getElementById("trail-progress-text").textContent = `Checkpoint ${currentIndex + 1} / ${questQuestions.length}`;
+      
+      const activeNode = document.getElementById(`trail-node-${currentIndex}`);
+      if (activeNode) {
+        activeNode.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+
+      let correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      document.getElementById("header-gem-score").textContent = correctCount;
+    }
+
+    // Render Question
+    function renderQuestion(index) {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      setSpeakingState(false);
+
+      const q = questQuestions[index];
+      currentIndex = index;
+
+      document.getElementById("q-category-badge").textContent = q.category;
+      document.getElementById("q-unit-badge").textContent = q.unit;
+      document.getElementById("q-counter").textContent = `Checkpoint ${index + 1} of ${questQuestions.length}`;
+      document.getElementById("q-prompt").textContent = q.question;
+
+      const illBox = document.getElementById("q-illustration");
+      if (q.svg) {
+        illBox.innerHTML = q.svg;
+        illBox.style.display = "flex";
+      } else {
+        illBox.style.display = "none";
+      }
+
+      const audioBox = document.getElementById("audio-player-box");
+      const transcriptBox = document.getElementById("audio-transcript-box");
+      const transcriptToggle = document.getElementById("transcript-toggle");
+      if (q.type === "listening" && q.audioScript) {
+        audioBox.style.display = "flex";
+        transcriptBox.textContent = `"${q.audioScript}"`;
+        transcriptBox.classList.remove("visible");
+        transcriptToggle.textContent = "Show Transcript";
+        document.getElementById("btn-audio-play").onclick = () => {
+          playTTS(q.audioScript);
+        };
+      } else {
+        audioBox.style.display = "none";
+      }
+
+      const optsContainer = document.getElementById("options-container");
+      const picContainer = document.getElementById("picture-options-container");
+      const storyContainer = document.getElementById("story-seq-container");
+      optsContainer.style.display = "none";
+      picContainer.style.display = "none";
+      storyContainer.style.display = "none";
+
+      const isAnswered = !!userAnswers[q.id] && !userAnswers[q.id].skipped;
+
+      if (q.type === "speaking_order") {
+        storyContainer.style.display = "flex";
+        renderStorySeq(q, isAnswered);
+      } else if (q.optionsType === "pictures") {
+        picContainer.style.display = "grid";
+        renderPictureOptions(q, isAnswered);
+      } else {
+        optsContainer.style.display = "grid";
+        renderStandardOptions(q, isAnswered);
+      }
+
+      document.getElementById("btn-prev-q").disabled = index === 0;
+      const checkBtn = document.getElementById("btn-check-q");
+      const nextBtn = document.getElementById("btn-next-q");
+      const skipBtn = document.getElementById("btn-skip-q");
+
+      if (isAnswered) {
+        checkBtn.style.display = "none";
+        nextBtn.style.display = "inline-flex";
+        skipBtn.style.display = "none";
+        showFeedback(q, userAnswers[q.id].isCorrect);
+      } else {
+        checkBtn.style.display = "inline-flex";
+        nextBtn.style.display = "none";
+        skipBtn.style.display = "inline-flex";
+        document.getElementById("feedback-panel").classList.remove("visible");
+      }
+
+      updateTrailUI();
+    }
+
+    // Render Standard Options
+    function renderStandardOptions(q, isAnswered) {
+      const container = document.getElementById("options-container");
+      container.innerHTML = "";
+      container.className = q.options.length <= 2 ? "options-grid two-cols" : "options-grid";
+
+      const letters = ["A", "B", "C", "D"];
+      q.options.forEach((optText, optIdx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        if (isAnswered) {
+          btn.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            btn.classList.add("opt-correct");
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            btn.classList.add("opt-incorrect");
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          btn.classList.add("selected");
+        }
+
+        btn.innerHTML = `
+          <div class="option-letter">${letters[optIdx]}</div>
+          <div class="option-label">${optText}</div>
+        `;
+
+        btn.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(btn);
+      });
+    }
+
+    // Render Picture Options
+    function renderPictureOptions(q, isAnswered) {
+      const container = document.getElementById("picture-options-container");
+      container.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.options.forEach((opt, optIdx) => {
+        const card = document.createElement("div");
+        card.className = "pic-option-card";
+        if (isAnswered) {
+          card.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            card.style.borderColor = "#10b981";
+            card.style.background = "#ecfdf5";
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            card.style.borderColor = "#ef4444";
+            card.style.background = "#fef2f2";
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          card.classList.add("selected");
+        }
+
+        card.innerHTML = `
+          <div class="pic-preview-box">${opt.svg}</div>
+          <div class="pic-card-label"><strong>${letters[optIdx]}.</strong> ${opt.label}</div>
+        `;
+
+        card.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".pic-option-card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(btn = card);
+      });
+    }
+
+    // Render Story Sequencing
+    function renderStorySeq(q, isAnswered) {
+      const container = document.getElementById("story-seq-container");
+      container.innerHTML = "";
+
+      if (!storyCurrentOrder || storyCurrentOrder.length !== q.sentences.length) {
+        if (userAnswers[q.id] && userAnswers[q.id].order) {
+          storyCurrentOrder = [...userAnswers[q.id].order];
+        } else {
+          storyCurrentOrder = q.sentences.map((_, i) => i);
+        }
+      }
+
+      storyCurrentOrder.forEach((sentenceIdx, rankIdx) => {
+        const item = document.createElement("div");
+        item.className = "story-card";
+        item.draggable = !isAnswered;
+
+        item.innerHTML = `
+          <div class="story-card-left">
+            <div class="story-rank">${rankIdx + 1}</div>
+            <div class="story-text">${q.sentences[sentenceIdx]}</div>
+          </div>
+          ${!isAnswered ? `
+            <div class="story-arrows">
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, -1)">▲</button>
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, 1)">▼</button>
+            </div>
+          ` : ""}
+        `;
+
+        if (!isAnswered) {
+          item.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", rankIdx);
+            item.classList.add("dragging");
+          });
+          item.addEventListener("dragend", () => {
+            item.classList.remove("dragging");
+          });
+          item.addEventListener("dragover", (e) => {
+            e.preventDefault();
+          });
+          item.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const fromRank = parseInt(e.dataTransfer.getData("text/plain"), 10);
+            const toRank = rankIdx;
+            if (fromRank !== toRank) {
+              const moved = storyCurrentOrder.splice(fromRank, 1)[0];
+              storyCurrentOrder.splice(toRank, 0, moved);
+              playSound("click");
+              renderStorySeq(q, false);
+            }
+          });
+        }
+
+        container.appendChild(item);
+      });
+    }
+
+    window.moveStoryItem = function(index, delta) {
+      const target = index + delta;
+      if (target < 0 || target >= storyCurrentOrder.length) return;
+      const temp = storyCurrentOrder[index];
+      storyCurrentOrder[index] = storyCurrentOrder[target];
+      storyCurrentOrder[target] = temp;
+      playSound("click");
+      const q = questQuestions[currentIndex];
+      renderStorySeq(q, false);
+    };
+
+    // Show Feedback Box
+    function showFeedback(q, isCorrect) {
+      const panel = document.getElementById("feedback-panel");
+      panel.className = "feedback-panel visible " + (isCorrect ? "correct-theme" : "incorrect-theme");
+      
+      const icon = document.getElementById("feedback-status-icon");
+      const statusText = document.getElementById("feedback-status-text");
+      if (isCorrect) {
+        icon.textContent = "🎉";
+        statusText.textContent = "Goal! Outstanding sports answer!";
+      } else {
+        icon.textContent = "🏅";
+        statusText.textContent = "Good try! Let's read the sports clue below!";
+      }
+
+      document.getElementById("feedback-vn-text").innerHTML = q.explanation.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    // Check Answer Handler
+    function handleCheckAnswer() {
+      const q = questQuestions[currentIndex];
+
+      if (q.type === "speaking_order") {
+        const isMatch = JSON.stringify(storyCurrentOrder) === JSON.stringify(q.correctOrder);
+        userAnswers[q.id] = {
+          order: [...storyCurrentOrder],
+          isCorrect: isMatch,
+          skipped: false
+        };
+      } else {
+        if (!userAnswers[q.id] || userAnswers[q.id].selected === undefined) {
+          alert("Please choose an answer first!");
+          return;
+        }
+        const isMatch = userAnswers[q.id].selected === q.correctIndex;
+        userAnswers[q.id].isCorrect = isMatch;
+      }
+
+      const isCorrect = userAnswers[q.id].isCorrect;
+      if (isCorrect) {
+        playSound("correct");
+        triggerConfetti();
+      } else {
+        playSound("incorrect");
+      }
+
+      renderQuestion(currentIndex);
+    }
+
+    // Skip Handler
+    function handleSkip() {
+      const q = questQuestions[currentIndex];
+      userAnswers[q.id] = { skipped: true };
+      playSound("click");
+      goToNext();
+    }
+
+    function goToNext() {
+      if (currentIndex < questQuestions.length - 1) {
+        goToQuestion(currentIndex + 1);
+      } else {
+        checkFinishQuest();
+      }
+    }
+
+    function goToQuestion(idx) {
+      renderQuestion(idx);
+    }
+
+    function checkFinishQuest() {
+      const skippedCount = Object.values(userAnswers).filter(a => a.skipped).length;
+      const unansweredCount = questQuestions.filter(q => !userAnswers[q.id]).length;
+      const incomplete = skippedCount + unansweredCount;
+
+      if (incomplete > 0) {
+        const confirmFinish = confirm(`You still have ${incomplete} question(s) skipped or unanswered! Do you want to finish the sports quest now?`);
+        if (!confirmFinish) {
+          openMapModal();
+          return;
+        }
+      }
+      showResults();
+    }
+
+    // Show Results
+    function showResults() {
+      document.getElementById("quest-card").style.display = "none";
+      const resultsScreen = document.getElementById("results-screen");
+      resultsScreen.classList.add("visible");
+
+      playSound("fanfare");
+      triggerConfetti();
+
+      const total = questQuestions.length;
+      const correct = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      const pct = Math.round((correct / total) * 100);
+
+      document.getElementById("result-score-num").textContent = `${correct}/${total}`;
+      document.getElementById("result-score-pct").textContent = `${pct}% Correct`;
+
+      let rank = "🌟 Fantastic Sports Player!";
+      if (pct >= 90) rank = "👑 Gold Medal Sports Champion!";
+      else if (pct >= 75) rank = "🏆 Master Sports Athlete!";
+      else if (pct >= 50) rank = "⚽ Active Sports Explorer!";
+      document.getElementById("result-rank-title").textContent = rank;
+
+      const skills = {
+        "Listening": { correct: 0, total: 0, icon: "🎧" },
+        "Reading & Writing": { correct: 0, total: 0, icon: "📖" },
+        "Speaking": { correct: 0, total: 0, icon: "🗣️" },
+        "Vocabulary": { correct: 0, total: 0, icon: "🔤" },
+        "Grammar": { correct: 0, total: 0, icon: "⚙️" }
+      };
+
+      questQuestions.forEach(q => {
+        if (skills[q.skill]) {
+          skills[q.skill].total++;
+          if (userAnswers[q.id] && userAnswers[q.id].isCorrect) {
+            skills[q.skill].correct++;
+          }
+        }
+      });
+
+      const skillGrid = document.getElementById("skill-breakdown-grid");
+      skillGrid.innerHTML = "";
+      for (const [skName, data] of Object.entries(skills)) {
+        const card = document.createElement("div");
+        card.className = "skill-stat-card";
+        card.innerHTML = `
+          <div class="skill-stat-title">${data.icon} ${skName}</div>
+          <div class="skill-stat-value">${data.correct} / ${data.total}</div>
+        `;
+        skillGrid.appendChild(card);
+      }
+    }
+
+    // Map Modal
+    function openMapModal() {
+      const modal = document.getElementById("quest-map-modal");
+      const grid = document.getElementById("grid-checkpoints");
+      grid.innerHTML = "";
+
+      questQuestions.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "grid-node-btn";
+        if (idx === currentIndex) btn.classList.add("current");
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) btn.classList.add("skipped");
+          else if (userAnswers[q.id].isCorrect) btn.classList.add("correct");
+          else btn.classList.add("incorrect");
+        }
+
+        btn.innerHTML = `
+          <span>#${idx + 1}</span>
+          <span style="font-size: 10px; font-weight: normal;">${q.skill.slice(0, 4)}</span>
+        `;
+        btn.onclick = () => {
+          modal.classList.remove("open");
+          goToQuestion(idx);
+        };
+        grid.appendChild(btn);
+      });
+
+      modal.classList.add("open");
+    }
+
+    // Confetti
+    function triggerConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#f59e0b", "#10b981", "#38bdf8", "#ef4444", "#16a34a", "#fde047"];
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.4,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 14,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35;
+          p.rotation += p.vRot;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frames++;
+        if (frames < 75) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    // Listeners
+    document.getElementById("btn-check-q").addEventListener("click", handleCheckAnswer);
+    document.getElementById("btn-next-q").addEventListener("click", goToNext);
+    document.getElementById("btn-skip-q").addEventListener("click", handleSkip);
+    document.getElementById("btn-prev-q").addEventListener("click", () => {
+      if (currentIndex > 0) goToQuestion(currentIndex - 1);
+    });
+
+    document.getElementById("btn-open-map").addEventListener("click", openMapModal);
+    document.getElementById("btn-close-modal").addEventListener("click", () => {
+      document.getElementById("quest-map-modal").classList.remove("open");
+    });
+
+    document.getElementById("btn-sound-toggle").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById("sound-icon").textContent = soundEnabled ? "🔊" : "🔇";
+    });
+
+    document.getElementById("transcript-toggle").addEventListener("click", () => {
+      const box = document.getElementById("audio-transcript-box");
+      const toggle = document.getElementById("transcript-toggle");
+      box.classList.toggle("visible");
+      toggle.textContent = box.classList.contains("visible") ? "Hide Transcript" : "Show Transcript";
+    });
+
+    document.getElementById("btn-restart-quest").addEventListener("click", () => {
+      userAnswers = {};
+      currentIndex = 0;
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      initTrailTrack();
+      renderQuestion(0);
+    });
+
+    document.getElementById("btn-review-all").addEventListener("click", () => {
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      goToQuestion(0);
+    });
+
+    // Start App
+    initTrailTrack();
+    renderQuestion(0);
+  </script>
+</body>
+</html>
