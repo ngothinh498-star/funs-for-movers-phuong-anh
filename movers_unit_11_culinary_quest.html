@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chef's Culinary Quest - Cambridge Movers Unit 11: Things We Eat and Drink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ea580c;
+      --primary-dark: #c2410c;
+      --primary-light: #ffedd5;
+      --accent: #f59e0b;
+      --accent-dark: #d97706;
+      --success: #10b981;
+      --success-dark: #059669;
+      --danger: #ef4444;
+      --chef-gold: #fde047;
+      --bg-gradient: linear-gradient(180deg, #fdba74 0%, #fed7aa 25%, #fef08a 60%, #bbf7d0 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 20px 35px -5px rgba(0, 0, 0, 0.15);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Quicksand', -apple-system, sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: #1e293b;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 70px;
+    }
+
+    /* Living Culinary Animation Background */
+    .bg-scenery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Drifting steam clouds */
+    .steam-cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 50px;
+      opacity: 0.8;
+      filter: blur(2px);
+      animation: floatSteam linear infinite;
+    }
+    .steam-cloud::before, .steam-cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .steam-1 {
+      width: 150px; height: 48px; top: 8%; left: -180px;
+      animation-duration: 40s;
+    }
+    .steam-1::before { width: 65px; height: 65px; top: -28px; left: 22px; }
+    .steam-1::after { width: 50px; height: 50px; top: -18px; left: 75px; }
+
+    .steam-2 {
+      width: 210px; height: 62px; top: 18%; left: -240px;
+      animation-duration: 55s; animation-delay: 10s;
+    }
+    .steam-2::before { width: 85px; height: 85px; top: -38px; left: 30px; }
+    .steam-2::after { width: 65px; height: 65px; top: -24px; left: 105px; }
+
+    @keyframes floatSteam {
+      from { transform: translateX(-220px); }
+      to { transform: translateX(calc(100vw + 260px)); }
+    }
+
+    /* Floating Little Strawberry in background */
+    .floating-strawberry {
+      position: absolute;
+      top: 40px;
+      right: 5%;
+      width: 55px;
+      height: 60px;
+      animation: gentleBob 5s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes gentleBob {
+      0% { transform: translateY(0) rotate(4deg); }
+      100% { transform: translateY(-20px) rotate(-6deg); }
+    }
+
+    /* Floating Chef Hat on the left */
+    .floating-chef-hat {
+      position: absolute;
+      top: 55px;
+      left: 4%;
+      width: 65px;
+      height: 55px;
+      animation: gentleHatBob 6s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes gentleHatBob {
+      0% { transform: translateY(0) rotate(-5deg); }
+      100% { transform: translateY(-16px) rotate(5deg); }
+    }
+
+    /* Kitchen cutting board border on bottom */
+    .kitchen-counter-strip {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      background: #78350f;
+      border-top: 4px solid #b45309;
+      z-index: 1;
+    }
+    .counter-checkered {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: repeating-linear-gradient(90deg, #fef08a 0, #fef08a 20px, #dc2626 20px, #dc2626 40px);
+    }
+
+    /* Container */
+    .app-container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Top Header */
+    .top-header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+      border: 3px solid #ffffff;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      font-size: 34px;
+      animation: chefBounce 2s ease infinite;
+    }
+    @keyframes chefBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px) scale(1.1); }
+    }
+    .brand-text h1 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #c2410c;
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #ea580c;
+      font-weight: 600;
+      background: #ffedd5;
+      padding: 2px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      border: 1px solid #fed7aa;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-tool {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-tool:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .score-badge {
+      background: linear-gradient(135deg, #fef08a, #f59e0b);
+      color: #78350f;
+      padding: 7px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+      border: 2px solid #fde68a;
+    }
+
+    /* Milestone Trail (20 Checkpoints) */
+    .trail-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      border: 3px solid #ffffff;
+    }
+    .trail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .trail-label {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #c2410c;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trail-stats {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .trail-track-wrapper {
+      position: relative;
+      overflow-x: auto;
+      padding: 8px 4px 14px 4px;
+      scrollbar-width: thin;
+      scrollbar-color: #fb923c #ffedd5;
+    }
+    .trail-track-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+    .trail-track-wrapper::-webkit-scrollbar-thumb {
+      background: #fb923c;
+      border-radius: 4px;
+    }
+    .trail-track {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 680px;
+    }
+    .trail-node {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2px solid #cbd5e1;
+      flex-shrink: 0;
+    }
+    .trail-node:hover {
+      transform: scale(1.18);
+    }
+    .trail-node.current {
+      background: #ea580c;
+      color: #ffffff;
+      border-color: #fb923c;
+      box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.4);
+      transform: scale(1.22);
+    }
+    .trail-node.correct {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #a7f3d0;
+    }
+    .trail-node.incorrect {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #fca5a5;
+    }
+    .trail-node.skipped {
+      background: #f97316;
+      color: #ffffff;
+      border-color: #fed7aa;
+    }
+
+    /* Main Question Card */
+    .quest-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 30px;
+      border: 4px solid #ffffff;
+      position: relative;
+    }
+
+    /* Meta Badges */
+    .q-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .q-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-category {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-unit {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+    }
+    .checkpoint-number {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c2410c;
+      background: #ffedd5;
+      padding: 6px 14px;
+      border-radius: 16px;
+    }
+
+    /* Question Prompt */
+    .q-prompt {
+      font-size: 19px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      white-space: pre-line;
+    }
+
+    /* Illustration Box */
+    .q-illustration {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto 24px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 3px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .q-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Audio Player Widget */
+    .audio-player-box {
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
+      border: 2px solid #fdba74;
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audio-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .audio-voice-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #c2410c;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid #fed7aa;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .btn-audio-play {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      padding: 10px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-audio-play:hover {
+      background: linear-gradient(135deg, #c2410c, #9a3412);
+      transform: translateY(-2px);
+    }
+    .btn-audio-play.speaking {
+      background: linear-gradient(135deg, #10b981, #059669);
+      animation: pulsePlay 1.2s infinite;
+    }
+    @keyframes pulsePlay {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    }
+
+    .audio-wave {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 28px;
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+    .wave-bar {
+      width: 4px;
+      background: #fb923c;
+      border-radius: 3px;
+      height: 6px;
+      transition: height 0.15s ease;
+    }
+    .audio-wave.active .wave-bar {
+      animation: waveDance 1s ease infinite alternate;
+    }
+    .audio-wave.active .wave-bar:nth-child(1) { animation-delay: 0.1s; height: 16px; }
+    .audio-wave.active .wave-bar:nth-child(2) { animation-delay: 0.3s; height: 24px; }
+    .audio-wave.active .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+    .audio-wave.active .wave-bar:nth-child(4) { animation-delay: 0.4s; height: 22px; }
+    .audio-wave.active .wave-bar:nth-child(5) { animation-delay: 0.15s; height: 18px; }
+    .audio-wave.active .wave-bar:nth-child(6) { animation-delay: 0.35s; height: 26px; }
+    .audio-wave.active .wave-bar:nth-child(7) { animation-delay: 0.25s; height: 12px; }
+
+    @keyframes waveDance {
+      0% { height: 6px; }
+      100% { height: 26px; }
+    }
+
+    .transcript-toggle {
+      font-size: 12px;
+      color: #ea580c;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-weight: 600;
+      text-align: right;
+    }
+    .audio-transcript-box {
+      font-size: 13.5px;
+      color: #334155;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px dashed #fdba74;
+      display: none;
+      font-style: italic;
+    }
+    .audio-transcript-box.visible {
+      display: block;
+    }
+
+    /* Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .options-grid.two-cols {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .option-btn {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+    .option-btn:hover:not(.locked) {
+      border-color: #fb923c;
+      background: #fff7ed;
+      transform: translateY(-2px);
+    }
+    .option-btn.selected {
+      border-color: #ea580c;
+      background: #ffedd5;
+    }
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .option-btn.selected .option-letter {
+      background: #ea580c;
+      color: #ffffff;
+    }
+
+    /* Picture Options Cards */
+    .picture-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    .pic-option-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .pic-option-card:hover:not(.locked) {
+      border-color: #fb923c;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .pic-option-card.selected {
+      border-color: #ea580c;
+      background: #fff7ed;
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.25);
+    }
+    .pic-preview-box {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: #f8fafc;
+    }
+    .pic-card-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.3;
+    }
+
+    /* Drag & Drop Story Sequencing */
+    .story-seq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .story-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: grab;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .story-card:active {
+      cursor: grabbing;
+    }
+    .story-card.dragging {
+      opacity: 0.4;
+      background: #f1f5f9;
+      border-style: dashed;
+    }
+    .story-card-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-grow: 1;
+    }
+    .story-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #f97316;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .story-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+    .story-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .btn-arrow {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      color: #475569;
+      transition: background 0.15s;
+    }
+    .btn-arrow:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Actions Footer */
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 2px dashed #e2e8f0;
+    }
+    .actions-left, .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      border: none;
+      border-radius: 18px;
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-check {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+    .btn-check:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+    }
+    .btn-check:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn-skip {
+      background: #fff7ed;
+      color: #ea580c;
+      border: 2px solid #fed7aa;
+    }
+    .btn-skip:hover {
+      background: #ffedd5;
+      transform: translateY(-2px);
+    }
+    .btn-nav {
+      background: #f1f5f9;
+      color: #334155;
+      border: 2px solid #cbd5e1;
+    }
+    .btn-nav:hover:not(:disabled) {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .btn-nav:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Explanation & Feedback Card (Vietnamese) */
+    .feedback-panel {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 20px;
+      display: none;
+      animation: slideUp 0.3s ease forwards;
+    }
+    .feedback-panel.visible {
+      display: block;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .feedback-panel.correct-theme {
+      background: #ecfdf5;
+      border: 3px solid #6ee7b7;
+    }
+    .feedback-panel.incorrect-theme {
+      background: #fff1f2;
+      border: 3px solid #fecdd3;
+    }
+    .feedback-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .correct-theme .feedback-status { color: #047857; }
+    .incorrect-theme .feedback-status { color: #be123c; }
+
+    .vn-explanation-box {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 18px;
+      border-left: 5px solid #ea580c;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .vn-explanation-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c2410c;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .vn-explanation-text {
+      font-size: 14.5px;
+      color: #334155;
+      line-height: 1.6;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Option Result Styling */
+    .option-btn.opt-correct {
+      border-color: #10b981 !important;
+      background: #ecfdf5 !important;
+      color: #065f46 !important;
+    }
+    .option-btn.opt-correct .option-letter {
+      background: #10b981 !important;
+      color: #ffffff !important;
+    }
+    .option-btn.opt-incorrect {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      color: #991b1b !important;
+    }
+    .option-btn.opt-incorrect .option-letter {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+    }
+
+    /* Modal Overlay (All 20 Checkpoints) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 620px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #fed7aa;
+      animation: popIn 0.25s ease forwards;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #c2410c;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-modal {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .grid-checkpoints {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .grid-node-btn {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.2s;
+    }
+    .grid-node-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    .grid-node-btn.correct { background: #d1fae5; border-color: #10b981; color: #047857; }
+    .grid-node-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .grid-node-btn.skipped { background: #ffedd5; border-color: #f97316; color: #c2410c; }
+    .grid-node-btn.current { border-color: #ea580c; box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.3); }
+
+    /* Results Screen */
+    .results-screen {
+      display: none;
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #fde047;
+      text-align: center;
+      animation: popIn 0.3s ease;
+    }
+    .results-screen.visible {
+      display: block;
+    }
+    .master-chef-trophy {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 16px auto;
+      animation: floatTrophy 3s ease-in-out infinite alternate;
+    }
+    @keyframes floatTrophy {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    .result-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #c2410c;
+      margin-bottom: 8px;
+    }
+    .result-rank {
+      font-size: 16px;
+      font-weight: 700;
+      color: #b45309;
+      background: #fef3c7;
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      border: 2px solid #fde68a;
+    }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fb923c, #ea580c);
+      color: #ffffff;
+      margin: 0 auto 24px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+    }
+    .score-number {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .skill-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .skill-stat-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .skill-stat-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .skill-stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @media (max-width: 640px) {
+      .app-container { padding: 10px; }
+      .quest-card { padding: 18px 14px; }
+      .q-prompt { font-size: 16px; }
+      .top-header { padding: 10px 14px; }
+      .brand-text h1 { font-size: 16px; }
+      .card-actions { justify-content: center; }
+      .actions-left, .actions-right { width: 100%; justify-content: center; }
+      .btn-action { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Living Culinary Animation Environment -->
+  <div class="bg-scenery">
+    <!-- Steam Clouds -->
+    <div class="steam-cloud steam-1"></div>
+    <div class="steam-cloud steam-2"></div>
+
+    <!-- Floating Cute Strawberry -->
+    <div class="floating-strawberry">
+      <svg viewBox="0 0 60 70" width="100%" height="100%">
+        <!-- Leaves -->
+        <path d="M30,12 Q15,0 5,10 Q20,15 30,12" fill="#15803d"/>
+        <path d="M30,12 Q45,0 55,10 Q40,15 30,12" fill="#15803d"/>
+        <path d="M30,12 Q30,-2 28,-10" stroke="#78350f" stroke-width="3" fill="none"/>
+        <!-- Berry Body -->
+        <path d="M10,20 C5,45 20,65 30,65 C40,65 55,45 50,20 C45,10 15,10 10,20 Z" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+        <!-- Seeds -->
+        <circle cx="22" cy="25" r="1.5" fill="#fde047"/>
+        <circle cx="36" cy="25" r="1.5" fill="#fde047"/>
+        <circle cx="28" cy="36" r="1.5" fill="#fde047"/>
+        <circle cx="20" cy="46" r="1.5" fill="#fde047"/>
+        <circle cx="38" cy="46" r="1.5" fill="#fde047"/>
+      </svg>
+    </div>
+
+    <!-- Floating Chef Hat -->
+    <div class="floating-chef-hat">
+      <svg viewBox="0 0 70 60" width="100%" height="100%">
+        <path d="M15,28 C5,10 25,-5 35,5 C45,-5 65,10 55,28 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="2.5"/>
+        <rect x="16" y="26" width="38" height="16" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="2.5"/>
+        <!-- Small golden star on hat -->
+        <polygon points="35,30 37,34 41,34 38,37 39,41 35,38 31,41 32,37 29,34 33,34" fill="#fbbf24"/>
+      </svg>
+    </div>
+
+    <!-- Bottom Checkered Kitchen Counter -->
+    <div class="kitchen-counter-strip">
+      <div class="counter-checkered"></div>
+    </div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Top Header Bar -->
+    <header class="top-header">
+      <div class="brand-title">
+        <div class="brand-icon">👨‍🍳</div>
+        <div class="brand-text">
+          <h1>Chef's Culinary Quest</h1>
+          <span>Movers Unit 11: Things We Eat & Drink</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-tool" id="btn-open-map" title="View Kitchen Recipe Map">
+          <span>📜</span>
+          <span>Recipe Map</span>
+        </button>
+        <button class="btn-tool" id="btn-sound-toggle" title="Toggle Sound">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <div class="score-badge">
+          <span>⭐</span>
+          <span id="header-gem-score">0</span>
+          <span>Chef Stars</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Kitchen Milestone Trail (20 Checkpoints) -->
+    <section class="trail-card">
+      <div class="trail-header">
+        <span class="trail-label">🍴 Master Kitchen Milestone Trail</span>
+        <span class="trail-stats" id="trail-progress-text">Checkpoint 1 / 20</span>
+      </div>
+      <div class="trail-track-wrapper">
+        <div class="trail-track" id="trail-track">
+          <!-- 20 Node Buttons injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Question Card -->
+    <main class="quest-card" id="quest-card">
+      <!-- Meta Badges -->
+      <div class="q-meta">
+        <div class="q-badges">
+          <span class="badge-category" id="q-category-badge">🔤 Word Master</span>
+          <span class="badge-unit" id="q-unit-badge">Unit 11: Things we eat and drink</span>
+        </div>
+        <div class="checkpoint-number" id="q-counter">Checkpoint 1 of 20</div>
+      </div>
+
+      <!-- Question Prompt -->
+      <div class="q-prompt" id="q-prompt">Loading question...</div>
+
+      <!-- Question SVG Illustration -->
+      <div class="q-illustration" id="q-illustration"></div>
+
+      <!-- Audio Player Widget -->
+      <div class="audio-player-box" id="audio-player-box" style="display: none;">
+        <div class="audio-player-header">
+          <div class="audio-voice-tag">🎙️ Native US Storyteller (0.86x Clear & Expressive)</div>
+          <button class="transcript-toggle" id="transcript-toggle">Show Transcript</button>
+        </div>
+        <div class="audio-controls">
+          <button class="btn-audio-play" id="btn-audio-play">
+            <span id="audio-btn-icon">▶️</span>
+            <span id="audio-btn-text">Listen to Story</span>
+          </button>
+          <div class="audio-wave" id="audio-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+        <div class="audio-transcript-box" id="audio-transcript-box"></div>
+      </div>
+
+      <!-- Standard Multiple Choice / True-False Options -->
+      <div class="options-grid" id="options-container" style="display: none;"></div>
+
+      <!-- Picture Choice Options -->
+      <div class="picture-options-grid" id="picture-options-container" style="display: none;"></div>
+
+      <!-- Story Sequencing Drag & Drop -->
+      <div class="story-seq-list" id="story-seq-container" style="display: none;"></div>
+
+      <!-- Action Buttons Footer -->
+      <footer class="card-actions">
+        <div class="actions-left">
+          <button class="btn-action btn-nav" id="btn-prev-q">⬅ Back</button>
+          <button class="btn-action btn-skip" id="btn-skip-q">Skip for Now ↷</button>
+        </div>
+        <div class="actions-right">
+          <button class="btn-action btn-check" id="btn-check-q">Check Answer ⭐</button>
+          <button class="btn-action btn-nav" id="btn-next-q" style="display: none;">Next Recipe ➔</button>
+        </div>
+      </footer>
+
+      <!-- Feedback & Detailed Vietnamese Explanation Panel -->
+      <div class="feedback-panel" id="feedback-panel">
+        <div class="feedback-status" id="feedback-status">
+          <span id="feedback-status-icon">🎉</span>
+          <span id="feedback-status-text">Brilliant! That's correct!</span>
+        </div>
+        <div class="vn-explanation-box">
+          <div class="vn-explanation-title">
+            <span>💡</span>
+            <span>Giải Thích Chi Tiết Cho Bé:</span>
+          </div>
+          <div class="vn-explanation-text" id="feedback-vn-text"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Results Screen -->
+    <div class="results-screen" id="results-screen">
+      <div class="master-chef-trophy">
+        <svg viewBox="0 0 130 130" width="100%" height="100%">
+          <!-- Golden Trophy Cup -->
+          <path d="M35,25 L95,25 L88,75 C85,90 45,90 42,75 Z" fill="#fbbf24" stroke="#d97706" stroke-width="4"/>
+          <!-- Trophy Handles -->
+          <path d="M35,32 Q15,45 37,60" stroke="#f59e0b" stroke-width="5" fill="none"/>
+          <path d="M95,32 Q115,45 93,60" stroke="#f59e0b" stroke-width="5" fill="none"/>
+          <!-- Base Stem & Stand -->
+          <rect x="58" y="85" width="14" height="22" fill="#d97706"/>
+          <rect x="40" y="105" width="50" height="18" rx="4" fill="#78350f" stroke="#451a03" stroke-width="2"/>
+          <circle cx="65" cy="52" r="14" fill="#ffffff" opacity="0.9"/>
+          <!-- Chef Hat Icon on Trophy -->
+          <path d="M58,54 C53,46 62,40 65,44 C68,40 77,46 72,54 Z" fill="#ea580c"/>
+        </svg>
+      </div>
+
+      <h2 class="result-title">Culinary Quest Complete!</h2>
+      <div class="result-rank" id="result-rank-title">🏆 Grand Master Chef of Flavors</div>
+
+      <div class="score-circle">
+        <div class="score-number" id="result-score-num">20/20</div>
+        <div class="score-label" id="result-score-pct">100% Score</div>
+      </div>
+
+      <div class="skill-stats-grid" id="skill-breakdown-grid">
+        <!-- Breakdown cards injected by JS -->
+      </div>
+
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-action btn-check" id="btn-restart-quest">🔄 Restart Cooking Quest</button>
+        <button class="btn-action btn-nav" id="btn-review-all">📋 Review All Recipes</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Recipe Map Modal -->
+  <div class="modal-overlay" id="quest-map-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>📜</span>
+          <span>Kitchen Recipe Checkpoints</span>
+        </div>
+        <button class="btn-close-modal" id="btn-close-modal">✕</button>
+      </div>
+      <div class="grid-checkpoints" id="grid-checkpoints">
+        <!-- 20 Checkpoint Grid Items -->
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #64748b; flex-wrap: wrap; gap: 8px;">
+        <div>🟢 Correct</div>
+        <div>🔴 Needs Review</div>
+        <div>🟠 Skipped</div>
+        <div>🔵 Current</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Embedded Questions Data
+    const questQuestions = [{"id": 1, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. This tropical fruit is yellow and sweet inside with green spiky leaves on top. You can make delicious fresh juice from it. What fruit is it?", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"pinaBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fef9c3\"/>\n      <stop offset=\"100%\" stop-color=\"#fef08a\"/>\n    </linearGradient>\n    <linearGradient id=\"pineBody\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#f59e0b\"/>\n      <stop offset=\"100%\" stop-color=\"#d97706\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#pinaBg)\"/>\n  <!-- Pineapple Crown Spiky Leaves -->\n  <g transform=\"translate(200, 75)\">\n    <path d=\"M0,0 Q-15,-45 -35,-55 Q-15,-30 0,0\" fill=\"#15803d\"/>\n    <path d=\"M0,0 Q15,-45 35,-55 Q15,-30 0,0\" fill=\"#15803d\"/>\n    <path d=\"M0,0 Q-8,-60 -15,-75 Q-2,-45 0,0\" fill=\"#16a34a\"/>\n    <path d=\"M0,0 Q8,-60 15,-75 Q2,-45 0,0\" fill=\"#16a34a\"/>\n    <path d=\"M0,0 Q0,-70 0,-85 Q5,-45 0,0\" fill=\"#22c55e\"/>\n  </g>\n  <!-- Pineapple Oval Body -->\n  <ellipse cx=\"200\" cy=\"145\" rx=\"55\" ry=\"70\" fill=\"url(#pineBody)\" stroke=\"#b45309\" stroke-width=\"3\"/>\n  <!-- Diamond cross pattern -->\n  <path d=\"M165,100 L235,190 M155,120 L245,170 M155,170 L245,120 M165,190 L235,100\" stroke=\"#fde047\" stroke-width=\"2.5\" fill=\"none\"/>\n  <circle cx=\"200\" cy=\"145\" r=\"4\" fill=\"#78350f\"/>\n  <circle cx=\"180\" cy=\"130\" r=\"3.5\" fill=\"#78350f\"/>\n  <circle cx=\"220\" cy=\"130\" r=\"3.5\" fill=\"#78350f\"/>\n  <circle cx=\"180\" cy=\"160\" r=\"3.5\" fill=\"#78350f\"/>\n  <circle cx=\"220\" cy=\"160\" r=\"3.5\" fill=\"#78350f\"/>\n  <!-- Juice Glass next to it -->\n  <g transform=\"translate(290, 140)\">\n    <polygon points=\"10,0 40,0 35,55 15,55\" fill=\"#fef08a\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <polygon points=\"12,12 38,12 34,50 16,50\" fill=\"#facc15\"/>\n    <!-- Straw -->\n    <line x1=\"28\" y1=\"-15\" x2=\"22\" y2=\"40\" stroke=\"#ef4444\" stroke-width=\"3\"/>\n  </g>\n</svg>", "options": ["A coconut", "A pineapple", "A watermelon", "A lime"], "correctIndex": 1, "explanation": "Đáp án đúng là **A pineapple** (quả dứa / trái thơm). Mô tả: quả nhiệt đới bên trong vàng ngọt, bên trên có chùm lá nhọn màu xanh và làm nước ép rất ngon. Coconut = quả dừa; watermelon = dưa hấu; lime = chanh xanh."}, {"id": 2, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 11: Things we eat and drink", "question": "Listen to Daisy's breakfast routine. What special drink does Daisy have with her toast every morning?", "audioScript": "Good morning! My name is Daisy. Every morning at seven o'clock, my mother makes me two warm slices of bread with butter. I do not like drinking hot tea or coffee. I always have a big tall glass of banana milkshake because it gives me energy for school!", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"kitchenMorn\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fffbeb\"/>\n      <stop offset=\"100%\" stop-color=\"#fef3c7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#kitchenMorn)\"/>\n  <!-- Breakfast Table -->\n  <rect x=\"30\" y=\"140\" width=\"340\" height=\"85\" rx=\"10\" fill=\"#e2e8f0\" stroke=\"#cbd5e1\" stroke-width=\"3\"/>\n  <!-- Plate with Toast -->\n  <ellipse cx=\"140\" cy=\"165\" rx=\"50\" ry=\"18\" fill=\"#ffffff\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <rect x=\"110\" y=\"152\" width=\"28\" height=\"25\" rx=\"4\" fill=\"#d97706\" transform=\"rotate(-10, 120, 160)\"/>\n  <rect x=\"135\" y=\"152\" width=\"28\" height=\"25\" rx=\"4\" fill=\"#d97706\" transform=\"rotate(10, 145, 160)\"/>\n  <!-- Butter on toast -->\n  <rect x=\"120\" y=\"155\" width=\"10\" height=\"8\" rx=\"2\" fill=\"#fde047\"/>\n  <!-- Tall Glass with yellow milkshake -->\n  <g transform=\"translate(250, 95)\">\n    <polygon points=\"10,0 45,0 38,75 17,75\" fill=\"#fef08a\" stroke=\"#d97706\" stroke-width=\"2.5\"/>\n    <polygon points=\"12,15 43,15 37,70 18,70\" fill=\"#fde047\"/>\n    <!-- Whipped cream & cherry on top -->\n    <ellipse cx=\"27\" cy=\"0\" rx=\"16\" ry=\"7\" fill=\"#ffffff\"/>\n    <circle cx=\"27\" cy=\"-6\" r=\"4.5\" fill=\"#ef4444\"/>\n    <!-- Striped Straw -->\n    <line x1=\"34\" y1=\"-22\" x2=\"25\" y2=\"60\" stroke=\"#3b82f6\" stroke-width=\"3.5\"/>\n  </g>\n  <text x=\"200\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#78350f\">Daisy's Morning Breakfast</text>\n</svg>", "options": ["Hot black coffee", "A glass of banana milkshake", "Cold apple tea", "A cup of soup"], "correctIndex": 1, "explanation": "Đáp án đúng là **A glass of banana milkshake** (Một ly sinh tố sữa chuối). Trong đoạn nghe, Daisy nói: 'I do not like drinking hot tea or coffee. I always have a big tall glass of banana milkshake because it gives me energy for school!'."}, {"id": 3, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 11: Things we eat and drink", "question": "For lunch today, Jack has got ______ hot bowl of noodle soup and ______ delicious green grapes.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Bowl of hot noodle soup -->\n  <g transform=\"translate(100, 120)\">\n    <ellipse cx=\"0\" cy=\"20\" rx=\"55\" ry=\"24\" fill=\"#f97316\"/>\n    <ellipse cx=\"0\" cy=\"12\" rx=\"46\" ry=\"16\" fill=\"#fde68a\"/>\n    <!-- Noodles wavy lines -->\n    <path d=\"M-25,12 Q-10,4 0,14 Q15,6 25,12\" stroke=\"#ea580c\" stroke-width=\"3\" fill=\"none\"/>\n    <path d=\"M-20,16 Q-5,8 5,18 Q20,10 20,16\" stroke=\"#ea580c\" stroke-width=\"2.5\" fill=\"none\"/>\n    <!-- Steam -->\n    <path d=\"M-10,-5 Q-5,-20 -10,-35 M10,-5 Q15,-20 10,-35\" stroke=\"#fed7aa\" stroke-width=\"3\" fill=\"none\"/>\n    <text x=\"0\" y=\"65\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#c2410c\">a bowl of soup</text>\n  </g>\n  <!-- Bunch of green grapes -->\n  <g transform=\"translate(280, 110)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"40\" ry=\"12\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n    <!-- Grapes cluster -->\n    <circle cx=\"-15\" cy=\"-8\" r=\"9\" fill=\"#84cc16\"/>\n    <circle cx=\"0\" cy=\"-10\" r=\"9.5\" fill=\"#65a30d\"/>\n    <circle cx=\"15\" cy=\"-8\" r=\"9\" fill=\"#84cc16\"/>\n    <circle cx=\"-8\" cy=\"4\" r=\"9\" fill=\"#65a30d\"/>\n    <circle cx=\"8\" cy=\"4\" r=\"9\" fill=\"#84cc16\"/>\n    <circle cx=\"0\" cy=\"14\" r=\"8.5\" fill=\"#65a30d\"/>\n    <!-- Stem -->\n    <path d=\"M0,-14 Q-3,-25 4,-28\" stroke=\"#78350f\" stroke-width=\"2.5\" fill=\"none\"/>\n    <text x=\"0\" y=\"55\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#4d7c0f\">some green grapes</text>\n  </g>\n</svg>", "options": ["a / some", "some / a", "an / an", "a / a"], "correctIndex": 0, "explanation": "Đáp án đúng là **a / some**. Danh từ đếm được số ít 'hot bowl of noodle soup' (bắt đầu bằng phụ âm 'h') dùng mạo từ **a**. Danh từ số nhiều 'green grapes' (những quả nho) dùng lượng từ **some**."}, {"id": 4, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell how Lily makes a fresh fruit smoothie!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"blenderBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#eff6ff\"/>\n      <stop offset=\"100%\" stop-color=\"#dbeafe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#blenderBg)\"/>\n  <!-- Kitchen counter -->\n  <rect x=\"20\" y=\"150\" width=\"360\" height=\"70\" rx=\"8\" fill=\"#cbd5e1\"/>\n  <!-- Electric Blender in center -->\n  <g transform=\"translate(180, 50)\">\n    <!-- Blender Jar Glass -->\n    <polygon points=\"10,20 70,20 62,110 18,110\" fill=\"#bae6fd\" stroke=\"#0284c7\" stroke-width=\"3\" opacity=\"0.9\"/>\n    <!-- Smoothie inside -->\n    <polygon points=\"12,50 68,50 61,108 19,108\" fill=\"#f43f5e\"/>\n    <!-- Blender Lid -->\n    <rect x=\"5\" y=\"10\" width=\"70\" height=\"12\" rx=\"3\" fill=\"#1e293b\"/>\n    <!-- Motor Base -->\n    <rect x=\"15\" y=\"110\" width=\"50\" height=\"40\" rx=\"6\" fill=\"#3b82f6\" stroke=\"#1d4ed8\" stroke-width=\"2\"/>\n    <circle cx=\"40\" cy=\"128\" r=\"6\" fill=\"#fde047\"/>\n  </g>\n  <!-- Strawberries & bananas on cutting board -->\n  <rect x=\"40\" y=\"135\" width=\"80\" height=\"25\" rx=\"3\" fill=\"#b45309\"/>\n  <circle cx=\"60\" cy=\"130\" r=\"8\" fill=\"#ef4444\"/>\n  <circle cx=\"78\" cy=\"130\" r=\"8\" fill=\"#ef4444\"/>\n  <path d=\"M90,135 Q105,122 115,135\" stroke=\"#facc15\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\"/>\n  <!-- Two glasses ready -->\n  <polygon points=\"290,120 315,120 310,160 295,160\" fill=\"#fef08a\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <polygon points=\"325,120 350,120 345,160 330,160\" fill=\"#fef08a\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n</svg>", "sentences": ["Next, she poured fresh cold milk and sweet honey into the blender.", "Finally, Lily poured the pink fruit smoothie into two tall glasses for her and her brother.", "First, Lily washed fresh red strawberries and peeled two yellow bananas.", "Then, she pressed the blue button to blend everything together smoothly."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự làm sinh tố hoa quả: 1. Đầu tiên, Lily rửa dâu tây tươi và bóc vỏ 2 quả chuối (First, Lily washed...) -> 2. Tiếp theo, bạn đổ sữa tươi và mật ong vào máy xay (Next, she poured...) -> 3. Sau đó, bấm nút màu xanh để xay nhuyễn mọi thứ (Then, she pressed the blue button...) -> 4. Cuối cùng, rót sinh tố màu hồng ra hai chiếc ly cao (Finally, Lily poured...)."}, {"id": 5, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 11: Things we eat and drink", "question": "Read the story below. Is the sentence TRUE or FALSE?\n\n\"On sunny Saturdays, Tom's family often has a picnic in the green park. Tom's father brings a big box of cheese and chicken sandwiches. His sister loves eating sweet red watermelon slices, but Tom prefers drinking cold lemonade because he does not like sweet fruit.\"\n\nSentence: Tom's favorite picnic food is sweet red watermelon.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"picnicGrass\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#dcfce7\"/>\n      <stop offset=\"100%\" stop-color=\"#86efac\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#picnicGrass)\"/>\n  <!-- Picnic Blanket Red & White Checkered -->\n  <g transform=\"translate(60, 50)\">\n    <rect x=\"0\" y=\"0\" width=\"280\" height=\"130\" rx=\"8\" fill=\"#fee2e2\" stroke=\"#ef4444\" stroke-width=\"2\"/>\n    <!-- Basket -->\n    <rect x=\"30\" y=\"25\" width=\"60\" height=\"45\" rx=\"5\" fill=\"#b45309\"/>\n    <path d=\"M30,25 Q60,-5 90,25\" stroke=\"#78350f\" stroke-width=\"4\" fill=\"none\"/>\n    <!-- Watermelon slice -->\n    <path d=\"M130,55 A35,35 0 0,0 180,55 Z\" fill=\"#ef4444\" stroke=\"#15803d\" stroke-width=\"4\"/>\n    <circle cx=\"150\" cy=\"65\" r=\"1.5\" fill=\"#0f172a\"/>\n    <circle cx=\"160\" cy=\"65\" r=\"1.5\" fill=\"#0f172a\"/>\n    <!-- Bottle of Lemonade -->\n    <rect x=\"220\" y=\"25\" width=\"22\" height=\"50\" rx=\"4\" fill=\"#fef08a\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <rect x=\"226\" y=\"15\" width=\"10\" height=\"12\" fill=\"#ca8a04\"/>\n    <text x=\"140\" y=\"115\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#b91c1c\">Park Picnic Day</text>\n  </g>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Trong bài đọc nêu rõ: 'His sister loves eating sweet red watermelon slices, but Tom prefers drinking cold lemonade because he does not like sweet fruit' (Em gái Tom mới là người thích ăn dưa hấu, còn Tom thích uống nước chanh vì không thích ăn trái cây ngọt)."}, {"id": 6, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 11: Things we eat and drink", "question": "Listen to the park audio. Which picture shows what Ben is having under the big oak tree?", "audioScript": "Look at Ben sitting on the grass under the big oak tree! He is wearing a blue cap. On the small white cloth in front of him, he has got a big glass bottle of cold yellow lemonade and two round lemon slices.", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#fef9c3\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#facc15\" opacity=\"0.25\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#a16207\">🎧 Listen carefully to choose Ben's drink!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Glass bottle of cold yellow lemonade with lemon slices", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fef08a\"/>\n  <!-- Lemonade bottle -->\n  <rect x=\"55\" y=\"30\" width=\"30\" height=\"60\" rx=\"5\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <rect x=\"63\" y=\"18\" width=\"14\" height=\"14\" fill=\"#ca8a04\"/>\n  <!-- Lemon slices -->\n  <circle cx=\"108\" cy=\"70\" r=\"16\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <circle cx=\"108\" cy=\"70\" r=\"11\" fill=\"#fef9c3\"/>\n  <!-- Ice cubes -->\n  <rect x=\"62\" y=\"55\" width=\"8\" height=\"8\" rx=\"1\" fill=\"#ffffff\" opacity=\"0.8\"/>\n</svg>"}, {"label": "Hot cup of brown coffee with steam", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fed7aa\"/>\n  <rect x=\"50\" y=\"45\" width=\"50\" height=\"45\" rx=\"6\" fill=\"#78350f\"/>\n  <path d=\"M100,55 Q118,65 100,78\" stroke=\"#78350f\" stroke-width=\"4\" fill=\"none\"/>\n  <path d=\"M65,35 Q68,20 65,10 M85,35 Q88,20 85,10\" stroke=\"#b45309\" stroke-width=\"2.5\" fill=\"none\"/>\n</svg>"}, {"label": "Bowl of hot vegetable soup with a spoon", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#e0f2fe\"/>\n  <ellipse cx=\"80\" cy=\"70\" rx=\"42\" ry=\"20\" fill=\"#ea580c\"/>\n  <ellipse cx=\"80\" cy=\"65\" rx=\"35\" ry=\"14\" fill=\"#fdba74\"/>\n  <line x1=\"110\" y1=\"45\" x2=\"90\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"4\"/>\n</svg>"}, {"label": "Carton of fresh white cow milk", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#f1f5f9\"/>\n  <rect x=\"60\" y=\"30\" width=\"40\" height=\"65\" rx=\"4\" fill=\"#38bdf8\"/>\n  <polygon points=\"60,30 80,15 100,30\" fill=\"#0284c7\"/>\n  <text x=\"80\" y=\"65\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#ffffff\">MILK</text>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Glass bottle of cold yellow lemonade with lemon slices** (Chai thủy tinh đựng nước chanh vàng mát lạnh và hai lát chanh). Trong bài nghe có câu: 'a big glass bottle of cold yellow lemonade and two round lemon slices'."}, {"id": 7, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 11: Things we eat and drink", "question": "These are hot, thin and round cakes cooked in a frying pan. You can put sweet honey, lemon juice, or fresh fruit on them. What food are they?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#fff7ed\"/>\n  <!-- White ceramic plate -->\n  <ellipse cx=\"200\" cy=\"155\" rx=\"110\" ry=\"35\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\"3\"/>\n  <!-- Stack of 3 golden pancakes -->\n  <ellipse cx=\"200\" cy=\"148\" rx=\"75\" ry=\"22\" fill=\"#d97706\"/>\n  <ellipse cx=\"200\" cy=\"143\" rx=\"73\" ry=\"20\" fill=\"#f59e0b\"/>\n  <ellipse cx=\"200\" cy=\"130\" rx=\"73\" ry=\"20\" fill=\"#d97706\"/>\n  <ellipse cx=\"200\" cy=\"125\" rx=\"71\" ry=\"19\" fill=\"#f59e0b\"/>\n  <ellipse cx=\"200\" cy=\"112\" rx=\"71\" ry=\"19\" fill=\"#d97706\"/>\n  <ellipse cx=\"200\" cy=\"107\" rx=\"69\" ry=\"18\" fill=\"#f59e0b\"/>\n  <!-- Melting square of butter on top -->\n  <polygon points=\"190,95 210,95 215,105 195,105\" fill=\"#fef08a\" stroke=\"#eab308\" stroke-width=\"1.5\"/>\n  <!-- Honey dripping -->\n  <path d=\"M195,105 Q190,118 193,126\" stroke=\"#d97706\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/>\n  <!-- Strawberries around plate -->\n  <circle cx=\"120\" cy=\"150\" r=\"9\" fill=\"#ef4444\"/>\n  <circle cx=\"280\" cy=\"150\" r=\"9\" fill=\"#ef4444\"/>\n</svg>", "options": ["Pancakes", "Noodles", "Onions", "Carrots"], "correctIndex": 0, "explanation": "Đáp án đúng là **Pancakes** (bánh kếp / bánh nướng chảo). Định nghĩa chuẩn của Cambridge Movers: 'These are hot, thin and round cakes cooked in a frying pan. You can put sweet honey, lemon juice on them'. Noodles = mì; onions = hành tây; carrots = cà rốt."}, {"id": 8, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 11: Things we eat and drink", "question": "Choose the correct question to ask a friend about their breakfast preference:", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#fefce8\"/>\n  <circle cx=\"200\" cy=\"95\" r=\"48\" fill=\"#fde047\" opacity=\"0.3\"/>\n  <text x=\"200\" y=\"115\" text-anchor=\"middle\" font-size=\"60\" font-weight=\"bold\" fill=\"#ca8a04\">?</text>\n  <!-- Coffee cup left & fried egg right -->\n  <g transform=\"translate(70, 90)\">\n    <rect x=\"0\" y=\"0\" width=\"40\" height=\"30\" rx=\"4\" fill=\"#3b82f6\"/>\n    <path d=\"M40,5 Q52,15 40,25\" stroke=\"#3b82f6\" stroke-width=\"3\" fill=\"none\"/>\n  </g>\n  <g transform=\"translate(290, 100)\">\n    <ellipse cx=\"20\" cy=\"10\" rx=\"28\" ry=\"16\" fill=\"#ffffff\" stroke=\"#e2e8f0\" stroke-width=\"2\"/>\n    <circle cx=\"20\" cy=\"8\" r=\"10\" fill=\"#f59e0b\"/>\n  </g>\n</svg>", "options": ["What do you like having for breakfast?", "What does you like having for breakfast?", "What do you likes having for breakfast?", "What are you like have for breakfast?"], "correctIndex": 0, "explanation": "Đáp án đúng là **What do you like having for breakfast?**. Thì Hiện tại đơn với chủ ngữ 'you' dùng trợ động từ 'do' và động từ nguyên mẫu 'like'. Sau 'like' dùng V-ing ('having')."}, {"id": 9, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the delicious homemade pizza story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"pizzaOvenBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fff1f2\"/>\n      <stop offset=\"100%\" stop-color=\"#fee2e2\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#pizzaOvenBg)\"/>\n  <!-- Big Round Cheese Pizza on Wooden Board -->\n  <circle cx=\"200\" cy=\"120\" r=\"75\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"4\"/>\n  <!-- Tomato sauce and cheese layer -->\n  <circle cx=\"200\" cy=\"120\" r=\"65\" fill=\"#fde047\" stroke=\"#dc2626\" stroke-width=\"3\"/>\n  <!-- Pizza toppings: red sausages, green peppers, black olives -->\n  <circle cx=\"180\" cy=\"95\" r=\"9\" fill=\"#dc2626\"/>\n  <circle cx=\"225\" cy=\"100\" r=\"9\" fill=\"#dc2626\"/>\n  <circle cx=\"170\" cy=\"135\" r=\"9\" fill=\"#dc2626\"/>\n  <circle cx=\"220\" cy=\"140\" r=\"9\" fill=\"#dc2626\"/>\n  <!-- Green peppers -->\n  <path d=\"M195,115 Q205,108 200,128\" stroke=\"#16a34a\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M165,110 Q160,125 150,118\" stroke=\"#16a34a\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <!-- Black olives -->\n  <circle cx=\"200\" cy=\"145\" r=\"4.5\" fill=\"#0f172a\"/>\n  <circle cx=\"210\" cy=\"85\" r=\"4.5\" fill=\"#0f172a\"/>\n  <!-- Pizza cutter -->\n  <g transform=\"translate(320, 140)\">\n    <circle cx=\"0\" cy=\"0\" r=\"16\" fill=\"#cbd5e1\" stroke=\"#475569\" stroke-width=\"2\"/>\n    <rect x=\"0\" y=\"-4\" width=\"45\" height=\"8\" rx=\"3\" fill=\"#dc2626\" transform=\"rotate(-30)\"/>\n  </g>\n</svg>", "sentences": ["Next, they spread red tomato sauce, yellow cheese, and sausages on top.", "Finally, the hot pizza came out of the oven, smelling wonderfully delicious!", "First, Sam and his father made round dough on the kitchen table.", "Then, dad placed the pizza carefully into the hot oven to bake."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự làm bánh pizza: 1. Đầu tiên, Sam và bố cán bột thành hình tròn trên bàn bếp (First, Sam and his father made round dough...) -> 2. Tiếp theo, phết sốt cà chua, rắc phô mai vàng và xúc xích lên trên (Next, they spread red tomato sauce...) -> 3. Sau đó, bố cho pizza vào lò nướng (Then, dad placed the pizza...) -> 4. Cuối cùng, chiếc pizza nóng hổi thơm phức ra lò (Finally, the hot pizza came out...)."}, {"id": 10, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 11: Things we eat and drink", "question": "Read the short text. Choose the best word to fill in the blank:\n\n\"When it is cold outside in winter, people love eating warm vegetable ______ with carrots and potatoes. You can eat it with a spoon from a big bowl.\"", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#eff6ff\"/>\n  <!-- Hot bowl with soup -->\n  <ellipse cx=\"200\" cy=\"140\" rx=\"75\" ry=\"30\" fill=\"#3b82f6\"/>\n  <ellipse cx=\"200\" cy=\"128\" rx=\"65\" ry=\"22\" fill=\"#ea580c\"/>\n  <!-- Carrots and peas chunks in soup -->\n  <circle cx=\"180\" cy=\"125\" r=\"5\" fill=\"#f97316\"/>\n  <circle cx=\"215\" cy=\"130\" r=\"5\" fill=\"#f97316\"/>\n  <circle cx=\"195\" cy=\"135\" r=\"4\" fill=\"#22c55e\"/>\n  <circle cx=\"225\" cy=\"122\" r=\"4\" fill=\"#22c55e\"/>\n  <!-- Silver Spoon -->\n  <g transform=\"translate(140, 95)\">\n    <ellipse cx=\"0\" cy=\"20\" rx=\"14\" ry=\"18\" fill=\"#e2e8f0\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <line x1=\"0\" y1=\"2\" x2=\"-35\" y2=\"-45\" stroke=\"#94a3b8\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n  </g>\n  <!-- Warm Steam -->\n  <path d=\"M190,95 Q195,75 190,55 M215,95 Q220,75 215,55\" stroke=\"#93c5fd\" stroke-width=\"3\" fill=\"none\"/>\n</svg>", "options": ["soup", "stairs", "pencils", "coats"], "correctIndex": 0, "explanation": "Đáp án đúng là **soup** (món súp / canh). Trong mùa đông, mọi người thích ăn 'warm vegetable soup' (súp rau củ ấm nóng) bằng thìa đựng trong bát. Stairs = cầu thang; pencils = bút chì; coats = áo khoác."}, {"id": 11, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 11: Things we eat and drink", "question": "Listen to the café story. Is the sentence TRUE or FALSE?\n\nSentence: Chef Paul uses onions and black pepper in his sweet fruit salad.", "audioScript": "Welcome to Rainbow Café! Chef Paul is making a big colorful fruit salad for lunch. He chops sweet red apples, fresh yellow bananas, and juicy pineapples. He says: 'Never put onions or pepper in fruit salad, only fresh sweet honey and cold orange juice!'", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"cafeGrad\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fdf4ff\"/>\n      <stop offset=\"100%\" stop-color=\"#fae8ff\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#cafeGrad)\"/>\n  <!-- Chef Hat -->\n  <g transform=\"translate(200, 60)\">\n    <path d=\"M-25,0 C-35,-20 -20,-45 0,-45 C20,-45 35,-20 25,0 Z\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n    <rect x=\"-22\" y=\"0\" width=\"44\" height=\"15\" rx=\"2\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n  </g>\n  <!-- Big Glass Bowl of Fruit Salad -->\n  <g transform=\"translate(200, 150)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"75\" ry=\"32\" fill=\"#bae6fd\" stroke=\"#0284c7\" stroke-width=\"3\" opacity=\"0.8\"/>\n    <!-- Colorful fruit chunks -->\n    <circle cx=\"-35\" cy=\"-5\" r=\"10\" fill=\"#ef4444\"/>\n    <circle cx=\"-15\" cy=\"-10\" r=\"11\" fill=\"#facc15\"/>\n    <circle cx=\"15\" cy=\"-8\" r=\"10\" fill=\"#f97316\"/>\n    <circle cx=\"35\" cy=\"-5\" r=\"9\" fill=\"#22c55e\"/>\n    <circle cx=\"0\" cy=\"5\" r=\"11\" fill=\"#ef4444\"/>\n    <text x=\"0\" y=\"45\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#7e22ce\">Rainbow Fruit Salad</text>\n  </g>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Đầu bếp Paul nói rõ: 'Never put onions or pepper in fruit salad, only fresh sweet honey and cold orange juice!' (Tuyệt đối không bao giờ cho hành tây hay hạt tiêu vào món salad hoa quả ngọt)."}, {"id": 12, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. These are tiny round green vegetables that grow inside a long green pod. Rabbits and children often eat them with rice or chicken. What are they?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Open Green Pea Pod -->\n  <g transform=\"translate(200, 115)\">\n    <!-- Back Pod Shell -->\n    <path d=\"M-120,0 Q0,50 120,0 Q0,75 -120,0 Z\" fill=\"#15803d\"/>\n    <!-- 5 Round Green Peas inside -->\n    <circle cx=\"-75\" cy=\"22\" r=\"14\" fill=\"#4ade80\" stroke=\"#16a34a\" stroke-width=\"2.5\"/>\n    <circle cx=\"-38\" cy=\"30\" r=\"15\" fill=\"#22c55e\" stroke=\"#16a34a\" stroke-width=\"2.5\"/>\n    <circle cx=\"0\" cy=\"32\" r=\"15.5\" fill=\"#4ade80\" stroke=\"#16a34a\" stroke-width=\"2.5\"/>\n    <circle cx=\"38\" cy=\"30\" r=\"15\" fill=\"#22c55e\" stroke=\"#16a34a\" stroke-width=\"2.5\"/>\n    <circle cx=\"75\" cy=\"22\" r=\"14\" fill=\"#4ade80\" stroke=\"#16a34a\" stroke-width=\"2.5\"/>\n    <!-- Highlights on peas -->\n    <circle cx=\"-78\" cy=\"18\" r=\"3\" fill=\"#ffffff\" opacity=\"0.6\"/>\n    <circle cx=\"-41\" cy=\"26\" r=\"3\" fill=\"#ffffff\" opacity=\"0.6\"/>\n    <circle cx=\"-3\" cy=\"28\" r=\"3.5\" fill=\"#ffffff\" opacity=\"0.6\"/>\n    <circle cx=\"35\" cy=\"26\" r=\"3\" fill=\"#ffffff\" opacity=\"0.6\"/>\n    <circle cx=\"72\" cy=\"18\" r=\"3\" fill=\"#ffffff\" opacity=\"0.6\"/>\n  </g>\n  <text x=\"200\" y=\"195\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#15803d\">Green & Healthy Vegetables</text>\n</svg>", "options": ["Peas", "Mangoes", "Burgers", "Nuts"], "correctIndex": 0, "explanation": "Đáp án đúng là **Peas** (những hạt đậu Hà Lan). Định nghĩa: những hạt tròn nhỏ màu xanh lá mọc bên trong quả đậu quả dài ('grow inside a long green pod'). Mangoes = quả xoài; burgers = bánh kẹp thịt; nuts = các loại hạt."}, {"id": 13, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 11: Things we eat and drink", "question": "Sally is a vegetarian. She ______ eat meat or sausages, but she ______ eating cheese omelettes.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Left: Meat with Red Cross (doesn't eat) -->\n  <g transform=\"translate(100, 110)\">\n    <rect x=\"-60\" y=\"-60\" width=\"120\" height=\"120\" rx=\"10\" fill=\"#fee2e2\" stroke=\"#ef4444\" stroke-width=\"2\"/>\n    <ellipse cx=\"0\" cy=\"5\" rx=\"30\" ry=\"18\" fill=\"#b91c1c\"/>\n    <line x1=\"-35\" y1=\"-35\" x2=\"35\" y2=\"35\" stroke=\"#ef4444\" stroke-width=\"6\"/>\n    <line x1=\"35\" y1=\"-35\" x2=\"-35\" y2=\"35\" stroke=\"#ef4444\" stroke-width=\"6\"/>\n    <text x=\"0\" y=\"52\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">NO MEAT</text>\n  </g>\n  <!-- Right: Cheese Omelette with Green Check (likes) -->\n  <g transform=\"translate(300, 110)\">\n    <rect x=\"-60\" y=\"-60\" width=\"120\" height=\"120\" rx=\"10\" fill=\"#dcfce7\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n    <ellipse cx=\"0\" cy=\"5\" rx=\"32\" ry=\"16\" fill=\"#fde047\" stroke=\"#eab308\" stroke-width=\"2\"/>\n    <path d=\"M-20,-10 L-5,10 L25,-25\" stroke=\"#16a34a\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <text x=\"0\" y=\"52\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#15803d\">CHEESE OMELETTE</text>\n  </g>\n</svg>", "options": ["doesn't / likes", "don't / like", "isn't / liking", "doesn't / like"], "correctIndex": 0, "explanation": "Đáp án đúng là **doesn't / likes**. Chủ ngữ 'Sally' là ngôi thứ 3 số ít: câu phủ định dùng trợ động từ **doesn't + V-nguyên mẫu** ('doesn't eat'); câu khẳng định dùng động từ thêm -s: **likes**."}, {"id": 14, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the supermarket fruit shopping trip!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"marketSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#ecfeff\"/>\n      <stop offset=\"100%\" stop-color=\"#cffafe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#marketSky)\"/>\n  <!-- Supermarket Fruit Shelves -->\n  <rect x=\"30\" y=\"40\" width=\"160\" height=\"130\" rx=\"6\" fill=\"#78350f\"/>\n  <rect x=\"40\" y=\"55\" width=\"40\" height=\"30\" fill=\"#f97316\"/>\n  <rect x=\"90\" y=\"55\" width=\"40\" height=\"30\" fill=\"#ef4444\"/>\n  <rect x=\"140\" y=\"55\" width=\"40\" height=\"30\" fill=\"#fde047\"/>\n  <rect x=\"40\" y=\"105\" width=\"40\" height=\"30\" fill=\"#22c55e\"/>\n  <rect x=\"90\" y=\"105\" width=\"40\" height=\"30\" fill=\"#84cc16\"/>\n  <rect x=\"140\" y=\"105\" width=\"40\" height=\"30\" fill=\"#a855f7\"/>\n  <!-- Shopping Trolley Cart -->\n  <g transform=\"translate(250, 110)\">\n    <rect x=\"0\" y=\"0\" width=\"80\" height=\"50\" fill=\"none\" stroke=\"#0284c7\" stroke-width=\"3\"/>\n    <line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"50\" stroke=\"#0284c7\" stroke-width=\"1.5\"/>\n    <line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"50\" stroke=\"#0284c7\" stroke-width=\"1.5\"/>\n    <line x1=\"60\" y1=\"0\" x2=\"60\" y2=\"50\" stroke=\"#0284c7\" stroke-width=\"1.5\"/>\n    <!-- Handle -->\n    <line x1=\"80\" y1=\"10\" x2=\"105\" y2=\"-10\" stroke=\"#0284c7\" stroke-width=\"4\"/>\n    <!-- Wheels -->\n    <circle cx=\"15\" cy=\"58\" r=\"8\" fill=\"#1e293b\"/>\n    <circle cx=\"65\" cy=\"58\" r=\"8\" fill=\"#1e293b\"/>\n    <!-- Fruit inside trolley -->\n    <circle cx=\"25\" cy=\"20\" r=\"10\" fill=\"#ef4444\"/>\n    <circle cx=\"45\" cy=\"18\" r=\"10\" fill=\"#facc15\"/>\n    <circle cx=\"60\" cy=\"22\" r=\"9\" fill=\"#f97316\"/>\n  </g>\n</svg>", "sentences": ["Next, they chose yellow bananas, sweet apples, and green beans from the wooden shelves.", "Finally, they paid the friendly cashier and walked home with full bags.", "First, Charlie and his mum took a silver shopping trolley inside the supermarket.", "Then, Charlie helped put all the fresh fruits carefully into their trolley."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự đi siêu thị mua sắm đồ ăn: 1. Đầu tiên, Charlie và mẹ lấy chiếc xe đẩy mua hàng bằng bạc vào siêu thị (First, Charlie and his mum took...) -> 2. Tiếp theo, hai mẹ con chọn chuối vàng, táo ngọt và đậu que trên kệ (Next, they chose yellow bananas...) -> 3. Sau đó, Charlie giúp xếp hoa quả cẩn thận vào xe đẩy (Then, Charlie helped put...) -> 4. Cuối cùng, thanh toán tiền cho cô thu ngân và xách túi về nhà (Finally, they paid...)."}, {"id": 15, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 11: Things we eat and drink", "question": "Read the story. Answer the question below:\n\n\"Every Sunday evening, Grandma cooks a wonderful family dinner. Her specialty is roast chicken with boiled yellow potatoes and green peas. For dessert, she always bakes a warm apple pie with sweet vanilla ice cream on top!\"\n\nWhat does Grandma serve with the warm apple pie for dessert?", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#fffbeb\"/>\n  <!-- Apple Pie in baking dish -->\n  <g transform=\"translate(140, 115)\">\n    <ellipse cx=\"0\" cy=\"20\" rx=\"60\" ry=\"24\" fill=\"#d97706\"/>\n    <ellipse cx=\"0\" cy=\"12\" rx=\"52\" ry=\"18\" fill=\"#f59e0b\"/>\n    <!-- Crust lattice pattern -->\n    <path d=\"M-30,12 L30,12 M-20,4 L20,20 M-20,20 L20,4\" stroke=\"#b45309\" stroke-width=\"2.5\"/>\n    <text x=\"0\" y=\"60\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#92400e\">Warm Apple Pie</text>\n  </g>\n  <!-- Bowl of Vanilla Ice Cream -->\n  <g transform=\"translate(290, 115)\">\n    <ellipse cx=\"0\" cy=\"25\" rx=\"35\" ry=\"12\" fill=\"#cbd5e1\"/>\n    <!-- Ice cream scoop -->\n    <circle cx=\"0\" cy=\"5\" r=\"20\" fill=\"#fef9c3\" stroke=\"#fde047\" stroke-width=\"2\"/>\n    <text x=\"0\" y=\"60\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#ca8a04\">Vanilla Ice Cream</text>\n  </g>\n</svg>", "options": ["Sweet vanilla ice cream", "Hot tomato soup", "Cold orange juice", "Boiled potatoes"], "correctIndex": 0, "explanation": "Đáp án đúng là **Sweet vanilla ice cream** (Kem vani ngọt ngào). Trong bài đọc nêu rõ: 'she always bakes a warm apple pie with sweet vanilla ice cream on top!'."}, {"id": 16, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 11: Things we eat and drink", "question": "Listen to the summer treat audio. Which picture shows the cool summer treat described?", "audioScript": "On hot summer afternoons, the children love visiting the corner sweet shop. Today, Oliver bought two cold watermelon popsicles. They are bright red with small green tips and taste very sweet and refreshing in the heat!", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#ffe4e6\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#f43f5e\" opacity=\"0.2\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#be123c\">🎧 Listen carefully to choose the summer treat!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Red watermelon popsicles with green tips on wooden sticks", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fee2e2\"/>\n  <!-- Popsicle 1 -->\n  <path d=\"M45,20 L75,20 L70,75 L50,75 Z\" fill=\"#ef4444\" rx=\"4\"/>\n  <rect x=\"50\" y=\"70\" width=\"20\" height=\"8\" fill=\"#15803d\"/>\n  <rect x=\"57\" y=\"78\" width=\"6\" height=\"24\" rx=\"2\" fill=\"#d97706\"/>\n  <!-- Popsicle 2 -->\n  <path d=\"M85,20 L115,20 L110,75 L90,75 Z\" fill=\"#ef4444\" rx=\"4\"/>\n  <rect x=\"90\" y=\"70\" width=\"20\" height=\"8\" fill=\"#15803d\"/>\n  <rect x=\"97\" y=\"78\" width=\"6\" height=\"24\" rx=\"2\" fill=\"#d97706\"/>\n</svg>"}, {"label": "Hot chocolate mug with white marshmallows", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fed7aa\"/>\n  <rect x=\"50\" y=\"40\" width=\"55\" height=\"50\" rx=\"6\" fill=\"#78350f\"/>\n  <path d=\"M105,50 Q122,65 105,78\" stroke=\"#78350f\" stroke-width=\"4\" fill=\"none\"/>\n  <circle cx=\"65\" cy=\"45\" r=\"5\" fill=\"#ffffff\"/>\n  <circle cx=\"85\" cy=\"45\" r=\"5\" fill=\"#ffffff\"/>\n</svg>"}, {"label": "Hot bowl of spicy noodles", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fef3c7\"/>\n  <ellipse cx=\"80\" cy=\"70\" rx=\"40\" ry=\"18\" fill=\"#dc2626\"/>\n  <ellipse cx=\"80\" cy=\"65\" rx=\"32\" ry=\"12\" fill=\"#fde047\"/>\n  <!-- Chopsticks -->\n  <line x1=\"100\" y1=\"40\" x2=\"70\" y2=\"70\" stroke=\"#78350f\" stroke-width=\"3\"/>\n  <line x1=\"108\" y1=\"40\" x2=\"78\" y2=\"70\" stroke=\"#78350f\" stroke-width=\"3\"/>\n</svg>"}, {"label": "Baguette bread loaf", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#f1f5f9\"/>\n  <ellipse cx=\"80\" cy=\"65\" rx=\"55\" ry=\"16\" fill=\"#d97706\"/>\n  <line x1=\"50\" y1=\"60\" x2=\"60\" y2=\"70\" stroke=\"#92400e\" stroke-width=\"2.5\"/>\n  <line x1=\"75\" y1=\"60\" x2=\"85\" y2=\"70\" stroke=\"#92400e\" stroke-width=\"2.5\"/>\n  <line x1=\"100\" y1=\"60\" x2=\"110\" y2=\"70\" stroke=\"#92400e\" stroke-width=\"2.5\"/>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Red watermelon popsicles with green tips on wooden sticks** (Những cây kem que dưa hấu màu đỏ có viền xanh lá trên que gỗ). Trong bài nghe có nói rõ: 'Oliver bought two cold watermelon popsicles. They are bright red with small green tips'."}, {"id": 17, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 11: Things we eat and drink", "question": "You make this quick meal with two slices of bread, and you can put cheese, tomato, eggs, or chicken inside. What is it?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Triangle Cut Sandwiches on Plate -->\n  <g transform=\"translate(200, 120)\">\n    <ellipse cx=\"0\" cy=\"35\" rx=\"90\" ry=\"25\" fill=\"#f1f5f9\" stroke=\"#cbd5e1\" stroke-width=\"2.5\"/>\n    <!-- Triangle Sandwich 1 -->\n    <polygon points=\"-65,25 0,-30 15,25\" fill=\"#fde047\" stroke=\"#d97706\" stroke-width=\"3\"/>\n    <!-- Fillings: Red tomato, green lettuce, cheese -->\n    <line x1=\"-50\" y1=\"18\" x2=\"5\" y2=\"18\" stroke=\"#16a34a\" stroke-width=\"4\"/>\n    <line x1=\"-40\" y1=\"12\" x2=\"0\" y2=\"12\" stroke=\"#ef4444\" stroke-width=\"5\"/>\n    <line x1=\"-30\" y1=\"5\" x2=\"-5\" y2=\"5\" stroke=\"#f59e0b\" stroke-width=\"4\"/>\n    <!-- Triangle Sandwich 2 -->\n    <polygon points=\"-10,25 55,-30 70,25\" fill=\"#fde047\" stroke=\"#d97706\" stroke-width=\"3\"/>\n    <line x1=\"5\" y1=\"18\" x2=\"60\" y2=\"18\" stroke=\"#16a34a\" stroke-width=\"4\"/>\n    <line x1=\"15\" y1=\"12\" x2=\"55\" y2=\"12\" stroke=\"#ef4444\" stroke-width=\"5\"/>\n  </g>\n  <text x=\"200\" y=\"200\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#b45309\">Tasty Lunch Food</text>\n</svg>", "options": ["A sandwich", "A coconut", "A cup of tea", "A bowl of peas"], "correctIndex": 0, "explanation": "Đáp án đúng là **A sandwich** (bánh mì kẹp). Định nghĩa: món ăn làm từ hai lát bánh mì kẹp phô mai, cà chua, trứng hoặc thịt gà bên trong ('two slices of bread, and you can put cheese, tomato, eggs inside'). Coconut = quả dừa; cup of tea = tách trà; bowl of peas = bát đậu."}, {"id": 18, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 11: Things we eat and drink", "question": "At the school canteen, Peter says: \"Excuse me, ______ I have some orange juice and a banana, please?\"", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0f9ff\"/>\n  <!-- Canteen Counter -->\n  <rect x=\"50\" y=\"130\" width=\"300\" height=\"70\" rx=\"6\" fill=\"#0284c7\"/>\n  <!-- Juice Glass and Banana on counter -->\n  <polygon points=\"120,80 145,80 140,128 125,128\" fill=\"#f97316\" stroke=\"#c2410c\" stroke-width=\"2\"/>\n  <path d=\"M165,115 Q185,95 205,115\" stroke=\"#facc15\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/>\n  <!-- Speech Bubble -->\n  <g transform=\"translate(230, 40)\">\n    <rect x=\"0\" y=\"0\" width=\"135\" height=\"55\" rx=\"12\" fill=\"#ffffff\" stroke=\"#38bdf8\" stroke-width=\"2.5\"/>\n    <polygon points=\"20,55 10,70 35,55\" fill=\"#ffffff\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n    <text x=\"67\" y=\"26\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0369a1\">Polite request:</text>\n    <text x=\"67\" y=\"44\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#dc2626\">\"______ I have...?\"</text>\n  </g>\n</svg>", "options": ["Can", "Do", "Am", "Are"], "correctIndex": 0, "explanation": "Đáp án đúng là **Can**. Cấu trúc yêu cầu lịch sự khi gọi món ăn/đồ uống trong tiếng Anh: 'Can I have [food/drink], please?' (Cháu có thể lấy... được không ạ?). Do/Am/Are không dùng để diễn đạt lời yêu cầu này."}, {"id": 19, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 11: Things we eat and drink", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the fresh garden salad story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"saladVegBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#f0fdf4\"/>\n      <stop offset=\"100%\" stop-color=\"#dcfce7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#saladVegBg)\"/>\n  <!-- Big Salad Bowl -->\n  <g transform=\"translate(200, 130)\">\n    <ellipse cx=\"0\" cy=\"15\" rx=\"80\" ry=\"32\" fill=\"#059669\" stroke=\"#047857\" stroke-width=\"3\"/>\n    <ellipse cx=\"0\" cy=\"5\" rx=\"72\" ry=\"25\" fill=\"#34d399\"/>\n    <!-- Green lettuce leaves, red tomato wedges, cucumber slices -->\n    <circle cx=\"-35\" cy=\"0\" r=\"12\" fill=\"#ef4444\"/>\n    <circle cx=\"35\" cy=\"0\" r=\"12\" fill=\"#ef4444\"/>\n    <circle cx=\"0\" cy=\"-8\" r=\"11\" fill=\"#84cc16\"/>\n    <circle cx=\"-15\" cy=\"10\" r=\"11\" fill=\"#84cc16\"/>\n    <circle cx=\"20\" cy=\"10\" r=\"10\" fill=\"#fde047\"/>\n    <!-- Salad fork & spoon crossed -->\n    <line x1=\"-55\" y1=\"-25\" x2=\"0\" y2=\"15\" stroke=\"#e2e8f0\" stroke-width=\"4\"/>\n    <line x1=\"55\" y1=\"-25\" x2=\"0\" y2=\"15\" stroke=\"#e2e8f0\" stroke-width=\"4\"/>\n  </g>\n  <!-- Olive oil bottle on side -->\n  <g transform=\"translate(65, 85)\">\n    <rect x=\"0\" y=\"20\" width=\"22\" height=\"48\" rx=\"4\" fill=\"#ca8a04\" stroke=\"#854d0e\" stroke-width=\"2\"/>\n    <rect x=\"6\" y=\"8\" width=\"10\" height=\"12\" fill=\"#854d0e\"/>\n    <text x=\"11\" y=\"48\" text-anchor=\"middle\" font-size=\"7\" font-weight=\"bold\" fill=\"#ffffff\">OIL</text>\n  </g>\n</svg>", "sentences": ["Next, she chopped red tomatoes, green cucumbers, and fresh carrots.", "Finally, the whole family enjoyed the healthy salad with warm bread for dinner.", "First, Emma washed crisp green lettuce leaves under cold running water.", "Then, she mixed all the vegetables in a big green bowl with a little olive oil."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự làm món salad rau củ tươi: 1. Đầu tiên, Emma rửa sạch xà lách xanh dưới vòi nước mát (First, Emma washed crisp green lettuce...) -> 2. Tiếp theo, bạn thái cà chua đỏ, dưa chuột xanh và cà rốt tươi (Next, she chopped red tomatoes...) -> 3. Sau đó, trộn tất cả rau củ trong chiếc bát lớn với dầu ô-liu (Then, she mixed all the vegetables...) -> 4. Cuối cùng, cả nhà thưởng thức món salad bổ dưỡng cùng bánh mì ấm (Finally, the whole family enjoyed...)."}, {"id": 20, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 11: Things we eat and drink", "question": "Read the story. Is the sentence TRUE or FALSE?\n\n\"Coconuts grow on tall palm trees near the sunny beach. They have got a very hard brown shell on the outside. Inside, you can drink sweet coconut water and eat the delicious white fruit. In hot countries, people love drinking fresh coconut water right on the beach!\"\n\nSentence: Coconuts have got a soft yellow shell on the outside.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"beachCocoBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"65%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#fde047\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#beachCocoBg)\"/>\n  <!-- Palm tree trunk -->\n  <path d=\"M80,220 Q120,110 80,40\" stroke=\"#78350f\" stroke-width=\"12\" fill=\"none\"/>\n  <path d=\"M80,40 Q30,20 20,50 M80,40 Q70,5 50,15 M80,40 Q130,10 140,35 M80,40 Q130,50 150,80\" stroke=\"#16a34a\" stroke-width=\"6\" fill=\"none\"/>\n  <!-- Whole Brown Coconut -->\n  <circle cx=\"230\" cy=\"150\" r=\"28\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"3\"/>\n  <!-- Cut Open Coconut with white fruit inside & straw -->\n  <g transform=\"translate(310, 145)\">\n    <circle cx=\"0\" cy=\"0\" r=\"30\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"3\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"23\" fill=\"#ffffff\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"16\" fill=\"#e0f2fe\"/>\n    <!-- Drinking straw -->\n    <line x1=\"8\" y1=\"-32\" x2=\"0\" y2=\"5\" stroke=\"#ef4444\" stroke-width=\"4\"/>\n  </g>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Trong đoạn văn nêu rõ: 'They have got a very hard brown shell on the outside' (Quả dừa có lớp vỏ cứng màu nâu ở bên ngoài), chứ không phải vỏ mềm màu vàng ('soft yellow shell')."}];
+
+    // State
+    let currentIndex = 0;
+    let userAnswers = {}; // { qId: { selected, isCorrect, skipped } }
+    let soundEnabled = true;
+    let storyCurrentOrder = [];
+
+    // Web Audio Synthesizer (Zero external dependencies)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (!soundEnabled || !audioCtx) return;
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      const now = audioCtx.currentTime;
+
+      if (type === "correct") {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.28);
+        });
+      } else if (type === "incorrect") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.3);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.38);
+      } else if (type === "click") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(600, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } else if (type === "fanfare") {
+        const notes = [440, 554.37, 659.25, 880];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.45);
+        });
+      }
+    }
+
+    // Web Speech API for Listening Questions
+    let activeSpeech = null;
+    let isSpeaking = false;
+
+    function playTTS(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Web Speech API is not supported on this browser.");
+        return;
+      }
+
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setSpeakingState(false);
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86; // 0.85x - 0.9x as required
+      utterance.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoices = voices.filter(v => 
+        v.lang === "en-US" && (v.name.includes("Natural") || v.name.includes("Studio") || v.name.includes("Samantha") || v.name.includes("Google US English") || v.name.includes("Zira") || v.name.includes("Jenny"))
+      );
+      if (preferredVoices.length > 0) {
+        utterance.voice = preferredVoices[0];
+      } else {
+        const anyUS = voices.find(v => v.lang === "en-US");
+        if (anyUS) utterance.voice = anyUS;
+      }
+
+      utterance.onstart = () => {
+        setSpeakingState(true);
+      };
+      utterance.onend = () => {
+        setSpeakingState(false);
+      };
+      utterance.onerror = () => {
+        setSpeakingState(false);
+      };
+
+      activeSpeech = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function setSpeakingState(speaking) {
+      isSpeaking = speaking;
+      const btn = document.getElementById("btn-audio-play");
+      const wave = document.getElementById("audio-wave");
+      const btnText = document.getElementById("audio-btn-text");
+      const btnIcon = document.getElementById("audio-btn-icon");
+      if (speaking) {
+        btn.classList.add("speaking");
+        wave.classList.add("active");
+        btnText.textContent = "Speaking... (Click to Pause)";
+        btnIcon.textContent = "⏸️";
+      } else {
+        btn.classList.remove("speaking");
+        wave.classList.remove("active");
+        btnText.textContent = "Listen to Story";
+        btnIcon.textContent = "▶️";
+      }
+    }
+
+    // Initialize Trail Track
+    function initTrailTrack() {
+      const track = document.getElementById("trail-track");
+      track.innerHTML = "";
+      questQuestions.forEach((q, idx) => {
+        const node = document.createElement("div");
+        node.className = "trail-node";
+        node.id = `trail-node-${idx}`;
+        node.textContent = idx + 1;
+        node.title = `${q.category} - Checkpoint ${idx + 1}`;
+        node.addEventListener("click", () => {
+          playSound("click");
+          goToQuestion(idx);
+        });
+        track.appendChild(node);
+      });
+      updateTrailUI();
+    }
+
+    function updateTrailUI() {
+      questQuestions.forEach((q, idx) => {
+        const node = document.getElementById(`trail-node-${idx}`);
+        if (!node) return;
+        node.className = "trail-node";
+        if (idx === currentIndex) {
+          node.classList.add("current");
+        }
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) {
+            node.classList.add("skipped");
+          } else if (userAnswers[q.id].isCorrect) {
+            node.classList.add("correct");
+          } else {
+            node.classList.add("incorrect");
+          }
+        }
+      });
+
+      document.getElementById("trail-progress-text").textContent = `Checkpoint ${currentIndex + 1} / ${questQuestions.length}`;
+      
+      const activeNode = document.getElementById(`trail-node-${currentIndex}`);
+      if (activeNode) {
+        activeNode.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+
+      let correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      document.getElementById("header-gem-score").textContent = correctCount;
+    }
+
+    // Render Question
+    function renderQuestion(index) {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      setSpeakingState(false);
+
+      const q = questQuestions[index];
+      currentIndex = index;
+
+      document.getElementById("q-category-badge").textContent = q.category;
+      document.getElementById("q-unit-badge").textContent = q.unit;
+      document.getElementById("q-counter").textContent = `Checkpoint ${index + 1} of ${questQuestions.length}`;
+      document.getElementById("q-prompt").textContent = q.question;
+
+      const illBox = document.getElementById("q-illustration");
+      if (q.svg) {
+        illBox.innerHTML = q.svg;
+        illBox.style.display = "flex";
+      } else {
+        illBox.style.display = "none";
+      }
+
+      const audioBox = document.getElementById("audio-player-box");
+      const transcriptBox = document.getElementById("audio-transcript-box");
+      const transcriptToggle = document.getElementById("transcript-toggle");
+      if (q.type === "listening" && q.audioScript) {
+        audioBox.style.display = "flex";
+        transcriptBox.textContent = `"${q.audioScript}"`;
+        transcriptBox.classList.remove("visible");
+        transcriptToggle.textContent = "Show Transcript";
+        document.getElementById("btn-audio-play").onclick = () => {
+          playTTS(q.audioScript);
+        };
+      } else {
+        audioBox.style.display = "none";
+      }
+
+      const optsContainer = document.getElementById("options-container");
+      const picContainer = document.getElementById("picture-options-container");
+      const storyContainer = document.getElementById("story-seq-container");
+      optsContainer.style.display = "none";
+      picContainer.style.display = "none";
+      storyContainer.style.display = "none";
+
+      const isAnswered = !!userAnswers[q.id] && !userAnswers[q.id].skipped;
+
+      if (q.type === "speaking_order") {
+        storyContainer.style.display = "flex";
+        renderStorySeq(q, isAnswered);
+      } else if (q.optionsType === "pictures") {
+        picContainer.style.display = "grid";
+        renderPictureOptions(q, isAnswered);
+      } else {
+        optsContainer.style.display = "grid";
+        renderStandardOptions(q, isAnswered);
+      }
+
+      document.getElementById("btn-prev-q").disabled = index === 0;
+      const checkBtn = document.getElementById("btn-check-q");
+      const nextBtn = document.getElementById("btn-next-q");
+      const skipBtn = document.getElementById("btn-skip-q");
+
+      if (isAnswered) {
+        checkBtn.style.display = "none";
+        nextBtn.style.display = "inline-flex";
+        skipBtn.style.display = "none";
+        showFeedback(q, userAnswers[q.id].isCorrect);
+      } else {
+        checkBtn.style.display = "inline-flex";
+        nextBtn.style.display = "none";
+        skipBtn.style.display = "inline-flex";
+        document.getElementById("feedback-panel").classList.remove("visible");
+      }
+
+      updateTrailUI();
+    }
+
+    // Render Standard Options
+    function renderStandardOptions(q, isAnswered) {
+      const container = document.getElementById("options-container");
+      container.innerHTML = "";
+      container.className = q.options.length <= 2 ? "options-grid two-cols" : "options-grid";
+
+      const letters = ["A", "B", "C", "D"];
+      q.options.forEach((optText, optIdx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        if (isAnswered) {
+          btn.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            btn.classList.add("opt-correct");
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            btn.classList.add("opt-incorrect");
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          btn.classList.add("selected");
+        }
+
+        btn.innerHTML = `
+          <div class="option-letter">${letters[optIdx]}</div>
+          <div class="option-label">${optText}</div>
+        `;
+
+        btn.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(btn);
+      });
+    }
+
+    // Render Picture Options
+    function renderPictureOptions(q, isAnswered) {
+      const container = document.getElementById("picture-options-container");
+      container.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.options.forEach((opt, optIdx) => {
+        const card = document.createElement("div");
+        card.className = "pic-option-card";
+        if (isAnswered) {
+          card.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            card.style.borderColor = "#10b981";
+            card.style.background = "#ecfdf5";
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            card.style.borderColor = "#ef4444";
+            card.style.background = "#fef2f2";
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          card.classList.add("selected");
+        }
+
+        card.innerHTML = `
+          <div class="pic-preview-box">${opt.svg}</div>
+          <div class="pic-card-label"><strong>${letters[optIdx]}.</strong> ${opt.label}</div>
+        `;
+
+        card.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".pic-option-card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(card);
+      });
+    }
+
+    // Render Story Sequencing
+    function renderStorySeq(q, isAnswered) {
+      const container = document.getElementById("story-seq-container");
+      container.innerHTML = "";
+
+      if (!storyCurrentOrder || storyCurrentOrder.length !== q.sentences.length) {
+        if (userAnswers[q.id] && userAnswers[q.id].order) {
+          storyCurrentOrder = [...userAnswers[q.id].order];
+        } else {
+          storyCurrentOrder = q.sentences.map((_, i) => i);
+        }
+      }
+
+      storyCurrentOrder.forEach((sentenceIdx, rankIdx) => {
+        const item = document.createElement("div");
+        item.className = "story-card";
+        item.draggable = !isAnswered;
+
+        item.innerHTML = `
+          <div class="story-card-left">
+            <div class="story-rank">${rankIdx + 1}</div>
+            <div class="story-text">${q.sentences[sentenceIdx]}</div>
+          </div>
+          ${!isAnswered ? `
+            <div class="story-arrows">
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, -1)">▲</button>
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, 1)">▼</button>
+            </div>
+          ` : ""}
+        `;
+
+        if (!isAnswered) {
+          item.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", rankIdx);
+            item.classList.add("dragging");
+          });
+          item.addEventListener("dragend", () => {
+            item.classList.remove("dragging");
+          });
+          item.addEventListener("dragover", (e) => {
+            e.preventDefault();
+          });
+          item.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const fromRank = parseInt(e.dataTransfer.getData("text/plain"), 10);
+            const toRank = rankIdx;
+            if (fromRank !== toRank) {
+              const moved = storyCurrentOrder.splice(fromRank, 1)[0];
+              storyCurrentOrder.splice(toRank, 0, moved);
+              playSound("click");
+              renderStorySeq(q, false);
+            }
+          });
+        }
+
+        container.appendChild(item);
+      });
+    }
+
+    window.moveStoryItem = function(index, delta) {
+      const target = index + delta;
+      if (target < 0 || target >= storyCurrentOrder.length) return;
+      const temp = storyCurrentOrder[index];
+      storyCurrentOrder[index] = storyCurrentOrder[target];
+      storyCurrentOrder[target] = temp;
+      playSound("click");
+      const q = questQuestions[currentIndex];
+      renderStorySeq(q, false);
+    };
+
+    // Show Feedback Box
+    function showFeedback(q, isCorrect) {
+      const panel = document.getElementById("feedback-panel");
+      panel.className = "feedback-panel visible " + (isCorrect ? "correct-theme" : "incorrect-theme");
+      
+      const icon = document.getElementById("feedback-status-icon");
+      const statusText = document.getElementById("feedback-status-text");
+      if (isCorrect) {
+        icon.textContent = "🎉";
+        statusText.textContent = "Delicious! That is the right recipe!";
+      } else {
+        icon.textContent = "🍴";
+        statusText.textContent = "Good try! Let's read the chef's clue below!";
+      }
+
+      document.getElementById("feedback-vn-text").innerHTML = q.explanation.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    // Check Answer Handler
+    function handleCheckAnswer() {
+      const q = questQuestions[currentIndex];
+
+      if (q.type === "speaking_order") {
+        const isMatch = JSON.stringify(storyCurrentOrder) === JSON.stringify(q.correctOrder);
+        userAnswers[q.id] = {
+          order: [...storyCurrentOrder],
+          isCorrect: isMatch,
+          skipped: false
+        };
+      } else {
+        if (!userAnswers[q.id] || userAnswers[q.id].selected === undefined) {
+          alert("Please choose an answer first!");
+          return;
+        }
+        const isMatch = userAnswers[q.id].selected === q.correctIndex;
+        userAnswers[q.id].isCorrect = isMatch;
+      }
+
+      const isCorrect = userAnswers[q.id].isCorrect;
+      if (isCorrect) {
+        playSound("correct");
+        triggerConfetti();
+      } else {
+        playSound("incorrect");
+      }
+
+      renderQuestion(currentIndex);
+    }
+
+    // Skip Handler
+    function handleSkip() {
+      const q = questQuestions[currentIndex];
+      userAnswers[q.id] = { skipped: true };
+      playSound("click");
+      goToNext();
+    }
+
+    function goToNext() {
+      if (currentIndex < questQuestions.length - 1) {
+        goToQuestion(currentIndex + 1);
+      } else {
+        checkFinishQuest();
+      }
+    }
+
+    function goToQuestion(idx) {
+      renderQuestion(idx);
+    }
+
+    function checkFinishQuest() {
+      const skippedCount = Object.values(userAnswers).filter(a => a.skipped).length;
+      const unansweredCount = questQuestions.filter(q => !userAnswers[q.id]).length;
+      const incomplete = skippedCount + unansweredCount;
+
+      if (incomplete > 0) {
+        const confirmFinish = confirm(`You still have ${incomplete} question(s) skipped or unanswered! Do you want to finish the quest now?`);
+        if (!confirmFinish) {
+          openMapModal();
+          return;
+        }
+      }
+      showResults();
+    }
+
+    // Show Results
+    function showResults() {
+      document.getElementById("quest-card").style.display = "none";
+      const resultsScreen = document.getElementById("results-screen");
+      resultsScreen.classList.add("visible");
+
+      playSound("fanfare");
+      triggerConfetti();
+
+      const total = questQuestions.length;
+      const correct = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      const pct = Math.round((correct / total) * 100);
+
+      document.getElementById("result-score-num").textContent = `${correct}/${total}`;
+      document.getElementById("result-score-pct").textContent = `${pct}% Correct`;
+
+      let rank = "🌟 Rising Junior Chef!";
+      if (pct >= 90) rank = "👑 Legendary Grand Master Chef of Flavors!";
+      else if (pct >= 75) rank = "🏆 Master Executive Chef!";
+      else if (pct >= 50) rank = "🍴 Talented Kitchen Explorer!";
+      document.getElementById("result-rank-title").textContent = rank;
+
+      const skills = {
+        "Listening": { correct: 0, total: 0, icon: "🎧" },
+        "Reading & Writing": { correct: 0, total: 0, icon: "📖" },
+        "Speaking": { correct: 0, total: 0, icon: "🗣️" },
+        "Vocabulary": { correct: 0, total: 0, icon: "🔤" },
+        "Grammar": { correct: 0, total: 0, icon: "⚙️" }
+      };
+
+      questQuestions.forEach(q => {
+        if (skills[q.skill]) {
+          skills[q.skill].total++;
+          if (userAnswers[q.id] && userAnswers[q.id].isCorrect) {
+            skills[q.skill].correct++;
+          }
+        }
+      });
+
+      const skillGrid = document.getElementById("skill-breakdown-grid");
+      skillGrid.innerHTML = "";
+      for (const [skName, data] of Object.entries(skills)) {
+        const card = document.createElement("div");
+        card.className = "skill-stat-card";
+        card.innerHTML = `
+          <div class="skill-stat-title">${data.icon} ${skName}</div>
+          <div class="skill-stat-value">${data.correct} / ${data.total}</div>
+        `;
+        skillGrid.appendChild(card);
+      }
+    }
+
+    // Map Modal
+    function openMapModal() {
+      const modal = document.getElementById("quest-map-modal");
+      const grid = document.getElementById("grid-checkpoints");
+      grid.innerHTML = "";
+
+      questQuestions.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "grid-node-btn";
+        if (idx === currentIndex) btn.classList.add("current");
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) btn.classList.add("skipped");
+          else if (userAnswers[q.id].isCorrect) btn.classList.add("correct");
+          else btn.classList.add("incorrect");
+        }
+
+        btn.innerHTML = `
+          <span>#${idx + 1}</span>
+          <span style="font-size: 10px; font-weight: normal;">${q.skill.slice(0, 4)}</span>
+        `;
+        btn.onclick = () => {
+          modal.classList.remove("open");
+          goToQuestion(idx);
+        };
+        grid.appendChild(btn);
+      });
+
+      modal.classList.add("open");
+    }
+
+    // Confetti
+    function triggerConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#f59e0b", "#10b981", "#fb923c", "#ef4444", "#ec4899", "#8b5cf6"];
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.4,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 14,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35;
+          p.rotation += p.vRot;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frames++;
+        if (frames < 75) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    // Listeners
+    document.getElementById("btn-check-q").addEventListener("click", handleCheckAnswer);
+    document.getElementById("btn-next-q").addEventListener("click", goToNext);
+    document.getElementById("btn-skip-q").addEventListener("click", handleSkip);
+    document.getElementById("btn-prev-q").addEventListener("click", () => {
+      if (currentIndex > 0) goToQuestion(currentIndex - 1);
+    });
+
+    document.getElementById("btn-open-map").addEventListener("click", openMapModal);
+    document.getElementById("btn-close-modal").addEventListener("click", () => {
+      document.getElementById("quest-map-modal").classList.remove("open");
+    });
+
+    document.getElementById("btn-sound-toggle").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById("sound-icon").textContent = soundEnabled ? "🔊" : "🔇";
+    });
+
+    document.getElementById("transcript-toggle").addEventListener("click", () => {
+      const box = document.getElementById("audio-transcript-box");
+      const toggle = document.getElementById("transcript-toggle");
+      box.classList.toggle("visible");
+      toggle.textContent = box.classList.contains("visible") ? "Hide Transcript" : "Show Transcript";
+    });
+
+    document.getElementById("btn-restart-quest").addEventListener("click", () => {
+      userAnswers = {};
+      currentIndex = 0;
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      initTrailTrack();
+      renderQuestion(0);
+    });
+
+    document.getElementById("btn-review-all").addEventListener("click", () => {
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      goToQuestion(0);
+    });
+
+    // Start App
+    initTrailTrack();
+    renderQuestion(0);
+  </script>
+</body>
+</html>
