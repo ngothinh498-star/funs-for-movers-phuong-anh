@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Homes Explorer Quest - Cambridge Movers Unit 13: Different Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #f59e0b;
+      --accent-dark: #d97706;
+      --theme-emerald: #059669;
+      --theme-indigo: #4f46e5;
+      --success: #10b981;
+      --success-dark: #059669;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --bg-gradient: linear-gradient(180deg, #38bdf8 0%, #818cf8 28%, #f472b6 62%, #fde047 88%, #4ade80 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 20px 35px -5px rgba(0, 0, 0, 0.15);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Fredoka', 'Quicksand', -apple-system, sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: #1e293b;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 70px;
+    }
+
+    /* Living Animated Environment */
+    .bg-scenery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Floating Clouds */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 50px;
+      opacity: 0.85;
+      filter: blur(1px);
+      animation: floatCloud linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .cloud-1 {
+      width: 170px; height: 52px; top: 6%; left: -200px;
+      animation-duration: 44s;
+    }
+    .cloud-1::before { width: 75px; height: 75px; top: -32px; left: 25px; }
+    .cloud-1::after { width: 55px; height: 55px; top: -22px; left: 85px; }
+
+    .cloud-2 {
+      width: 230px; height: 68px; top: 18%; left: -260px;
+      animation-duration: 60s; animation-delay: 11s;
+    }
+    .cloud-2::before { width: 95px; height: 95px; top: -42px; left: 35px; }
+    .cloud-2::after { width: 75px; height: 75px; top: -28px; left: 115px; }
+
+    .cloud-3 {
+      width: 140px; height: 44px; top: 28%; left: -160px;
+      animation-duration: 38s; animation-delay: 4s;
+    }
+    .cloud-3::before { width: 55px; height: 55px; top: -24px; left: 20px; }
+    .cloud-3::after { width: 45px; height: 45px; top: -18px; left: 70px; }
+
+    @keyframes floatCloud {
+      from { transform: translateX(-240px); }
+      to { transform: translateX(calc(100vw + 300px)); }
+    }
+
+    /* Floating Hot Air Balloon on Top Right */
+    .air-balloon {
+      position: absolute;
+      top: 35px;
+      right: 4%;
+      width: 60px;
+      height: 80px;
+      animation: balloonGentleBob 6s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes balloonGentleBob {
+      0% { transform: translateY(0px) rotate(2deg); }
+      100% { transform: translateY(-20px) rotate(-3deg); }
+    }
+
+    /* Floating Castle Crest on Left */
+    .floating-castle-crest {
+      position: absolute;
+      top: 45px;
+      left: 3%;
+      width: 55px;
+      height: 60px;
+      animation: crestGentleBob 5s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    @keyframes crestGentleBob {
+      0% { transform: translateY(0) rotate(-3deg); }
+      100% { transform: translateY(-16px) rotate(4deg); }
+    }
+
+    /* Horizon Mountain & Valley Strip at bottom */
+    .horizon-strip {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 52px;
+      background: #15803d;
+      border-top: 4px solid #166534;
+      z-index: 1;
+    }
+    .horizon-hills {
+      position: absolute;
+      top: -16px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: repeating-linear-gradient(90deg, #22c55e 0, #22c55e 40px, #16a34a 40px, #16a34a 80px);
+      clip-path: polygon(0 100%, 5% 20%, 10% 100%, 15% 10%, 20% 100%, 25% 30%, 30% 100%, 35% 15%, 40% 100%, 45% 25%, 50% 100%, 55% 10%, 60% 100%, 65% 20%, 70% 100%, 75% 15%, 80% 100%, 85% 25%, 90% 100%, 95% 15%, 100% 100%);
+    }
+
+    /* Container */
+    .app-container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 15px auto 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Top Header */
+    .top-header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+      border: 3px solid #ffffff;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      font-size: 34px;
+      animation: globeBounce 2s ease infinite;
+    }
+    @keyframes globeBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(6deg); }
+    }
+    .brand-text h1 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #0369a1;
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 13px;
+      color: #4338ca;
+      font-weight: 600;
+      background: #e0e7ff;
+      padding: 2px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      border: 1px solid #c7d2fe;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-tool {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-tool:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .score-badge {
+      background: linear-gradient(135deg, #fef08a, #f59e0b);
+      color: #78350f;
+      padding: 7px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+      border: 2px solid #fde68a;
+    }
+
+    /* Milestone Trail (20 Checkpoints) */
+    .trail-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      border: 3px solid #ffffff;
+    }
+    .trail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .trail-label {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #4338ca;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trail-stats {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .trail-track-wrapper {
+      position: relative;
+      overflow-x: auto;
+      padding: 8px 4px 14px 4px;
+      scrollbar-width: thin;
+      scrollbar-color: #818cf8 #e0e7ff;
+    }
+    .trail-track-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+    .trail-track-wrapper::-webkit-scrollbar-thumb {
+      background: #818cf8;
+      border-radius: 4px;
+    }
+    .trail-track {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 680px;
+    }
+    .trail-node {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2px solid #cbd5e1;
+      flex-shrink: 0;
+    }
+    .trail-node:hover {
+      transform: scale(1.18);
+    }
+    .trail-node.current {
+      background: #4f46e5;
+      color: #ffffff;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.45);
+      transform: scale(1.22);
+    }
+    .trail-node.correct {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #a7f3d0;
+    }
+    .trail-node.incorrect {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #fca5a5;
+    }
+    .trail-node.skipped {
+      background: #f97316;
+      color: #ffffff;
+      border-color: #fed7aa;
+    }
+
+    /* Main Question Card */
+    .quest-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 30px;
+      border: 4px solid #ffffff;
+      position: relative;
+    }
+
+    /* Meta Badges */
+    .q-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .q-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-category {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-unit {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+    }
+    .checkpoint-number {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4338ca;
+      background: #e0e7ff;
+      padding: 6px 14px;
+      border-radius: 16px;
+    }
+
+    /* Question Prompt */
+    .q-prompt {
+      font-size: 19px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      white-space: pre-line;
+    }
+
+    /* Illustration Box */
+    .q-illustration {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto 24px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border: 3px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .q-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Audio Player Widget */
+    .audio-player-box {
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      border: 2px solid #c7d2fe;
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audio-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .audio-voice-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #4338ca;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid #c7d2fe;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .btn-audio-play {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      padding: 10px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-audio-play:hover {
+      background: linear-gradient(135deg, #4338ca, #3730a3);
+      transform: translateY(-2px);
+    }
+    .btn-audio-play.speaking {
+      background: linear-gradient(135deg, #10b981, #059669);
+      animation: pulsePlay 1.2s infinite;
+    }
+    @keyframes pulsePlay {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    }
+
+    .audio-wave {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 28px;
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+    .wave-bar {
+      width: 4px;
+      background: #818cf8;
+      border-radius: 3px;
+      height: 6px;
+      transition: height 0.15s ease;
+    }
+    .audio-wave.active .wave-bar {
+      animation: waveDance 1s ease infinite alternate;
+    }
+    .audio-wave.active .wave-bar:nth-child(1) { animation-delay: 0.1s; height: 16px; }
+    .audio-wave.active .wave-bar:nth-child(2) { animation-delay: 0.3s; height: 24px; }
+    .audio-wave.active .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+    .audio-wave.active .wave-bar:nth-child(4) { animation-delay: 0.4s; height: 22px; }
+    .audio-wave.active .wave-bar:nth-child(5) { animation-delay: 0.15s; height: 18px; }
+    .audio-wave.active .wave-bar:nth-child(6) { animation-delay: 0.35s; height: 26px; }
+    .audio-wave.active .wave-bar:nth-child(7) { animation-delay: 0.25s; height: 12px; }
+
+    @keyframes waveDance {
+      0% { height: 6px; }
+      100% { height: 26px; }
+    }
+
+    .transcript-toggle {
+      font-size: 12px;
+      color: #4f46e5;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-weight: 600;
+      text-align: right;
+    }
+    .audio-transcript-box {
+      font-size: 13.5px;
+      color: #334155;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px dashed #c7d2fe;
+      display: none;
+      font-style: italic;
+    }
+    .audio-transcript-box.visible {
+      display: block;
+    }
+
+    /* Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .options-grid.two-cols {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .option-btn {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+    .option-btn:hover:not(.locked) {
+      border-color: #818cf8;
+      background: #eef2ff;
+      transform: translateY(-2px);
+    }
+    .option-btn.selected {
+      border-color: #4f46e5;
+      background: #e0e7ff;
+    }
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .option-btn.selected .option-letter {
+      background: #4f46e5;
+      color: #ffffff;
+    }
+
+    /* Picture Options Cards */
+    .picture-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    .pic-option-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .pic-option-card:hover:not(.locked) {
+      border-color: #818cf8;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .pic-option-card.selected {
+      border-color: #4f46e5;
+      background: #eef2ff;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+    }
+    .pic-preview-box {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: #f8fafc;
+    }
+    .pic-card-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.3;
+    }
+
+    /* Drag & Drop Story Sequencing */
+    .story-seq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .story-card {
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: grab;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .story-card:active {
+      cursor: grabbing;
+    }
+    .story-card.dragging {
+      opacity: 0.4;
+      background: #f1f5f9;
+      border-style: dashed;
+    }
+    .story-card-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-grow: 1;
+    }
+    .story-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .story-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+    .story-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .btn-arrow {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      color: #475569;
+      transition: background 0.15s;
+    }
+    .btn-arrow:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Actions Footer */
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 2px dashed #e2e8f0;
+    }
+    .actions-left, .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      border: none;
+      border-radius: 18px;
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-check {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+    .btn-check:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+    }
+    .btn-check:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn-skip {
+      background: #fff7ed;
+      color: #ea580c;
+      border: 2px solid #fed7aa;
+    }
+    .btn-skip:hover {
+      background: #ffedd5;
+      transform: translateY(-2px);
+    }
+    .btn-nav {
+      background: #f1f5f9;
+      color: #334155;
+      border: 2px solid #cbd5e1;
+    }
+    .btn-nav:hover:not(:disabled) {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+    .btn-nav:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Explanation & Feedback Card (Vietnamese) */
+    .feedback-panel {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 20px;
+      display: none;
+      animation: slideUp 0.3s ease forwards;
+    }
+    .feedback-panel.visible {
+      display: block;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .feedback-panel.correct-theme {
+      background: #ecfdf5;
+      border: 3px solid #6ee7b7;
+    }
+    .feedback-panel.incorrect-theme {
+      background: #fff1f2;
+      border: 3px solid #fecdd3;
+    }
+    .feedback-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .correct-theme .feedback-status { color: #047857; }
+    .incorrect-theme .feedback-status { color: #be123c; }
+
+    .vn-explanation-box {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 18px;
+      border-left: 5px solid #4f46e5;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .vn-explanation-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4338ca;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .vn-explanation-text {
+      font-size: 14.5px;
+      color: #334155;
+      line-height: 1.6;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Option Result Styling */
+    .option-btn.opt-correct {
+      border-color: #10b981 !important;
+      background: #ecfdf5 !important;
+      color: #065f46 !important;
+    }
+    .option-btn.opt-correct .option-letter {
+      background: #10b981 !important;
+      color: #ffffff !important;
+    }
+    .option-btn.opt-incorrect {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      color: #991b1b !important;
+    }
+    .option-btn.opt-incorrect .option-letter {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+    }
+
+    /* Modal Overlay (All 20 Checkpoints) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 620px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #c7d2fe;
+      animation: popIn 0.25s ease forwards;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4338ca;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-modal {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .grid-checkpoints {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .grid-node-btn {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.2s;
+    }
+    .grid-node-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    .grid-node-btn.correct { background: #d1fae5; border-color: #10b981; color: #047857; }
+    .grid-node-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .grid-node-btn.skipped { background: #ffedd5; border-color: #f97316; color: #c2410c; }
+    .grid-node-btn.current { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); }
+
+    /* Results Screen */
+    .results-screen {
+      display: none;
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid #fde047;
+      text-align: center;
+      animation: popIn 0.3s ease;
+    }
+    .results-screen.visible {
+      display: block;
+    }
+    .explorer-trophy {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 16px auto;
+      animation: floatExpTrophy 3s ease-in-out infinite alternate;
+    }
+    @keyframes floatExpTrophy {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    .result-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #4338ca;
+      margin-bottom: 8px;
+    }
+    .result-rank {
+      font-size: 16px;
+      font-weight: 700;
+      color: #b45309;
+      background: #fef3c7;
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      border: 2px solid #fde68a;
+    }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #818cf8, #4f46e5);
+      color: #ffffff;
+      margin: 0 auto 24px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+    }
+    .score-number {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .skill-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .skill-stat-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .skill-stat-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .skill-stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @media (max-width: 640px) {
+      .app-container { padding: 10px; }
+      .quest-card { padding: 18px 14px; }
+      .q-prompt { font-size: 16px; }
+      .top-header { padding: 10px 14px; }
+      .brand-text h1 { font-size: 16px; }
+      .card-actions { justify-content: center; }
+      .actions-left, .actions-right { width: 100%; justify-content: center; }
+      .btn-action { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Living Animated World Environment -->
+  <div class="bg-scenery">
+    <!-- Drifting Clouds -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <!-- Floating Explorer Balloon -->
+    <div class="air-balloon">
+      <svg viewBox="0 0 60 80" width="100%" height="100%">
+        <!-- Balloon Body -->
+        <ellipse cx="30" cy="28" rx="26" ry="28" fill="#4f46e5"/>
+        <path d="M10,28 C10,12 20,4 30,4 C40,4 50,12 50,28 C50,42 38,54 30,54 C22,54 10,42 10,28 Z" fill="#facc15"/>
+        <ellipse cx="30" cy="28" rx="8" ry="26" fill="#ef4444"/>
+        <!-- Ropes & Basket -->
+        <line x1="20" y1="54" x2="24" y2="66" stroke="#78350f" stroke-width="2"/>
+        <line x1="40" y1="54" x2="36" y2="66" stroke="#78350f" stroke-width="2"/>
+        <rect x="23" y="66" width="14" height="12" rx="2" fill="#78350f"/>
+      </svg>
+    </div>
+
+    <!-- Floating Castle Crest Icon -->
+    <div class="floating-castle-crest">
+      <svg viewBox="0 0 55 60" width="100%" height="100%">
+        <polygon points="10,15 27,5 45,15 45,45 27,55 10,45" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+        <path d="M18,35 L18,22 L22,22 L22,26 L27,26 L27,22 L31,22 L31,26 L36,26 L36,22 L40,22 L40,35 Z" fill="#4338ca"/>
+      </svg>
+    </div>
+
+    <!-- Horizon Hills & Grass at Bottom -->
+    <div class="horizon-strip">
+      <div class="horizon-hills"></div>
+    </div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Top Header Bar -->
+    <header class="top-header">
+      <div class="brand-title">
+        <div class="brand-icon">🏰</div>
+        <div class="brand-text">
+          <h1>World Homes Explorer Quest</h1>
+          <span>Movers Unit 13: Different Homes</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-tool" id="btn-open-map" title="View World Homes Map">
+          <span>🗺️</span>
+          <span>World Map</span>
+        </button>
+        <button class="btn-tool" id="btn-sound-toggle" title="Toggle Sound">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <div class="score-badge">
+          <span>🧭</span>
+          <span id="header-gem-score">0</span>
+          <span>Compass Badges</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Milestone Trail Strip (20 Checkpoints) -->
+    <section class="trail-card">
+      <div class="trail-header">
+        <span class="trail-label">🌍 Global Homes Discovery Trail</span>
+        <span class="trail-stats" id="trail-progress-text">Checkpoint 1 / 20</span>
+      </div>
+      <div class="trail-track-wrapper">
+        <div class="trail-track" id="trail-track">
+          <!-- 20 Node Buttons injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Question Card -->
+    <main class="quest-card" id="quest-card">
+      <!-- Meta Badges -->
+      <div class="q-meta">
+        <div class="q-badges">
+          <span class="badge-category" id="q-category-badge">🔤 Word Master</span>
+          <span class="badge-unit" id="q-unit-badge">Unit 13: Different homes</span>
+        </div>
+        <div class="checkpoint-number" id="q-counter">Checkpoint 1 of 20</div>
+      </div>
+
+      <!-- Question Prompt -->
+      <div class="q-prompt" id="q-prompt">Loading question...</div>
+
+      <!-- Question SVG Illustration -->
+      <div class="q-illustration" id="q-illustration"></div>
+
+      <!-- Audio Player Widget -->
+      <div class="audio-player-box" id="audio-player-box" style="display: none;">
+        <div class="audio-player-header">
+          <div class="audio-voice-tag">🎙️ Native US Storyteller (0.86x Clear & Expressive)</div>
+          <button class="transcript-toggle" id="transcript-toggle">Show Transcript</button>
+        </div>
+        <div class="audio-controls">
+          <button class="btn-audio-play" id="btn-audio-play">
+            <span id="audio-btn-icon">▶️</span>
+            <span id="audio-btn-text">Listen to Story</span>
+          </button>
+          <div class="audio-wave" id="audio-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+        <div class="audio-transcript-box" id="audio-transcript-box"></div>
+      </div>
+
+      <!-- Standard Multiple Choice / True-False Options -->
+      <div class="options-grid" id="options-container" style="display: none;"></div>
+
+      <!-- Picture Choice Options -->
+      <div class="picture-options-grid" id="picture-options-container" style="display: none;"></div>
+
+      <!-- Story Sequencing Drag & Drop -->
+      <div class="story-seq-list" id="story-seq-container" style="display: none;"></div>
+
+      <!-- Action Buttons Footer -->
+      <footer class="card-actions">
+        <div class="actions-left">
+          <button class="btn-action btn-nav" id="btn-prev-q">⬅ Back</button>
+          <button class="btn-action btn-skip" id="btn-skip-q">Skip for Now ↷</button>
+        </div>
+        <div class="actions-right">
+          <button class="btn-action btn-check" id="btn-check-q">Check Answer ⭐</button>
+          <button class="btn-action btn-nav" id="btn-next-q" style="display: none;">Next Destination ➔</button>
+        </div>
+      </footer>
+
+      <!-- Feedback & Detailed Vietnamese Explanation Panel -->
+      <div class="feedback-panel" id="feedback-panel">
+        <div class="feedback-status" id="feedback-status">
+          <span id="feedback-status-icon">🎉</span>
+          <span id="feedback-status-text">Brilliant! That's correct!</span>
+        </div>
+        <div class="vn-explanation-box">
+          <div class="vn-explanation-title">
+            <span>💡</span>
+            <span>Giải Thích Chi Tiết Cho Bé:</span>
+          </div>
+          <div class="vn-explanation-text" id="feedback-vn-text"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Results Screen -->
+    <div class="results-screen" id="results-screen">
+      <div class="explorer-trophy">
+        <svg viewBox="0 0 130 130" width="100%" height="100%">
+          <!-- Golden Compass Star Explorer Award -->
+          <circle cx="65" cy="65" r="42" fill="#4f46e5" stroke="#fbbf24" stroke-width="4"/>
+          <!-- Compass 8-point star -->
+          <polygon points="65,15 72,55 115,65 72,75 65,115 58,75 15,65 58,55" fill="#facc15"/>
+          <polygon points="65,25 70,58 105,65 70,72 65,105 60,72 25,65 60,58" fill="#f59e0b"/>
+          <circle cx="65" cy="65" r="8" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <h2 class="result-title">Expedition Complete!</h2>
+      <div class="result-rank" id="result-rank-title">🏆 Chief Explorer of World Homes</div>
+
+      <div class="score-circle">
+        <div class="score-number" id="result-score-num">20/20</div>
+        <div class="score-label" id="result-score-pct">100% Score</div>
+      </div>
+
+      <div class="skill-stats-grid" id="skill-breakdown-grid">
+        <!-- Breakdown cards injected by JS -->
+      </div>
+
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-action btn-check" id="btn-restart-quest">🔄 Restart World Expedition</button>
+        <button class="btn-action btn-nav" id="btn-review-all">📋 Review All Destinations</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Map Modal -->
+  <div class="modal-overlay" id="quest-map-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>🌍</span>
+          <span>World Homes Map Checkpoints</span>
+        </div>
+        <button class="btn-close-modal" id="btn-close-modal">✕</button>
+      </div>
+      <div class="grid-checkpoints" id="grid-checkpoints">
+        <!-- 20 Checkpoint Grid Items -->
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #64748b; flex-wrap: wrap; gap: 8px;">
+        <div>🟢 Correct</div>
+        <div>🔴 Needs Review</div>
+        <div>🟠 Skipped</div>
+        <div>🔵 Current</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // Embedded Questions Data
+    const questQuestions = [{"id": 1, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 13: Different homes", "question": "Look at the picture. This is a very large old stone building with tall towers, strong flags, and thick walls. Kings, queens, and brave knights lived here in fairy tales. What home is it?", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"castleSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#fef08a\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#castleSky)\"/>\n  <!-- Green hill -->\n  <path d=\"M0,200 Q200,160 400,200 L400,240 L0,240 Z\" fill=\"#15803d\"/>\n  <!-- Castle Moat water -->\n  <path d=\"M0,215 Q200,185 400,215 L400,240 L0,240 Z\" fill=\"#0284c7\" opacity=\"0.7\"/>\n  <!-- Stone Castle Main Keep -->\n  <g transform=\"translate(110, 50)\">\n    <!-- Central Wall -->\n    <rect x=\"40\" y=\"55\" width=\"100\" height=\"95\" fill=\"#94a3b8\" stroke=\"#475569\" stroke-width=\"3\"/>\n    <!-- Battlements -->\n    <rect x=\"40\" y=\"45\" width=\"16\" height=\"15\" fill=\"#64748b\"/>\n    <rect x=\"68\" y=\"45\" width=\"16\" height=\"15\" fill=\"#64748b\"/>\n    <rect x=\"96\" y=\"45\" width=\"16\" height=\"15\" fill=\"#64748b\"/>\n    <rect x=\"124\" y=\"45\" width=\"16\" height=\"15\" fill=\"#64748b\"/>\n    <!-- Left Tower -->\n    <rect x=\"0\" y=\"25\" width=\"45\" height=\"125\" rx=\"3\" fill=\"#cbd5e1\" stroke=\"#475569\" stroke-width=\"3\"/>\n    <polygon points=\"-5,25 22,-10 50,25\" fill=\"#b91c1c\"/>\n    <line x1=\"22\" y1=\"-10\" x2=\"22\" y2=\"-25\" stroke=\"#78350f\" stroke-width=\"2\"/>\n    <polygon points=\"22,-25 38,-20 22,-15\" fill=\"#fbbf24\"/>\n    <!-- Right Tower -->\n    <rect x=\"135\" y=\"25\" width=\"45\" height=\"125\" rx=\"3\" fill=\"#cbd5e1\" stroke=\"#475569\" stroke-width=\"3\"/>\n    <polygon points=\"130,25 157,-10 185,25\" fill=\"#b91c1c\"/>\n    <line x1=\"157\" y1=\"-10\" x2=\"157\" y2=\"-25\" stroke=\"#78350f\" stroke-width=\"2\"/>\n    <polygon points=\"157,-25 173,-20 157,-15\" fill=\"#fbbf24\"/>\n    <!-- Arched Gate & Drawbridge -->\n    <path d=\"M72,150 L72,105 Q90,90 108,105 L108,150 Z\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"2.5\"/>\n    <!-- Portcullis grid -->\n    <line x1=\"84\" y1=\"100\" x2=\"84\" y2=\"150\" stroke=\"#451a03\" stroke-width=\"2\"/>\n    <line x1=\"96\" y1=\"100\" x2=\"96\" y2=\"150\" stroke=\"#451a03\" stroke-width=\"2\"/>\n    <line x1=\"72\" y1=\"120\" x2=\"108\" y2=\"120\" stroke=\"#451a03\" stroke-width=\"2\"/>\n    <line x1=\"72\" y1=\"135\" x2=\"108\" y2=\"135\" stroke=\"#451a03\" stroke-width=\"2\"/>\n    <!-- Windows slits -->\n    <rect x=\"18\" y=\"55\" width=\"8\" height=\"18\" rx=\"2\" fill=\"#1e293b\"/>\n    <rect x=\"153\" y=\"55\" width=\"8\" height=\"18\" rx=\"2\" fill=\"#1e293b\"/>\n  </g>\n</svg>", "options": ["A castle", "A tent", "A houseboat", "A flat"], "correctIndex": 0, "explanation": "Đáp án đúng là **A castle** (lâu đài). Định nghĩa: tòa nhà lớn bằng đá cổ kính có tháp cao, hào nước và tường dày, nơi vua, hoàng hậu và các hiệp sĩ từng sinh sống ('large old stone building with tall towers and thick walls. Kings, queens, and knights lived here'). Tent = lều bạt; houseboat = nhà thuyền; flat = căn hộ chung cư."}, {"id": 2, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 13: Different homes", "question": "Listen to the countryside story. Where does Grandpa live?", "audioScript": "My grandfather does not live in a noisy city or a tall apartment block. He lives in a small cozy cottage on a quiet farm in the countryside. Every morning, he collects fresh brown eggs from his chickens and drinks cold milk on the porch.", "svg": "<svg viewBox=\"0 0 400 240\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"farmSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#e0f2fe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"240\" rx=\"16\" fill=\"url(#farmSky)\"/>\n  <!-- Countryside green pasture -->\n  <rect x=\"0\" y=\"160\" width=\"400\" height=\"80\" fill=\"#22c55e\"/>\n  <!-- Wooden Fence -->\n  <line x1=\"0\" y1=\"175\" x2=\"400\" y2=\"175\" stroke=\"#ffffff\" stroke-width=\"3\"/>\n  <line x1=\"0\" y1=\"190\" x2=\"400\" y2=\"190\" stroke=\"#ffffff\" stroke-width=\"3\"/>\n  <line x1=\"40\" y1=\"165\" x2=\"40\" y2=\"205\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <line x1=\"100\" y1=\"165\" x2=\"100\" y2=\"205\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <line x1=\"300\" y1=\"165\" x2=\"300\" y2=\"205\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <line x1=\"360\" y1=\"165\" x2=\"360\" y2=\"205\" stroke=\"#ffffff\" stroke-width=\"4\"/>\n  <!-- Cozy Cottage -->\n  <g transform=\"translate(130, 75)\">\n    <rect x=\"0\" y=\"30\" width=\"140\" height=\"85\" rx=\"6\" fill=\"#fef3c7\" stroke=\"#b45309\" stroke-width=\"3\"/>\n    <!-- Thatched straw roof -->\n    <polygon points=\"-15,30 70,-15 155,30\" fill=\"#d97706\" stroke=\"#92400e\" stroke-width=\"3\"/>\n    <!-- Chimney with smoke -->\n    <rect x=\"100\" y=\"-10\" width=\"18\" height=\"25\" fill=\"#78350f\"/>\n    <circle cx=\"110\" cy=\"-22\" r=\"6\" fill=\"#94a3b8\" opacity=\"0.6\"/>\n    <circle cx=\"118\" cy=\"-32\" r=\"8\" fill=\"#94a3b8\" opacity=\"0.4\"/>\n    <!-- Wooden door -->\n    <rect x=\"55\" y=\"60\" width=\"30\" height=\"55\" fill=\"#78350f\"/>\n    <circle cx=\"80\" cy=\"88\" r=\"3\" fill=\"#fde047\"/>\n    <!-- Windows with flower boxes -->\n    <rect x=\"15\" y=\"45\" width=\"28\" height=\"28\" rx=\"2\" fill=\"#bae6fd\" stroke=\"#0284c7\" stroke-width=\"2\"/>\n    <rect x=\"95\" y=\"45\" width=\"28\" height=\"28\" rx=\"2\" fill=\"#bae6fd\" stroke=\"#0284c7\" stroke-width=\"2\"/>\n  </g>\n</svg>", "options": ["In a tall apartment block in the city", "In a small cozy cottage on a quiet farm", "On a houseboat in the middle of the sea", "In an igloo in the Arctic"], "correctIndex": 1, "explanation": "Đáp án đúng là **In a small cozy cottage on a quiet farm** (Trong một ngôi nhà tranh ấm cúng trên trang trại yên tĩnh). Trong bài nghe nêu rõ: 'He lives in a small cozy cottage on a quiet farm in the countryside' (Ông sống trong một ngôi nhà tranh ấm cúng ở vùng nông thôn)."}, {"id": 3, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 13: Different homes", "question": "Uncle Jack is a fisherman. He doesn't live on land; he lives ______ a colorful houseboat ______ the river.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"riverSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#e0f2fe\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#riverSky)\"/>\n  <!-- Blue River water -->\n  <rect x=\"0\" y=\"140\" width=\"400\" height=\"80\" fill=\"#0284c7\"/>\n  <path d=\"M0,140 Q100,132 200,140 Q300,148 400,140\" stroke=\"#38bdf8\" stroke-width=\"4\" fill=\"none\"/>\n  <!-- Floating Houseboat -->\n  <g transform=\"translate(120, 75)\">\n    <!-- Boat Hull -->\n    <path d=\"M0,65 L170,65 L155,95 L15,95 Z\" fill=\"#0369a1\" stroke=\"#0c4a6e\" stroke-width=\"3\"/>\n    <!-- House structure on boat -->\n    <rect x=\"25\" y=\"10\" width=\"115\" height=\"55\" rx=\"4\" fill=\"#facc15\" stroke=\"#ca8a04\" stroke-width=\"2.5\"/>\n    <polygon points=\"20,10 82,-12 145,10\" fill=\"#ef4444\"/>\n    <!-- Windows on boat house -->\n    <circle cx=\"50\" cy=\"35\" r=\"10\" fill=\"#ffffff\" stroke=\"#0284c7\" stroke-width=\"3\"/>\n    <circle cx=\"85\" cy=\"35\" r=\"10\" fill=\"#ffffff\" stroke=\"#0284c7\" stroke-width=\"3\"/>\n    <rect x=\"110\" y=\"25\" width=\"20\" height=\"40\" fill=\"#15803d\"/>\n    <!-- Lifebuoy ring -->\n    <circle cx=\"15\" cy=\"78\" r=\"8\" fill=\"#ffffff\" stroke=\"#ef4444\" stroke-width=\"3\"/>\n  </g>\n</svg>", "options": ["on / on", "in / under", "at / between", "to / behind"], "correctIndex": 0, "explanation": "Đáp án đúng là **on / on**. Giới từ chỉ vị trí nơi chốn: sống trên nhà thuyền dùng 'live **on** a houseboat', và trên mặt sông nước dùng '**on** the river' (lives on a colorful houseboat on the river)."}, {"id": 4, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 13: Different homes", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the igloo building story in the snowy village!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"snowDomeBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#e0f2fe\"/>\n      <stop offset=\"100%\" stop-color=\"#bae6fd\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#snowDomeBg)\"/>\n  <!-- White Snow Ground -->\n  <rect x=\"0\" y=\"160\" width=\"400\" height=\"70\" fill=\"#ffffff\"/>\n  <!-- Dome Igloo -->\n  <g transform=\"translate(190, 110)\">\n    <!-- Main Snow Dome -->\n    <path d=\"M-90,55 C-90,-25 90,-25 90,55 Z\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"3.5\"/>\n    <!-- Snow Block grid lines -->\n    <line x1=\"-80\" y1=\"35\" x2=\"80\" y2=\"35\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <line x1=\"-65\" y1=\"12\" x2=\"65\" y2=\"12\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <line x1=\"-40\" y1=\"-8\" x2=\"40\" y2=\"-8\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <line x1=\"-50\" y1=\"35\" x2=\"-45\" y2=\"55\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n    <line x1=\"0\" y1=\"35\" x2=\"0\" y2=\"55\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n    <line x1=\"50\" y1=\"35\" x2=\"45\" y2=\"55\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n    <line x1=\"-25\" y1=\"12\" x2=\"-25\" y2=\"35\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n    <line x1=\"25\" y1=\"12\" x2=\"25\" y2=\"35\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n    <!-- Tunnel Entrance -->\n    <path d=\"M-85,55 L-85,30 Q-65,15 -45,30 L-45,55 Z\" fill=\"#e2e8f0\" stroke=\"#94a3b8\" stroke-width=\"3\"/>\n    <path d=\"M-80,55 L-80,35 Q-65,22 -50,35 L-50,55 Z\" fill=\"#0f172a\"/>\n  </g>\n  <!-- Lantern glow outside -->\n  <circle cx=\"310\" cy=\"155\" r=\"6\" fill=\"#facc15\"/>\n</svg>", "sentences": ["Next, they stacked thick blocks of white snow in a tall round circle.", "Finally, they lit a warm oil lantern inside their snug snow house.", "On a freezing winter morning, two children went outside to build an igloo.", "Then, they made a small curved doorway and smoothed the dome roof."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện xây nhà tuyết igloo: 1. Vào buổi sáng mùa đông lạnh giá, hai bạn nhỏ ra ngoài xây nhà tuyết (On a freezing winter morning...) -> 2. Tiếp theo, xếp các khối tuyết trắng thành vòng tròn (Next, they stacked thick blocks of white snow...) -> 3. Sau đó, làm cửa vòm nhỏ và gọt nhẵn mái vòm (Then, they made a small curved doorway...) -> 4. Cuối cùng, thắp ngọn đèn lồng dầu ấm áp bên trong căn nhà tuyết ấm cúng (Finally, they lit a warm oil lantern...)."}, {"id": 5, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 13: Different homes", "question": "Read the story below. Is the sentence TRUE or FALSE?\n\n\"Some families live on houseboats along quiet river canals. These homes float safely on the water, but they cannot travel very fast like speedboats. Inside, they have got a small kitchen, cozy beds, and bright solar lamps. Children living on houseboats love feeding bread to the friendly ducks every morning.\"\n\nSentence: Houseboats travel across the sea very fast like speedboats.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Canal Water -->\n  <rect x=\"0\" y=\"130\" width=\"400\" height=\"90\" fill=\"#0284c7\"/>\n  <!-- Houseboat -->\n  <g transform=\"translate(130, 70)\">\n    <rect x=\"0\" y=\"45\" width=\"150\" height=\"30\" rx=\"4\" fill=\"#0369a1\"/>\n    <rect x=\"20\" y=\"10\" width=\"105\" height=\"40\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <polygon points=\"15,10 72,-10 130,10\" fill=\"#dc2626\"/>\n    <!-- Windows -->\n    <rect x=\"35\" y=\"20\" width=\"16\" height=\"16\" fill=\"#ffffff\"/>\n    <rect x=\"65\" y=\"20\" width=\"16\" height=\"16\" fill=\"#ffffff\"/>\n    <rect x=\"95\" y=\"20\" width=\"16\" height=\"16\" fill=\"#ffffff\"/>\n  </g>\n  <!-- Ducks swimming -->\n  <g transform=\"translate(60, 160)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"14\" ry=\"8\" fill=\"#facc15\"/>\n    <circle cx=\"10\" cy=\"-6\" r=\"6\" fill=\"#facc15\"/>\n    <polygon points=\"15,-6 22,-4 15,-2\" fill=\"#ea580c\"/>\n  </g>\n  <text x=\"200\" y=\"40\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#15803d\">Life on a Houseboat</text>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Trong đoạn văn nêu rõ: 'These homes float safely on the water, but they cannot travel very fast like speedboats' (Nhà thuyền không thể di chuyển rất nhanh như ca-nô cao tốc)."}, {"id": 6, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 13: Different homes", "question": "Listen to the holiday audio. Which picture shows Sarah's holiday home?", "audioScript": "Look at the four different homes! Sarah's family loves holidays out in nature. They do not stay in hotels or tall apartments. They sleep in a big round tent made of green fabric with yellow flags on top, right next to the blue lake.", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#ecfdf5\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#10b981\" opacity=\"0.2\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#047857\">🎧 Listen carefully to choose Sarah's home!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Big round green tent with yellow flags next to a lake", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#dcfce7\"/>\n  <!-- Green tent -->\n  <polygon points=\"20,105 80,25 140,105\" fill=\"#16a34a\" stroke=\"#15803d\" stroke-width=\"2.5\"/>\n  <polygon points=\"60,105 80,55 100,105\" fill=\"#15803d\"/>\n  <!-- Yellow flags on top -->\n  <line x1=\"80\" y1=\"25\" x2=\"80\" y2=\"8\" stroke=\"#78350f\" stroke-width=\"2\"/>\n  <polygon points=\"80,8 98,13 80,18\" fill=\"#facc15\"/>\n  <!-- Lake ripple at bottom -->\n  <path d=\"M10,112 Q80,106 150,112\" stroke=\"#0284c7\" stroke-width=\"3\" fill=\"none\"/>\n</svg>"}, {"label": "Tall gray skyscraper with many glass windows", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#e2e8f0\"/>\n  <rect x=\"50\" y=\"15\" width=\"60\" height=\"95\" fill=\"#64748b\"/>\n  <rect x=\"60\" y=\"25\" width=\"14\" height=\"15\" fill=\"#bae6fd\"/>\n  <rect x=\"85\" y=\"25\" width=\"14\" height=\"15\" fill=\"#bae6fd\"/>\n  <rect x=\"60\" y=\"50\" width=\"14\" height=\"15\" fill=\"#bae6fd\"/>\n  <rect x=\"85\" y=\"50\" width=\"14\" height=\"15\" fill=\"#bae6fd\"/>\n</svg>"}, {"label": "Wooden treehouse high up in a tree", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fef9c3\"/>\n  <circle cx=\"80\" cy=\"50\" r=\"35\" fill=\"#15803d\"/>\n  <rect x=\"55\" y=\"40\" width=\"45\" height=\"32\" fill=\"#b45309\"/>\n  <polygon points=\"50,40 77,22 105,40\" fill=\"#dc2626\"/>\n  <rect x=\"74\" y=\"80\" width=\"12\" height=\"35\" fill=\"#78350f\"/>\n</svg>"}, {"label": "Old stone castle with drawbridge", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fae8ff\"/>\n  <rect x=\"40\" y=\"40\" width=\"80\" height=\"65\" fill=\"#94a3b8\"/>\n  <polygon points=\"35,40 50,20 65,40\" fill=\"#b91c1c\"/>\n  <polygon points=\"95,40 110,20 125,40\" fill=\"#b91c1c\"/>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Big round green tent with yellow flags next to a lake** (Chiếc lều tròn màu xanh lá có cờ vàng cạnh hồ nước). Trong đoạn nghe kể: 'They sleep in a big round tent made of green fabric with yellow flags on top, right next to the blue lake'."}, {"id": 7, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 13: Different homes", "question": "Look at the picture. Thousands of years ago, before people knew how to build houses with bricks, they lived in a deep natural hole inside a rocky mountain. What is it?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"caveRockBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#fdba74\"/>\n      <stop offset=\"100%\" stop-color=\"#fed7aa\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#caveRockBg)\"/>\n  <!-- Mountain Rocky Wall -->\n  <path d=\"M0,0 L400,0 L400,230 L0,230 Z\" fill=\"#64748b\"/>\n  <path d=\"M0,0 Q180,60 260,20 Q350,50 400,0 L400,230 L0,230 Z\" fill=\"#475569\"/>\n  <!-- Big Dark Cave Entrance -->\n  <path d=\"M120,210 C110,100 280,100 280,210 Z\" fill=\"#0f172a\" stroke=\"#334155\" stroke-width=\"6\"/>\n  <!-- Campfire glowing inside cave -->\n  <ellipse cx=\"200\" cy=\"195\" rx=\"20\" ry=\"8\" fill=\"#78350f\"/>\n  <polygon points=\"190,195 200,165 210,195\" fill=\"#f97316\"/>\n  <polygon points=\"195,195 200,175 205,195\" fill=\"#fef08a\"/>\n  <!-- Cave paintings on wall -->\n  <path d=\"M80,100 Q95,85 110,100 M95,90 L95,120\" stroke=\"#b91c1c\" stroke-width=\"3\" fill=\"none\"/>\n  <text x=\"200\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#ffffff\">Natural Mountain Home</text>\n</svg>", "options": ["A cave", "A balcony", "A lift", "A garage"], "correctIndex": 0, "explanation": "Đáp án đúng là **A cave** (hang động / hang đá). Định nghĩa: nơi ở tự nhiên khoét sâu trong lòng núi đá nơi người xưa từng cư trú ('deep natural hole inside a rocky mountain'). Balcony = ban công; lift = thang máy; garage = nhà xe."}, {"id": 8, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 13: Different homes", "question": "The city has got millions of people, but the village has got only two hundred people. The village is much ______ than the city, but the city has got the ______ buildings.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Left: Quiet Village (Smaller) -->\n  <g transform=\"translate(40, 30)\">\n    <rect x=\"0\" y=\"0\" width=\"145\" height=\"160\" rx=\"10\" fill=\"#f0fdf4\" stroke=\"#86efac\" stroke-width=\"2\"/>\n    <text x=\"72\" y=\"28\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#15803d\">Quiet Village</text>\n    <!-- Little cottage -->\n    <rect x=\"40\" y=\"80\" width=\"60\" height=\"50\" rx=\"3\" fill=\"#fef08a\"/>\n    <polygon points=\"35,80 70,55 105,80\" fill=\"#dc2626\"/>\n    <text x=\"72\" y=\"150\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#16a34a\">Smaller</text>\n  </g>\n  <!-- Right: Busy City (Tallest Buildings) -->\n  <g transform=\"translate(215, 30)\">\n    <rect x=\"0\" y=\"0\" width=\"145\" height=\"160\" rx=\"10\" fill=\"#eff6ff\" stroke=\"#93c5fd\" stroke-width=\"2\"/>\n    <text x=\"72\" y=\"28\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#1d4ed8\">Big City</text>\n    <!-- Skyscrapers -->\n    <rect x=\"30\" y=\"50\" width=\"35\" height=\"85\" fill=\"#3b82f6\"/>\n    <rect x=\"75\" y=\"35\" width=\"40\" height=\"100\" fill=\"#1d4ed8\"/>\n    <text x=\"72\" y=\"150\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#2563eb\">Tallest buildings</text>\n  </g>\n</svg>", "options": ["smaller / tallest", "smallest / taller", "more small / most tall", "small / tall"], "correctIndex": 0, "explanation": "Đáp án đúng là **smaller / tallest**. Trong vế đầu có từ 'than' nên dùng so sánh hơn: 'small' -> **smaller**. Trong vế sau có mạo từ 'the' đứng trước nên dùng so sánh nhất: 'tall' -> **tallest**."}, {"id": 9, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 13: Different homes", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the lighthouse storm rescue story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"stormSeaBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#0f172a\"/>\n      <stop offset=\"60%\" stop-color=\"#1e293b\"/>\n      <stop offset=\"100%\" stop-color=\"#0369a1\"/>\n    </linearGradient>\n    <linearGradient id=\"lightBeam\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n      <stop offset=\"0%\" stop-color=\"#fde047\" stop-opacity=\"0.9\"/>\n      <stop offset=\"100%\" stop-color=\"#fde047\" stop-opacity=\"0\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#stormSeaBg)\"/>\n  <!-- Storm waves -->\n  <path d=\"M0,170 Q50,150 100,170 Q150,190 200,170 Q250,150 300,170 Q350,190 400,170 L400,230 L0,230 Z\" fill=\"#0284c7\" opacity=\"0.8\"/>\n  <!-- Rocky Island Base -->\n  <polygon points=\"50,210 110,130 190,130 240,210\" fill=\"#334155\"/>\n  <!-- Tall Red and White Striped Lighthouse Tower -->\n  <g transform=\"translate(150, 40)\">\n    <polygon points=\"-25,100 25,100 15,0 -15,0\" fill=\"#ffffff\" stroke=\"#475569\" stroke-width=\"2\"/>\n    <!-- Red stripes -->\n    <polygon points=\"-22,80 22,80 18,55 -18,55\" fill=\"#ef4444\"/>\n    <polygon points=\"-16,30 16,30 15,10 -15,10\" fill=\"#ef4444\"/>\n    <!-- Lantern room on top -->\n    <rect x=\"-18\" y=\"-15\" width=\"36\" height=\"18\" fill=\"#fef08a\" stroke=\"#0f172a\" stroke-width=\"2\"/>\n    <polygon points=\"-22,-15 0,-30 22,-15\" fill=\"#dc2626\"/>\n    <!-- Giant Light Beam shooting right -->\n    <polygon points=\"18,-10 240,-45 240,40\" fill=\"url(#lightBeam)\"/>\n  </g>\n</svg>", "sentences": ["Next, the brave lighthouse keeper climbed seventy stone steps to the very top.", "Finally, the big ship saw the bright light and sailed safely past the sharp rocks.", "As dark storm clouds covered the sky, huge waves hit the rocky island.", "Then, he switched on the giant revolving lamp to guide ships in the dark."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện ngọn hải đăng cứu tàu trong bão: 1. Khi mây bão đen kịt bầu trời, sóng lớn ập vào đảo đá (As dark storm clouds covered the sky...) -> 2. Tiếp theo, người gác hải đăng dũng cảm leo 70 bậc đá lên đỉnh tháp (Next, the brave lighthouse keeper...) -> 3. Sau đó, ông bật ngọn đèn khổng lồ xoay tròn để dẫn đường (Then, he switched on...) -> 4. Cuối cùng, con tàu lớn nhìn thấy ánh sáng và vượt qua bãi đá ngầm an toàn (Finally, the big ship saw the bright light...)."}, {"id": 10, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 13: Different homes", "question": "Read the sentences and choose the best word to complete the blank:\n\n\"My friend Clara lives on a tropical island. Her family's home is a wooden stilt house above the sandy beach. When the sea water rises at high tide, the strong wooden ______ keep the house completely dry and safe above the water.\"", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"stiltBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"60%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#fde047\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#stiltBg)\"/>\n  <!-- Sea water at high tide -->\n  <rect x=\"0\" y=\"165\" width=\"400\" height=\"55\" fill=\"#0284c7\" opacity=\"0.7\"/>\n  <!-- Wooden Stilt House High Above Water -->\n  <g transform=\"translate(130, 45)\">\n    <!-- Tall wooden poles / stilts -->\n    <line x1=\"20\" y1=\"80\" x2=\"20\" y2=\"155\" stroke=\"#78350f\" stroke-width=\"6\"/>\n    <line x1=\"60\" y1=\"80\" x2=\"60\" y2=\"155\" stroke=\"#78350f\" stroke-width=\"6\"/>\n    <line x1=\"100\" y1=\"80\" x2=\"100\" y2=\"155\" stroke=\"#78350f\" stroke-width=\"6\"/>\n    <line x1=\"130\" y1=\"80\" x2=\"130\" y2=\"155\" stroke=\"#78350f\" stroke-width=\"6\"/>\n    <!-- Wooden house on platform -->\n    <rect x=\"0\" y=\"15\" width=\"150\" height=\"65\" rx=\"4\" fill=\"#d97706\" stroke=\"#92400e\" stroke-width=\"3\"/>\n    <polygon points=\"-10,15 75,-15 160,15\" fill=\"#15803d\"/>\n    <!-- Windows and Door -->\n    <rect x=\"25\" y=\"30\" width=\"22\" height=\"22\" fill=\"#bae6fd\"/>\n    <rect x=\"105\" y=\"30\" width=\"22\" height=\"22\" fill=\"#bae6fd\"/>\n    <rect x=\"65\" y=\"30\" width=\"24\" height=\"50\" fill=\"#78350f\"/>\n    <!-- Ladder to water -->\n    <line x1=\"72\" y1=\"80\" x2=\"72\" y2=\"145\" stroke=\"#b45309\" stroke-width=\"2.5\"/>\n    <line x1=\"82\" y1=\"80\" x2=\"82\" y2=\"145\" stroke=\"#b45309\" stroke-width=\"2.5\"/>\n  </g>\n</svg>", "options": ["poles", "curtains", "spoons", "scarves"], "correctIndex": 0, "explanation": "Đáp án đúng là **poles** (những chiếc cột / cọc gỗ). Nhà sàn (stilt house) trên bãi biển được nâng đỡ bởi các cột gỗ cao và chắc chắn ('strong wooden poles') để giữ nhà khô ráo khi thủy triều dâng. Curtains = rèm cửa; spoons = những chiếc thìa; scarves = khăn quàng cổ."}, {"id": 11, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 13: Different homes", "question": "Listen to the rainforest audio. Is the sentence TRUE or FALSE?\n\nSentence: People build treehouses high in trees to stay safe from wild animals on the ground.", "audioScript": "Do you know about treehouses? In the warm rainforest, some families build their homes high up in giant trees. They use strong vines and wooden ladders to climb up. This keeps them safe from wild animals on the forest floor at night.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"jungleBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#dcfce7\"/>\n      <stop offset=\"100%\" stop-color=\"#bbf7d0\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#jungleBg)\"/>\n  <!-- Giant Rainforest Tree -->\n  <path d=\"M190,220 L190,110 L210,110 L210,220\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"2\"/>\n  <circle cx=\"200\" cy=\"75\" r=\"75\" fill=\"#15803d\" opacity=\"0.85\"/>\n  <circle cx=\"140\" cy=\"90\" r=\"55\" fill=\"#16a34a\" opacity=\"0.85\"/>\n  <circle cx=\"260\" cy=\"90\" r=\"55\" fill=\"#166534\" opacity=\"0.85\"/>\n  <!-- Treehouse in branches -->\n  <g transform=\"translate(160, 60)\">\n    <rect x=\"0\" y=\"20\" width=\"80\" height=\"55\" rx=\"4\" fill=\"#a16207\" stroke=\"#78350f\" stroke-width=\"2.5\"/>\n    <polygon points=\"-8,20 40,-8 88,20\" fill=\"#166534\"/>\n    <rect x=\"15\" y=\"32\" width=\"20\" height=\"20\" fill=\"#fef08a\"/>\n    <rect x=\"48\" y=\"35\" width=\"20\" height=\"40\" fill=\"#78350f\"/>\n  </g>\n  <!-- Rope ladder -->\n  <line x1=\"215\" y1=\"135\" x2=\"215\" y2=\"200\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <line x1=\"225\" y1=\"135\" x2=\"225\" y2=\"200\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <line x1=\"215\" y1=\"150\" x2=\"225\" y2=\"150\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <line x1=\"215\" y1=\"170\" x2=\"225\" y2=\"170\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <line x1=\"215\" y1=\"190\" x2=\"225\" y2=\"190\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n</svg>", "options": ["True", "False"], "correctIndex": 0, "explanation": "Đáp án đúng là **True** (Đúng). Trong bài nghe nêu rõ lý do: 'This keeps them safe from wild animals on the forest floor at night' (Điều này giúp họ an toàn trước thú dữ dưới mặt đất vào ban đêm)."}, {"id": 12, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 13: Different homes", "question": "In a very tall skyscraper with thirty floors, you do not need to walk up hundreds of stairs. You can press a button and ride in a metal ______ to the top floor in seconds.", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Elevator Door and Floor Panel -->\n  <g transform=\"translate(130, 25)\">\n    <!-- Elevator Frame -->\n    <rect x=\"0\" y=\"0\" width=\"140\" height=\"180\" rx=\"8\" fill=\"#64748b\" stroke=\"#334155\" stroke-width=\"4\"/>\n    <!-- Floor Display Screen -->\n    <rect x=\"40\" y=\"10\" width=\"60\" height=\"24\" rx=\"4\" fill=\"#0f172a\"/>\n    <text x=\"70\" y=\"27\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"bold\" fill=\"#ef4444\">▲ 30</text>\n    <!-- Sliding Steel Doors -->\n    <rect x=\"12\" y=\"42\" width=\"55\" height=\"130\" fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <rect x=\"73\" y=\"42\" width=\"55\" height=\"130\" fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n    <line x1=\"68\" y1=\"42\" x2=\"68\" y2=\"172\" stroke=\"#475569\" stroke-width=\"3\"/>\n  </g>\n  <!-- Call Button Panel on Right Wall -->\n  <g transform=\"translate(290, 85)\">\n    <rect x=\"0\" y=\"0\" width=\"28\" height=\"55\" rx=\"4\" fill=\"#334155\"/>\n    <circle cx=\"14\" cy=\"18\" r=\"7\" fill=\"#facc15\"/>\n    <text x=\"14\" y=\"22\" text-anchor=\"middle\" font-size=\"9\" font-weight=\"bold\" fill=\"#0f172a\">▲</text>\n    <circle cx=\"14\" cy=\"38\" r=\"7\" fill=\"#e2e8f0\"/>\n    <text x=\"14\" y=\"42\" text-anchor=\"middle\" font-size=\"9\" font-weight=\"bold\" fill=\"#0f172a\">▼</text>\n  </g>\n</svg>", "options": ["lift", "ladder", "fridge", "carpet"], "correctIndex": 0, "explanation": "Đáp án đúng là **lift** (thang máy / elevator). Định nghĩa: thiết bị nâng bằng kim loại giúp bạn bấm nút và đi thẳng lên các tầng cao mà không cần leo thang bộ ('press a button and ride in a metal lift to the top floor'). Ladder = cái thang chữ A; fridge = tủ lạnh; carpet = tấm thảm."}, {"id": 13, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 13: Different homes", "question": "Choose the correct sentence to ask your new penfriend about their home:", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#fefce8\"/>\n  <circle cx=\"200\" cy=\"90\" r=\"48\" fill=\"#fde047\" opacity=\"0.3\"/>\n  <text x=\"200\" y=\"112\" text-anchor=\"middle\" font-size=\"62\" font-weight=\"bold\" fill=\"#ca8a04\">?</text>\n  <!-- House left & Flat right -->\n  <g transform=\"translate(50, 100)\">\n    <rect x=\"0\" y=\"20\" width=\"60\" height=\"50\" rx=\"3\" fill=\"#93c5fd\"/>\n    <polygon points=\"-5,20 30,0 65,20\" fill=\"#2563eb\"/>\n    <text x=\"30\" y=\"85\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">House</text>\n  </g>\n  <g transform=\"translate(290, 80)\">\n    <rect x=\"0\" y=\"10\" width=\"55\" height=\"80\" rx=\"4\" fill=\"#fbcfe8\"/>\n    <rect x=\"10\" y=\"20\" width=\"12\" height=\"12\" fill=\"#ffffff\"/>\n    <rect x=\"32\" y=\"20\" width=\"12\" height=\"12\" fill=\"#ffffff\"/>\n    <rect x=\"10\" y=\"45\" width=\"12\" height=\"12\" fill=\"#ffffff\"/>\n    <rect x=\"32\" y=\"45\" width=\"12\" height=\"12\" fill=\"#ffffff\"/>\n    <text x=\"27\" y=\"105\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#be185d\">Flat</text>\n  </g>\n</svg>", "options": ["Where do you live, in a house or in a flat?", "Where are you live, in a house or in a flat?", "Where does you live, in a house or in a flat?", "Where do you living, in a house or in a flat?"], "correctIndex": 0, "explanation": "Đáp án đúng là **Where do you live, in a house or in a flat?**. Cấu trúc câu hỏi thì Hiện tại đơn với từ để hỏi: Từ để hỏi (Where) + trợ động từ (do) + chủ ngữ (you) + động từ nguyên mẫu (live). Các lựa chọn còn lại đều sai ngữ pháp."}, {"id": 14, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 13: Different homes", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the houseboat ball rescue story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"canalSaveBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#e0f2fe\"/>\n      <stop offset=\"100%\" stop-color=\"#bae6fd\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#canalSaveBg)\"/>\n  <!-- Canal Water -->\n  <rect x=\"0\" y=\"140\" width=\"400\" height=\"90\" fill=\"#0284c7\"/>\n  <!-- Houseboat moored on water -->\n  <g transform=\"translate(100, 75)\">\n    <rect x=\"0\" y=\"45\" width=\"160\" height=\"30\" rx=\"4\" fill=\"#0369a1\"/>\n    <rect x=\"25\" y=\"10\" width=\"110\" height=\"40\" rx=\"4\" fill=\"#facc15\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n    <polygon points=\"20,10 80,-10 140,10\" fill=\"#ef4444\"/>\n    <!-- Red Ball floating in canal water -->\n    <circle cx=\"190\" cy=\"85\" r=\"12\" fill=\"#dc2626\" stroke=\"#991b1b\" stroke-width=\"2\"/>\n  </g>\n  <!-- Clever Dog swimming with ball -->\n  <g transform=\"translate(320, 160)\">\n    <ellipse cx=\"0\" cy=\"0\" rx=\"16\" ry=\"10\" fill=\"#78350f\"/>\n    <circle cx=\"-10\" cy=\"-6\" r=\"8\" fill=\"#78350f\"/>\n    <circle cx=\"-14\" cy=\"-8\" r=\"2\" fill=\"#0f172a\"/>\n  </g>\n</svg>", "sentences": ["Next, Max the clever dog ran across the wooden deck to help.", "Finally, the family cheered and gave brave Max a big tasty bone for dinner.", "One morning, a red toy ball rolled off the houseboat deck into the canal water.", "Then, Max jumped bravely into the cool water and carried the ball back."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện chú chó Max cứu bóng trên nhà thuyền: 1. Một buổi sáng, quả bóng đồ chơi lăn khỏi boong tàu rơi xuống nước (One morning, a red toy ball rolled off...) -> 2. Tiếp theo, chú chó thông minh Max chạy khắp boong tàu để hỗ trợ (Next, Max the clever dog ran...) -> 3. Sau đó, Max dũng cảm nhảy xuống nước ngậm quả bóng bơi vào (Then, Max jumped bravely...) -> 4. Cuối cùng, cả nhà reo hò và thưởng cho Max một khúc xương ngon (Finally, the family cheered...)."}, {"id": 15, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 13: Different homes", "question": "Read the story. Answer the question below:\n\n\"Castles were built hundreds of years ago. They have got very thick stone walls and a deep ditch filled with water around them called a moat. Inside the castle, there was a great hall with a giant fireplace where knights ate roasted meat after battles. Today, many castles are famous museums.\"\n\nWhat is a deep ditch filled with water around a castle called?", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"#f8fafc\"/>\n  <!-- Castle Moat with drawbridge -->\n  <rect x=\"0\" y=\"150\" width=\"400\" height=\"70\" fill=\"#0284c7\"/>\n  <!-- Castle stone walls behind -->\n  <rect x=\"90\" y=\"40\" width=\"220\" height=\"120\" fill=\"#94a3b8\" stroke=\"#475569\" stroke-width=\"3\"/>\n  <rect x=\"60\" y=\"20\" width=\"50\" height=\"140\" fill=\"#64748b\"/>\n  <rect x=\"290\" y=\"20\" width=\"50\" height=\"140\" fill=\"#64748b\"/>\n  <!-- Wooden drawbridge spanning water -->\n  <rect x=\"170\" y=\"145\" width=\"60\" height=\"40\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"2\"/>\n  <line x1=\"175\" y1=\"110\" x2=\"175\" y2=\"150\" stroke=\"#f59e0b\" stroke-width=\"2.5\"/>\n  <line x1=\"225\" y1=\"110\" x2=\"225\" y2=\"150\" stroke=\"#f59e0b\" stroke-width=\"2.5\"/>\n  <text x=\"200\" y=\"205\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#ffffff\">Deep water moat</text>\n</svg>", "options": ["A moat", "A balcony", "A basement", "A chimney"], "correctIndex": 0, "explanation": "Đáp án đúng là **A moat** (hào nước bao quanh lâu đài). Trong đoạn văn nêu rõ: 'a deep ditch filled with water around them called a moat' (con hào sâu chứa đầy nước bao quanh lâu đài được gọi là hào nước - a moat)."}, {"id": 16, "type": "listening", "category": "🎧 Listening Adventure", "skill": "Listening", "unit": "Unit 13: Different homes", "question": "Listen to the desert explorer. Which home is described in the audio?", "audioScript": "Listen to the desert explorer! In the hot desert, the wind blows sand everywhere. The nomad family lives in a low, wide brown tent made of strong camel wool. The thick wool keeps the inside cool during the hot sunny day and warm during the freezing night.", "svg": "<svg viewBox=\"0 0 400 160\" class=\"q-svg\">\n  <rect width=\"400\" height=\"160\" rx=\"16\" fill=\"#fef3c7\"/>\n  <circle cx=\"200\" cy=\"80\" r=\"45\" fill=\"#f59e0b\" opacity=\"0.2\"/>\n  <text x=\"200\" y=\"88\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"bold\" fill=\"#b45309\">🎧 Listen carefully to choose the desert home!</text>\n</svg>", "optionsType": "pictures", "options": [{"label": "Low, wide brown tent made of camel wool in the desert", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#fed7aa\"/>\n  <!-- Sand dune -->\n  <path d=\"M0,100 Q80,75 160,105 L160,120 L0,120 Z\" fill=\"#f59e0b\"/>\n  <!-- Low wide brown nomad tent -->\n  <polygon points=\"15,90 40,40 120,40 145,90\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"2.5\"/>\n  <polygon points=\"40,40 80,40 75,90 45,90\" fill=\"#451a03\"/>\n  <!-- Wooden tent poles -->\n  <line x1=\"40\" y1=\"40\" x2=\"30\" y2=\"95\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n  <line x1=\"120\" y1=\"40\" x2=\"130\" y2=\"95\" stroke=\"#ca8a04\" stroke-width=\"2\"/>\n</svg>"}, {"label": "Modern glass apartment building in a city", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#e0f2fe\"/>\n  <rect x=\"45\" y=\"15\" width=\"70\" height=\"95\" fill=\"#38bdf8\"/>\n  <rect x=\"55\" y=\"25\" width=\"20\" height=\"20\" fill=\"#ffffff\"/>\n  <rect x=\"85\" y=\"25\" width=\"20\" height=\"20\" fill=\"#ffffff\"/>\n  <rect x=\"55\" y=\"55\" width=\"20\" height=\"20\" fill=\"#ffffff\"/>\n  <rect x=\"85\" y=\"55\" width=\"20\" height=\"20\" fill=\"#ffffff\"/>\n</svg>"}, {"label": "Snow dome igloo in the Arctic", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#bae6fd\"/>\n  <path d=\"M30,95 C30,40 130,40 130,95 Z\" fill=\"#ffffff\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <rect x=\"70\" y=\"75\" width=\"20\" height=\"20\" fill=\"#0f172a\"/>\n</svg>"}, {"label": "Houseboat floating on canal water", "svg": "<svg viewBox=\"0 0 160 120\" style=\"width:100%;height:100px;\">\n  <rect width=\"160\" height=\"120\" rx=\"8\" fill=\"#dcfce7\"/>\n  <rect x=\"25\" y=\"70\" width=\"110\" height=\"25\" rx=\"3\" fill=\"#0284c7\"/>\n  <rect x=\"45\" y=\"45\" width=\"70\" height=\"28\" fill=\"#facc15\"/>\n</svg>"}], "correctIndex": 0, "explanation": "Đáp án đúng là hình ảnh đầu tiên: **Low, wide brown tent made of camel wool in the desert** (Chiếc lều thấp và rộng màu nâu làm bằng lông lạc đà trên sa mạc). Trong đoạn nghe kể: 'The nomad family lives in a low, wide brown tent made of strong camel wool'."}, {"id": 17, "type": "vocabulary", "category": "🔤 Word Master", "skill": "Vocabulary", "unit": "Unit 13: Different homes", "question": "Look at the picture. This is a small, charming country house with a thatched straw roof, surrounded by green trees and flower gardens in a quiet village. What is it?", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"#f0fdf4\"/>\n  <!-- Countryside Village Garden -->\n  <rect x=\"0\" y=\"165\" width=\"400\" height=\"65\" fill=\"#16a34a\"/>\n  <!-- Stone Wall in Front -->\n  <rect x=\"30\" y=\"170\" width=\"340\" height=\"18\" rx=\"3\" fill=\"#94a3b8\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n  <!-- Charming Thatched Roof Cottage -->\n  <g transform=\"translate(130, 45)\">\n    <rect x=\"0\" y=\"35\" width=\"140\" height=\"85\" rx=\"6\" fill=\"#fef08a\" stroke=\"#ca8a04\" stroke-width=\"3\"/>\n    <!-- Thatched straw roof -->\n    <polygon points=\"-15,35 70,-15 155,35\" fill=\"#d97706\" stroke=\"#78350f\" stroke-width=\"3\"/>\n    <!-- Chimney with smoke -->\n    <rect x=\"100\" y=\"-10\" width=\"16\" height=\"25\" fill=\"#78350f\"/>\n    <!-- Door -->\n    <rect x=\"55\" y=\"65\" width=\"30\" height=\"55\" fill=\"#78350f\"/>\n    <!-- Windows -->\n    <rect x=\"15\" y=\"50\" width=\"28\" height=\"28\" rx=\"2\" fill=\"#bae6fd\"/>\n    <rect x=\"95\" y=\"50\" width=\"28\" height=\"28\" rx=\"2\" fill=\"#bae6fd\"/>\n  </g>\n  <!-- Flowers along stone wall -->\n  <circle cx=\"60\" cy=\"165\" r=\"7\" fill=\"#ef4444\"/>\n  <circle cx=\"85\" cy=\"165\" r=\"7\" fill=\"#ec4899\"/>\n  <circle cx=\"315\" cy=\"165\" r=\"7\" fill=\"#facc15\"/>\n  <circle cx=\"340\" cy=\"165\" r=\"7\" fill=\"#ef4444\"/>\n</svg>", "options": ["A cottage", "A supermarket", "A cinema", "A bus station"], "correctIndex": 0, "explanation": "Đáp án đúng là **A cottage** (nhà tranh nông thôn / nhà thôn dã). Định nghĩa: ngôi nhà nhỏ duyên dáng ở vùng nông thôn có mái lợp rơm rạ và vườn hoa bao quanh ('small, charming country house with a thatched straw roof in a quiet village'). Supermarket = siêu thị; cinema = rạp chiếu phim; bus station = bến xe buýt."}, {"id": 18, "type": "grammar", "category": "⚙️ Grammar Wizard", "skill": "Grammar", "unit": "Unit 13: Different homes", "question": "Astronauts living on the International Space Station ______ float in the air because there is no gravity, but they ______ strap into their sleeping bags to sleep safely.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"spaceBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#090d16\"/>\n      <stop offset=\"100%\" stop-color=\"#1e1b4b\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#spaceBg)\"/>\n  <!-- Space Station window looking at Earth -->\n  <ellipse cx=\"200\" cy=\"110\" rx=\"140\" ry=\"80\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"8\"/>\n  <circle cx=\"200\" cy=\"110\" r=\"65\" fill=\"#0284c7\"/>\n  <path d=\"M160,80 Q190,70 230,95 Q250,130 200,160 Z\" fill=\"#22c55e\" opacity=\"0.8\"/>\n  <!-- Floating Astronaut -->\n  <g transform=\"translate(120, 90)\">\n    <circle cx=\"0\" cy=\"0\" r=\"16\" fill=\"#ffffff\" stroke=\"#cbd5e1\" stroke-width=\"2\"/>\n    <ellipse cx=\"2\" cy=\"0\" rx=\"10\" ry=\"7\" fill=\"#38bdf8\"/>\n    <rect x=\"-10\" y=\"16\" width=\"20\" height=\"26\" rx=\"4\" fill=\"#ffffff\"/>\n    <line x1=\"-10\" y1=\"22\" x2=\"-25\" y2=\"10\" stroke=\"#ffffff\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n    <line x1=\"10\" y1=\"22\" x2=\"25\" y2=\"10\" stroke=\"#ffffff\" stroke-width=\"5\" stroke-linecap=\"round\"/>\n  </g>\n  <text x=\"200\" y=\"25\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#fde047\">Living in Space (Can / Must)</text>\n</svg>", "options": ["can / must", "cannot / shouldn't", "must / cannot", "shouldn't / can"], "correctIndex": 0, "explanation": "Đáp án đúng là **can / must**. Trong không gian không có trọng lực, phi hành gia **có thể** lơ lửng trong không khí (**can** float), nhưng họ **phải / bắt buộc** cài dây túi ngủ để ngủ an toàn (**must** strap into their sleeping bags)."}, {"id": 19, "type": "speaking_order", "category": "🗣️ Story Teller", "skill": "Speaking", "unit": "Unit 13: Different homes", "question": "Look at the picture. Put the four sentences into the correct story order (1 to 4) to tell the windmill wheat flour story!", "svg": "<svg viewBox=\"0 0 400 230\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"windHillBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#fef08a\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"230\" rx=\"16\" fill=\"url(#windHillBg)\"/>\n  <!-- Green hill with wheat -->\n  <path d=\"M0,170 Q200,130 400,170 L400,230 L0,230 Z\" fill=\"#65a30d\"/>\n  <!-- Windmill Tower -->\n  <g transform=\"translate(200, 70)\">\n    <polygon points=\"-25,95 25,95 18,0 -18,0\" fill=\"#78350f\" stroke=\"#451a03\" stroke-width=\"2.5\"/>\n    <!-- Dome cap -->\n    <path d=\"M-20,0 C-20,-18 20,-18 20,0 Z\" fill=\"#b91c1c\"/>\n    <!-- Windmill Center hub -->\n    <circle cx=\"0\" cy=\"0\" r=\"7\" fill=\"#facc15\"/>\n    <!-- 4 Giant Cross Sails -->\n    <g stroke=\"#ffffff\" stroke-width=\"4\">\n      <line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"-65\"/>\n      <line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"65\"/>\n      <line x1=\"0\" y1=\"0\" x2=\"-65\" y2=\"0\"/>\n      <line x1=\"0\" y1=\"0\" x2=\"65\" y2=\"0\"/>\n    </g>\n    <!-- Sail lattice blades -->\n    <rect x=\"-10\" y=\"-60\" width=\"10\" height=\"40\" fill=\"#e2e8f0\" opacity=\"0.8\"/>\n    <rect x=\"0\" y=\"20\" width=\"10\" height=\"40\" fill=\"#e2e8f0\" opacity=\"0.8\"/>\n    <rect x=\"-60\" y=\"-10\" width=\"40\" height=\"10\" fill=\"#e2e8f0\" opacity=\"0.8\"/>\n    <rect x=\"20\" y=\"0\" width=\"40\" height=\"10\" fill=\"#e2e8f0\" opacity=\"0.8\"/>\n  </g>\n</svg>", "sentences": ["Next, the strong wind blew and turned the giant wooden sails round and round.", "Finally, the miller packed white flour into heavy sacks to bake fresh village bread.", "Early in the morning, the farmer brought big sacks of golden wheat to the windmill.", "Then, the heavy millstones crushed the wheat grains into fine soft powder."], "correctOrder": [2, 0, 3, 1], "explanation": "Trình tự câu chuyện xay bột tại cối xay gió: 1. Sáng sớm, người nông dân mang những bao lúa mì vàng đến cối xay gió (Early in the morning, the farmer brought...) -> 2. Tiếp theo, ngọn gió thổi mạnh làm quay những cánh quạt gỗ khổng lồ (Next, the strong wind blew...) -> 3. Sau đó, những cối đá nặng nghiền nát hạt lúa mì thành bột mịn (Then, the heavy millstones crushed...) -> 4. Cuối cùng, người thợ xay đóng bột mì trắng vào bao để nướng bánh (Finally, the miller packed white flour...)."}, {"id": 20, "type": "reading_writing", "category": "📖 Reading Explorer", "skill": "Reading & Writing", "unit": "Unit 13: Different homes", "question": "Read the story. Is the sentence TRUE or FALSE?\n\n\"Lighthouses are tall towers built on dangerous rocky coasts and lonely sea islands. In the past, a lighthouse keeper lived inside the tower to keep the giant lamp burning all night long. Nowadays, most lighthouses are automatic and run by computers without people living inside.\"\n\nSentence: Nowadays, most lighthouses need a person to live inside every night to light the lamp.", "svg": "<svg viewBox=\"0 0 400 220\" class=\"q-svg\">\n  <defs>\n    <linearGradient id=\"lhAutoBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"60%\" stop-color=\"#bae6fd\"/>\n      <stop offset=\"100%\" stop-color=\"#0284c7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"400\" height=\"220\" rx=\"16\" fill=\"url(#lhAutoBg)\"/>\n  <!-- Sea water -->\n  <rect x=\"0\" y=\"150\" width=\"400\" height=\"70\" fill=\"#0369a1\"/>\n  <!-- Island Rocks -->\n  <polygon points=\"120,200 170,120 230,120 280,200\" fill=\"#475569\"/>\n  <!-- Automated Lighthouse with Solar Panel -->\n  <g transform=\"translate(200, 45)\">\n    <polygon points=\"-18,75 18,75 12,0 -12,0\" fill=\"#ffffff\" stroke=\"#334155\" stroke-width=\"2\"/>\n    <rect x=\"-10\" y=\"-12\" width=\"20\" height=\"12\" fill=\"#fde047\" stroke=\"#334155\" stroke-width=\"2\"/>\n    <polygon points=\"-12,-12 0,-24 12,-12\" fill=\"#ef4444\"/>\n    <!-- Solar panel for automated computer -->\n    <rect x=\"18\" y=\"25\" width=\"22\" height=\"15\" rx=\"2\" fill=\"#1e3a8a\" stroke=\"#ffffff\" stroke-width=\"1.5\"/>\n  </g>\n  <text x=\"200\" y=\"25\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">Modern Automatic Lighthouse</text>\n</svg>", "options": ["True", "False"], "correctIndex": 1, "explanation": "Đáp án đúng là **False** (Sai). Trong đoạn văn nêu rõ: 'Nowadays, most lighthouses are automatic and run by computers without people living inside' (Ngày nay hầu hết các ngọn hải đăng đều tự động hóa và điều khiển bằng máy tính mà không cần người sống bên trong)."}];
+
+    // State
+    let currentIndex = 0;
+    let userAnswers = {}; // { qId: { selected, isCorrect, skipped } }
+    let soundEnabled = true;
+    let storyCurrentOrder = [];
+
+    // Synthesizer Audio Context (100% Offline)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (!soundEnabled || !audioCtx) return;
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      const now = audioCtx.currentTime;
+
+      if (type === "correct") {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.28);
+        });
+      } else if (type === "incorrect") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.3);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.38);
+      } else if (type === "click") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(600, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } else if (type === "fanfare") {
+        const notes = [440, 554.37, 659.25, 880];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.12, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.45);
+        });
+      }
+    }
+
+    // Web Speech API for Listening Questions
+    let activeSpeech = null;
+    let isSpeaking = false;
+
+    function playTTS(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Web Speech API is not supported on this browser.");
+        return;
+      }
+
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setSpeakingState(false);
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      utterance.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoices = voices.filter(v => 
+        v.lang === "en-US" && (v.name.includes("Natural") || v.name.includes("Studio") || v.name.includes("Samantha") || v.name.includes("Google US English") || v.name.includes("Zira") || v.name.includes("Jenny"))
+      );
+      if (preferredVoices.length > 0) {
+        utterance.voice = preferredVoices[0];
+      } else {
+        const anyUS = voices.find(v => v.lang === "en-US");
+        if (anyUS) utterance.voice = anyUS;
+      }
+
+      utterance.onstart = () => {
+        setSpeakingState(true);
+      };
+      utterance.onend = () => {
+        setSpeakingState(false);
+      };
+      utterance.onerror = () => {
+        setSpeakingState(false);
+      };
+
+      activeSpeech = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function setSpeakingState(speaking) {
+      isSpeaking = speaking;
+      const btn = document.getElementById("btn-audio-play");
+      const wave = document.getElementById("audio-wave");
+      const btnText = document.getElementById("audio-btn-text");
+      const btnIcon = document.getElementById("audio-btn-icon");
+      if (speaking) {
+        btn.classList.add("speaking");
+        wave.classList.add("active");
+        btnText.textContent = "Speaking... (Click to Pause)";
+        btnIcon.textContent = "⏸️";
+      } else {
+        btn.classList.remove("speaking");
+        wave.classList.remove("active");
+        btnText.textContent = "Listen to Story";
+        btnIcon.textContent = "▶️";
+      }
+    }
+
+    // Initialize Trail Track
+    function initTrailTrack() {
+      const track = document.getElementById("trail-track");
+      track.innerHTML = "";
+      questQuestions.forEach((q, idx) => {
+        const node = document.createElement("div");
+        node.className = "trail-node";
+        node.id = `trail-node-${idx}`;
+        node.textContent = idx + 1;
+        node.title = `${q.category} - Checkpoint ${idx + 1}`;
+        node.addEventListener("click", () => {
+          playSound("click");
+          goToQuestion(idx);
+        });
+        track.appendChild(node);
+      });
+      updateTrailUI();
+    }
+
+    function updateTrailUI() {
+      questQuestions.forEach((q, idx) => {
+        const node = document.getElementById(`trail-node-${idx}`);
+        if (!node) return;
+        node.className = "trail-node";
+        if (idx === currentIndex) {
+          node.classList.add("current");
+        }
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) {
+            node.classList.add("skipped");
+          } else if (userAnswers[q.id].isCorrect) {
+            node.classList.add("correct");
+          } else {
+            node.classList.add("incorrect");
+          }
+        }
+      });
+
+      document.getElementById("trail-progress-text").textContent = `Checkpoint ${currentIndex + 1} / ${questQuestions.length}`;
+      
+      const activeNode = document.getElementById(`trail-node-${currentIndex}`);
+      if (activeNode) {
+        activeNode.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+
+      let correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      document.getElementById("header-gem-score").textContent = correctCount;
+    }
+
+    // Render Question
+    function renderQuestion(index) {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      setSpeakingState(false);
+
+      const q = questQuestions[index];
+      currentIndex = index;
+
+      document.getElementById("q-category-badge").textContent = q.category;
+      document.getElementById("q-unit-badge").textContent = q.unit;
+      document.getElementById("q-counter").textContent = `Checkpoint ${index + 1} of ${questQuestions.length}`;
+      document.getElementById("q-prompt").textContent = q.question;
+
+      const illBox = document.getElementById("q-illustration");
+      if (q.svg) {
+        illBox.innerHTML = q.svg;
+        illBox.style.display = "flex";
+      } else {
+        illBox.style.display = "none";
+      }
+
+      const audioBox = document.getElementById("audio-player-box");
+      const transcriptBox = document.getElementById("audio-transcript-box");
+      const transcriptToggle = document.getElementById("transcript-toggle");
+      if (q.type === "listening" && q.audioScript) {
+        audioBox.style.display = "flex";
+        transcriptBox.textContent = `"${q.audioScript}"`;
+        transcriptBox.classList.remove("visible");
+        transcriptToggle.textContent = "Show Transcript";
+        document.getElementById("btn-audio-play").onclick = () => {
+          playTTS(q.audioScript);
+        };
+      } else {
+        audioBox.style.display = "none";
+      }
+
+      const optsContainer = document.getElementById("options-container");
+      const picContainer = document.getElementById("picture-options-container");
+      const storyContainer = document.getElementById("story-seq-container");
+      optsContainer.style.display = "none";
+      picContainer.style.display = "none";
+      storyContainer.style.display = "none";
+
+      const isAnswered = !!userAnswers[q.id] && !userAnswers[q.id].skipped;
+
+      if (q.type === "speaking_order") {
+        storyContainer.style.display = "flex";
+        renderStorySeq(q, isAnswered);
+      } else if (q.optionsType === "pictures") {
+        picContainer.style.display = "grid";
+        renderPictureOptions(q, isAnswered);
+      } else {
+        optsContainer.style.display = "grid";
+        renderStandardOptions(q, isAnswered);
+      }
+
+      document.getElementById("btn-prev-q").disabled = index === 0;
+      const checkBtn = document.getElementById("btn-check-q");
+      const nextBtn = document.getElementById("btn-next-q");
+      const skipBtn = document.getElementById("btn-skip-q");
+
+      if (isAnswered) {
+        checkBtn.style.display = "none";
+        nextBtn.style.display = "inline-flex";
+        skipBtn.style.display = "none";
+        showFeedback(q, userAnswers[q.id].isCorrect);
+      } else {
+        checkBtn.style.display = "inline-flex";
+        nextBtn.style.display = "none";
+        skipBtn.style.display = "inline-flex";
+        document.getElementById("feedback-panel").classList.remove("visible");
+      }
+
+      updateTrailUI();
+    }
+
+    // Render Standard Options
+    function renderStandardOptions(q, isAnswered) {
+      const container = document.getElementById("options-container");
+      container.innerHTML = "";
+      container.className = q.options.length <= 2 ? "options-grid two-cols" : "options-grid";
+
+      const letters = ["A", "B", "C", "D"];
+      q.options.forEach((optText, optIdx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        if (isAnswered) {
+          btn.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            btn.classList.add("opt-correct");
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            btn.classList.add("opt-incorrect");
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          btn.classList.add("selected");
+        }
+
+        btn.innerHTML = `
+          <div class="option-letter">${letters[optIdx]}</div>
+          <div class="option-label">${optText}</div>
+        `;
+
+        btn.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(btn);
+      });
+    }
+
+    // Render Picture Options
+    function renderPictureOptions(q, isAnswered) {
+      const container = document.getElementById("picture-options-container");
+      container.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.options.forEach((opt, optIdx) => {
+        const card = document.createElement("div");
+        card.className = "pic-option-card";
+        if (isAnswered) {
+          card.classList.add("locked");
+          if (optIdx === q.correctIndex) {
+            card.style.borderColor = "#10b981";
+            card.style.background = "#ecfdf5";
+          } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+            card.style.borderColor = "#ef4444";
+            card.style.background = "#fef2f2";
+          }
+        } else if (userAnswers[q.id] && userAnswers[q.id].selected === optIdx) {
+          card.classList.add("selected");
+        }
+
+        card.innerHTML = `
+          <div class="pic-preview-box">${opt.svg}</div>
+          <div class="pic-card-label"><strong>${letters[optIdx]}.</strong> ${opt.label}</div>
+        `;
+
+        card.onclick = () => {
+          if (isAnswered) return;
+          playSound("click");
+          container.querySelectorAll(".pic-option-card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          userAnswers[q.id] = { selected: optIdx, skipped: false };
+        };
+
+        container.appendChild(card);
+      });
+    }
+
+    // Render Story Sequencing
+    function renderStorySeq(q, isAnswered) {
+      const container = document.getElementById("story-seq-container");
+      container.innerHTML = "";
+
+      if (!storyCurrentOrder || storyCurrentOrder.length !== q.sentences.length) {
+        if (userAnswers[q.id] && userAnswers[q.id].order) {
+          storyCurrentOrder = [...userAnswers[q.id].order];
+        } else {
+          storyCurrentOrder = q.sentences.map((_, i) => i);
+        }
+      }
+
+      storyCurrentOrder.forEach((sentenceIdx, rankIdx) => {
+        const item = document.createElement("div");
+        item.className = "story-card";
+        item.draggable = !isAnswered;
+
+        item.innerHTML = `
+          <div class="story-card-left">
+            <div class="story-rank">${rankIdx + 1}</div>
+            <div class="story-text">${q.sentences[sentenceIdx]}</div>
+          </div>
+          ${!isAnswered ? `
+            <div class="story-arrows">
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, -1)">▲</button>
+              <button class="btn-arrow" onclick="moveStoryItem(${rankIdx}, 1)">▼</button>
+            </div>
+          ` : ""}
+        `;
+
+        if (!isAnswered) {
+          item.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", rankIdx);
+            item.classList.add("dragging");
+          });
+          item.addEventListener("dragend", () => {
+            item.classList.remove("dragging");
+          });
+          item.addEventListener("dragover", (e) => {
+            e.preventDefault();
+          });
+          item.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const fromRank = parseInt(e.dataTransfer.getData("text/plain"), 10);
+            const toRank = rankIdx;
+            if (fromRank !== toRank) {
+              const moved = storyCurrentOrder.splice(fromRank, 1)[0];
+              storyCurrentOrder.splice(toRank, 0, moved);
+              playSound("click");
+              renderStorySeq(q, false);
+            }
+          });
+        }
+
+        container.appendChild(item);
+      });
+    }
+
+    window.moveStoryItem = function(index, delta) {
+      const target = index + delta;
+      if (target < 0 || target >= storyCurrentOrder.length) return;
+      const temp = storyCurrentOrder[index];
+      storyCurrentOrder[index] = storyCurrentOrder[target];
+      storyCurrentOrder[target] = temp;
+      playSound("click");
+      const q = questQuestions[currentIndex];
+      renderStorySeq(q, false);
+    };
+
+    // Show Feedback Box
+    function showFeedback(q, isCorrect) {
+      const panel = document.getElementById("feedback-panel");
+      panel.className = "feedback-panel visible " + (isCorrect ? "correct-theme" : "incorrect-theme");
+      
+      const icon = document.getElementById("feedback-status-icon");
+      const statusText = document.getElementById("feedback-status-text");
+      if (isCorrect) {
+        icon.textContent = "🎉";
+        statusText.textContent = "Fantastic! You unlocked another unique home!";
+      } else {
+        icon.textContent = "🧭";
+        statusText.textContent = "Good try! Let's check the explorer notes below!";
+      }
+
+      document.getElementById("feedback-vn-text").innerHTML = q.explanation.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    // Check Answer Handler
+    function handleCheckAnswer() {
+      const q = questQuestions[currentIndex];
+
+      if (q.type === "speaking_order") {
+        const isMatch = JSON.stringify(storyCurrentOrder) === JSON.stringify(q.correctOrder);
+        userAnswers[q.id] = {
+          order: [...storyCurrentOrder],
+          isCorrect: isMatch,
+          skipped: false
+        };
+      } else {
+        if (!userAnswers[q.id] || userAnswers[q.id].selected === undefined) {
+          alert("Please choose an answer first!");
+          return;
+        }
+        const isMatch = userAnswers[q.id].selected === q.correctIndex;
+        userAnswers[q.id].isCorrect = isMatch;
+      }
+
+      const isCorrect = userAnswers[q.id].isCorrect;
+      if (isCorrect) {
+        playSound("correct");
+        triggerConfetti();
+      } else {
+        playSound("incorrect");
+      }
+
+      renderQuestion(currentIndex);
+    }
+
+    // Skip Handler
+    function handleSkip() {
+      const q = questQuestions[currentIndex];
+      userAnswers[q.id] = { skipped: true };
+      playSound("click");
+      goToNext();
+    }
+
+    function goToNext() {
+      if (currentIndex < questQuestions.length - 1) {
+        goToQuestion(currentIndex + 1);
+      } else {
+        checkFinishQuest();
+      }
+    }
+
+    function goToQuestion(idx) {
+      renderQuestion(idx);
+    }
+
+    function checkFinishQuest() {
+      const skippedCount = Object.values(userAnswers).filter(a => a.skipped).length;
+      const unansweredCount = questQuestions.filter(q => !userAnswers[q.id]).length;
+      const incomplete = skippedCount + unansweredCount;
+
+      if (incomplete > 0) {
+        const confirmFinish = confirm(`You still have ${incomplete} question(s) skipped or unanswered! Do you want to finish the world quest now?`);
+        if (!confirmFinish) {
+          openMapModal();
+          return;
+        }
+      }
+      showResults();
+    }
+
+    // Show Results
+    function showResults() {
+      document.getElementById("quest-card").style.display = "none";
+      const resultsScreen = document.getElementById("results-screen");
+      resultsScreen.classList.add("visible");
+
+      playSound("fanfare");
+      triggerConfetti();
+
+      const total = questQuestions.length;
+      const correct = Object.values(userAnswers).filter(a => a.isCorrect).length;
+      const pct = Math.round((correct / total) * 100);
+
+      document.getElementById("result-score-num").textContent = `${correct}/${total}`;
+      document.getElementById("result-score-pct").textContent = `${pct}% Correct`;
+
+      let rank = "🌟 Rising Junior Explorer of Homes!";
+      if (pct >= 90) rank = "👑 Grand Master Architect of World Homes!";
+      else if (pct >= 75) rank = "🏆 Master Expedition Leader!";
+      else if (pct >= 50) rank = "🧭 Curious Global Explorer!";
+      document.getElementById("result-rank-title").textContent = rank;
+
+      const skills = {
+        "Listening": { correct: 0, total: 0, icon: "🎧" },
+        "Reading & Writing": { correct: 0, total: 0, icon: "📖" },
+        "Speaking": { correct: 0, total: 0, icon: "🗣️" },
+        "Vocabulary": { correct: 0, total: 0, icon: "🔤" },
+        "Grammar": { correct: 0, total: 0, icon: "⚙️" }
+      };
+
+      questQuestions.forEach(q => {
+        if (skills[q.skill]) {
+          skills[q.skill].total++;
+          if (userAnswers[q.id] && userAnswers[q.id].isCorrect) {
+            skills[q.skill].correct++;
+          }
+        }
+      });
+
+      const skillGrid = document.getElementById("skill-breakdown-grid");
+      skillGrid.innerHTML = "";
+      for (const [skName, data] of Object.entries(skills)) {
+        const card = document.createElement("div");
+        card.className = "skill-stat-card";
+        card.innerHTML = `
+          <div class="skill-stat-title">${data.icon} ${skName}</div>
+          <div class="skill-stat-value">${data.correct} / ${data.total}</div>
+        `;
+        skillGrid.appendChild(card);
+      }
+    }
+
+    // Map Modal
+    function openMapModal() {
+      const modal = document.getElementById("quest-map-modal");
+      const grid = document.getElementById("grid-checkpoints");
+      grid.innerHTML = "";
+
+      questQuestions.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "grid-node-btn";
+        if (idx === currentIndex) btn.classList.add("current");
+        if (userAnswers[q.id]) {
+          if (userAnswers[q.id].skipped) btn.classList.add("skipped");
+          else if (userAnswers[q.id].isCorrect) btn.classList.add("correct");
+          else btn.classList.add("incorrect");
+        }
+
+        btn.innerHTML = `
+          <span>#${idx + 1}</span>
+          <span style="font-size: 10px; font-weight: normal;">${q.skill.slice(0, 4)}</span>
+        `;
+        btn.onclick = () => {
+          modal.classList.remove("open");
+          goToQuestion(idx);
+        };
+        grid.appendChild(btn);
+      });
+
+      modal.classList.add("open");
+    }
+
+    // Confetti
+    function triggerConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#f59e0b", "#10b981", "#38bdf8", "#ef4444", "#818cf8", "#facc15"];
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.4,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 14,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35;
+          p.rotation += p.vRot;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frames++;
+        if (frames < 75) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    // Listeners
+    document.getElementById("btn-check-q").addEventListener("click", handleCheckAnswer);
+    document.getElementById("btn-next-q").addEventListener("click", goToNext);
+    document.getElementById("btn-skip-q").addEventListener("click", handleSkip);
+    document.getElementById("btn-prev-q").addEventListener("click", () => {
+      if (currentIndex > 0) goToQuestion(currentIndex - 1);
+    });
+
+    document.getElementById("btn-open-map").addEventListener("click", openMapModal);
+    document.getElementById("btn-close-modal").addEventListener("click", () => {
+      document.getElementById("quest-map-modal").classList.remove("open");
+    });
+
+    document.getElementById("btn-sound-toggle").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById("sound-icon").textContent = soundEnabled ? "🔊" : "🔇";
+    });
+
+    document.getElementById("transcript-toggle").addEventListener("click", () => {
+      const box = document.getElementById("audio-transcript-box");
+      const toggle = document.getElementById("transcript-toggle");
+      box.classList.toggle("visible");
+      toggle.textContent = box.classList.contains("visible") ? "Hide Transcript" : "Show Transcript";
+    });
+
+    document.getElementById("btn-restart-quest").addEventListener("click", () => {
+      userAnswers = {};
+      currentIndex = 0;
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      initTrailTrack();
+      renderQuestion(0);
+    });
+
+    document.getElementById("btn-review-all").addEventListener("click", () => {
+      document.getElementById("results-screen").classList.remove("visible");
+      document.getElementById("quest-card").style.display = "block";
+      goToQuestion(0);
+    });
+
+    // Start App
+    initTrailTrack();
+    renderQuestion(0);
+  </script>
+</body>
+</html>
